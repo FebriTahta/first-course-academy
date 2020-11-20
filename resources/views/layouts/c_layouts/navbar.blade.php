@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta property="og:url"            content="course-academy.top" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Course Academy" />
+    <meta property="og:description"        content="Kini kami hadir dalam bentuk digital untuk memenuhi kebutuhan belajar anda" />
+    <meta property="og:image"              content="{{ asset('assets/media/drawkit/8-SCENE.svg') }}" />
     <title>Course Academy</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
