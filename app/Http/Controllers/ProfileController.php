@@ -30,7 +30,7 @@ class ProfileController extends Controller
                 $request->file('photo')->move('photo/',$request->file('photo')->getClientOriginalName());
                 $data_p->photo = $request->file('photo')->getClientOriginalName();
                 $data_p->save();
-            }            
+            }          
         // $data_p->update($data);
 
         $notif = array(

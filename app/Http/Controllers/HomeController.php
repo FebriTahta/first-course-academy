@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Profile;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,10 @@ class HomeController extends Controller
         if ($data_user == 'siswa') {
             # code...
             return view('client.mycourse.list');
-        }else {
+        }elseif($data_user == 'pengunjung') {
+            return view('client.mycourse.list');
+        }else
+        {
             # code...
             return redirect('/dashboard');
         }            

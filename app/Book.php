@@ -3,6 +3,8 @@
 namespace App;
 use App\Kursus;
 use App\User;
+use App\Kelas;
+use App\Mapel;
 use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
@@ -19,5 +21,15 @@ class Book extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
+
+    public function mapel()
+    {
+        return $this->belongsTo(Mapel::class);
     }
 }

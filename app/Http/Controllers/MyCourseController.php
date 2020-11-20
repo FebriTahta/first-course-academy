@@ -142,7 +142,8 @@ class MyCourseController extends Controller
         $user_name      = $users->name;
         $detail         = [
             'title'     => 'Hai '.$user_name.'',
-            'body'      => 'Pengajuan reset hasil kuis pada kuis ('.$kuis_name.') yang sudah kamu ajukan telah disetujui dan telah direset oleh instruktur'
+            'body'      => 'Pengajuan reset hasil kuis pada kuis ('.$kuis_name.') yang sudah kamu ajukan telah disetujui dan telah direset oleh instruktur',
+            'link'      => 'course-academy.top'
         ];
         //kirim email dulu
         $when           = Carbon::now()->addSeconds(10);
@@ -175,7 +176,8 @@ class MyCourseController extends Controller
         //kirim ke template email
         $detail         = [
             'title'   => 'Dear '.$nama_instruktur.' as Instruktur',
-            'body'    => 'seorang siswa bernama ('.$nama_siswa.') mengajukan Penghapusan hasil Kuis / Reset hasil kuis pada kuis ('.$nama_kuis.'). Sebelum menyetujui Penghapusan hasil kuis dimohon untuk memeriksa kuis tersebut terlebih dahulu'
+            'body'    => 'seorang siswa bernama ('.$nama_siswa.') mengajukan Penghapusan hasil Kuis / Reset hasil kuis pada kuis ('.$nama_kuis.'). Sebelum menyetujui Penghapusan hasil kuis dimohon untuk memeriksa kuis tersebut terlebih dahulu',
+            'link'    => 'course-academy.top'
         ];
         //kirim email dulu
         $when               = Carbon::now()->addSeconds(10);

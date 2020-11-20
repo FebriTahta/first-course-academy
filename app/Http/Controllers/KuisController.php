@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Kuis;
 use App\Kursus;
 use Auth;
+use App\User;
+use App\Kelas;
+use App\Mapel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -13,10 +16,10 @@ class KuisController extends Controller
     {
         $kursus_id      = $request->kursus_id;        
         $kuis_id        = $request->id;
-        $kursus         = Kursus::find($kursus_id);
+        
         $cek_kuis       = Kuis::where('slug',$request->slug)->first();
         
-        if ($cek_kuis   == null) {
+        
             # code...
             $new_kuis       = Kuis::updateOrCreate(['id' => $kuis_id],[
                 'user_id'   =>  $request->user_id,            
@@ -28,20 +31,28 @@ class KuisController extends Controller
             ]);
             $data_kuis      = Kuis::find($kuis_id);
             //cek jika sudah ada sebelumnya maka hanya update, jika belum add ke kursus
-            if ($data_kuis  === null) {
+            if ($kursus_id === null) {
                 # code...
-                $kursus->kuis()->attach($new_kuis);
+                $notif = array(
+                    'pesan-sukses' => 'kuis baru berhasil ditambahkan pada kursus',                
+                );
+                return redirect()->back()->with($notif);
+
+            } else {
+                # code...
+                if ($data_kuis  === null) {
+                    # code...
+                    $kursus         = Kursus::find($kursus_id);
+                    $kursus->kuis()->attach($new_kuis);
+                }
+                    $notif = array(
+                                'pesan-sukses' => 'kuis baru berhasil ditambahkan pada kursus',                
+                            );
+                    return redirect()->back()->with($notif);
             }
-            $notif = array(
-                        'pesan-sukses' => 'kuis baru berhasil ditambahkan pada kursus',                
-                    );
-            return redirect()->back()->with($notif);
-        }else{
-            $notif = array(
-                'pesan-peringatan' => 'Anda sudah pernah membuat kuis tersebut. silahkan periksa di daftar anda',                
-            );
-        return redirect()->back()->with($notif);
-        }
+            
+            
+        
     }
 
     public function salin(Request $request)
@@ -64,10 +75,10 @@ class KuisController extends Controller
 
     public function remove(Request $request)
     {
-        $kuis_id   = $request->id;
+        $kuis_id    = $request->id;
         $kursus_id  = $request->kursus_id;
         $kursus     = Kursus::find($kursus_id);
-        $kuis      = Kuis::find($kuis_id);
+        $kuis       = Kuis::find($kuis_id);
 
         $kursus->kuis()->detach($kuis);        
         $notif = array(
@@ -80,7 +91,23 @@ class KuisController extends Controller
     public function mykuis()
     {
         $user   = Auth::id();
+        $users  = User::find($user);
         $kuis   = Kuis::where('user_id', $user)->get();
-        return view('/admin/daftarKonten/kuis', compact('kuis'));
+        $kuiss  = Kuis::all();
+        $kelass = Kelas::all();
+        $mapels = Mapel::all();
+        return view('/admin/daftarKonten/kuis', compact('kuis','kuiss','user','users','kelass','mapels'));
+    }
+
+    public function hapusKuisPermanen(Request $request){
+        $id         = $request->id;
+        $kuis       = Kuis::find($id);
+        $kuis_name  = $kuis->kuis_name;
+
+        $notif      = array(
+                    'pesan-bahaya' => 'kuis "'.$kuis_name.'" berhasil dihapus',                
+                    );
+        $kuis->delete();    
+        return redirect()->back()->with($notif);   
     }
 }

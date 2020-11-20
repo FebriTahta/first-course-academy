@@ -29,12 +29,8 @@
             <div class="block block-rounded">                
                 <div class="block-content text-center bg-secondary text-white">
                     <p>putar video yang tersedia pada daftar video</p>
-                </div>
-                @if ($vid == null)
-                <iframe id="playvideo" src="" frameborder="0" allowfullscreen width="100%" height="380" position="absolute"></iframe>
-                @else
-                <iframe id="playvideo" src="{{ $vid->video_link }}" frameborder="0" allowfullscreen width="100%" height="380" position="absolute"></iframe>
-                @endif                
+                </div>                 
+                <iframe id="playvideo" src="" frameborder="0" allowfullscreen width="100%" height="380" position="absolute"></iframe>                            
             </div>
             <!--video frame-->
 
@@ -126,7 +122,11 @@
                 <div class="block-content">
                     <div class="block-content text-center">
                         <div class="push">
+                            @if ($data_kursus->user->profile->photo==null)
                             <img class="img-avatar" src="{{ asset('assets/media/photos/photo34@2x.jpg') }}" alt="{{ $data_kursus->user->name }}">
+                            @else
+                            <img class="img-avatar" src="{{ asset('photo/'.$data_kursus->user->profile->photo) }}" alt="{{ $data_kursus->user->name }}">
+                            @endif                            
                         </div>
                         <label for="">{{ $data_kursus->user->name }}</label>
                         <div class="font-size-sm text-muted text-center mb-20">

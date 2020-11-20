@@ -16,37 +16,26 @@
 
     <div class="content">
         <div class="row">
-            <div class="col-12"><h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Forum</small></h2></div>
-            <div class="col-xl-4">
-                <div class="block block-rounded">
-                    <div class="block-header block-header-default">
-                        <div class="block-content text-center">
-                            <h3 class="block-tittle">PERATURAN</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="block block-rounded block-content">
-                    <p>Daftar forum yang terdaftar adalah forum sesuai kursus yang tersedia</p>
-                    <p>Beberapa peraturan yang harus ditaati :</p>
-                    <ol class="text-danger">
-                        <li>tidak boleh berkata kasar</li>                        
-                        <li>hanya boleh memposting dan berkomentar seputar kursus yang terkait</li>
-                        <li>gunakanlah bahasa yang sopan, baik, dan benar</li>                        
-                    </ol>
-                </div>                
-            </div>
-
-            <div class="col-xl-8">
+            <div class="col-12"><h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Forum</small></h2></div>            
+            <div class="col-xl-12">
                 <div class="block">
                     <div class="block-header block-header-default">
                     {{-- nafigasi block --}}
                     </div>
-
                     <div class="block-content border-bottom">
                         <p class="text-center">DAFTAR FORUM</p>
                     </div>
                     <div class="block-content">
-                        <table class="table table-borderless">
+                        <table class="table table-borderless" id="daftar_forum">
+                            <thead>
+                                <tr>
+                                    <th>_</th>
+                                    <th>MAPEL</th>
+                                    <th>KELAS</th>
+                                    <th class="float-right">_</th>
+                                </tr>
+                            </thead>
+                            <tbody>                            
                             @foreach ($data_mapel as $dm)
                                 @foreach ($dm->kelas as $dk)
                                 <tr>
@@ -59,10 +48,11 @@
                                 </tr>
                                 @endforeach
                             @endforeach
-                        </table>
-                    </div>
+                            </tbody>
+                        </table>                        
+                    </div>                    
                 </div>
             </div>
-        </div>
+        </div>        
     </div>
 @endsection

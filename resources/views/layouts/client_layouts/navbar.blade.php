@@ -29,7 +29,7 @@
                 <li>
                     @auth                                    
                         @if (auth()->user()->role=='siswa')
-                            <a href="{{ route('akun') }}"><i class="fa fa-user"></i>Akun</a>
+                            <a href="/home"><i class="fa fa-user"></i>HOME</a>
                         @else
                             <a href="{{ route('dashboard') }}"><i class="si si-compass"></i>Dashboard</a>
                         @endif
@@ -58,7 +58,7 @@
                             <a href="{{ route('forum') }}">Forum</a>                            
                         </li>
                         <li>
-                            <a href="#">All Course</a>                            
+                            <a href="{{ route('allkursus') }}">All Course</a>                            
                         </li>
                     </ul>
                 </li>

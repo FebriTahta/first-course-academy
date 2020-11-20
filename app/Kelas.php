@@ -4,6 +4,7 @@ namespace App;
 use App\Mapel;
 use App\Kursus;
 use App\Kelas;
+use App\Book;
 use Illuminate\Database\Eloquent\Model;
 
 class Kelas extends Model
@@ -35,5 +36,10 @@ class Kelas extends Model
     public function kuis()
     {
         return $this->hasMany(Kuis::class);
+    }
+
+    public function book()
+    {
+        return $this->hasMany(Book::class);
     }
 }

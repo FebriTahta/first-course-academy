@@ -27,11 +27,14 @@
     <div class="row">
         <div class="col-md-4">
             <div class="block shadow">
-                <div class="block-content block-rounded ">
-                    <a  href="{{ route('kursus', $datas->slug) }}" class="mb-20 nafigasi"><i class="si si-action-undo"></i> &nbsp; back</a>                    
+                <div class="block-content block-rounded ">                    
                 </div>                
                 <div class="block-content border-bottom block-rounded text-center">
                     <p>total soal : {{ $total_soal }}</p>
+                </div>
+                <div class="block-content">
+                    Kuis : <p>{{ $data_kuis->kuis_name }}</p>
+                    Kuis : <p>{{ $data_kuis->kuis_desc }}</p>
                 </div>
             </div>
         </div>

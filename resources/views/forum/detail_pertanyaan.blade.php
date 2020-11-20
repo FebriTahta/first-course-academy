@@ -20,79 +20,61 @@
             <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
             @endif
         </div> 
-        <div class="col-xl-5">
-            <div class="block block-rounded">
-                <div class="block-header block-header-default">                    
-                    <div class="block-content text-center">
-                        <h5>DAFTAR PERTANYAAN</h5>
-                    </div>
-                    <div class="block-options">                    
-                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-down"></i></button>
-                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
-                            <i class="si si-pin"></i>
-                        </button>
-
-                    </div>
-                </div>
-                <div class="block-content">
-                    @foreach ($data_forum as $item_forum)                                            
-                    <div class="block block-mode-hidden">
-                        <div class="block-header block-header-default">
-                            <h3 class="block-title"><a href="/forum-detail-pertanyaan/{{ $item_forum->slug }}">{{ $item_forum->judul_pertanyaan }}</a></h3>
-                            <div class="block-options">
-                                <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
-                                <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-down"></i></button>
-                            </div>
-                        </div>
-                        <div class="block-content">
-                            <p>{!! $item_forum->desc_pertanyaan !!}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
         <div class="col-xl-7">
             <div class="block block-rounded border-bottom">
                 <div class="block-header block-header-default">                    
-                    <div class="block-content">
-                        
+                    <div class="block-options">                    
+                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-down"></i></button>
                     </div>
                 </div>
-
                 <div class="block-content border-bottom">
+                    <p>Oleh : {{ $data_pertanyaan_forum->user->name }} <small class="float-right">{{ $data_pertanyaan_forum->created_at }}</small></p>
                     <h1 class="h4 font-w400">{{ $data_pertanyaan_forum->judul_pertanyaan }}</h1>
                 </div>
                 <div class="block-content border-bottom">
                     <p>{!! $data_pertanyaan_forum->desc_pertanyaan !!}</p>
                 </div>
-
                 <div class="komen">
                     <div class="block-content">
-                        <p>DAFTAR KOMENTAR</p>
+                        <p>{{ $data_pertanyaan_forum->komentar->count() }} komentar</p>
                     </div>
-                    <div class="row">
-                        
-                        @if (count($data_pertanyaan_forum->komentar) == 0)
-                        
+                    <div class="row">                        
+                        @if (count($data_pertanyaan_forum->komentar) == 0)                        
                         <div class="col-10 col-md-10">
                             <div class="block-content text-left">
                                 <p class="text-danger">BELUM ADA KOMENTAR PADA PERTANYAAN INI</p>
                             </div>
                         </div>
                         @else
-                            @foreach ($data_pertanyaan_forum->komentar as $item)
+                            @foreach ($komen as $item)
                             <div class="col-2 col-md-2">
                                 <div class="block-content">
-                                    <input type="text" class="form-control" disabled>
+                                    @auth
+                                        @if ($data_pertanyaan_forum->user_id == auth()->user()->id)
+                                        <label class="css-control css-control-success css-switch">
+                                            <input data-id="{{ $item->id }}" type="checkbox" class="css-control-input" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $item->status ? 'checked' : '' }}>
+                                            <span class="css-control-indicator"></span>
+                                        </label>
+                                        @else
+                                            @if ($item->status==1)
+                                                <div class="block block-content">
+                                                    <p class="fa fa-check"></p>
+                                                </div>
+                                            @endif
+                                        @endif                                            
+                                    @else
+                                        @if ($item->status==1)
+                                            <div class="block block-content">
+                                                <p class="fa fa-check"></p>
+                                            </div>
+                                        @endif
+                                    @endauth                                                                        
                                 </div>
-                            </div>
-                            
+                            </div>                            
                             <div class="col-9 col-md-9 border-bottom flex-box">
                                 <div class="block block-rounded">
                                     <div class="block-content text-left">
-                                        <p class="text-primary">{{ $item->user->name }}</p>                                        
+                                        <label><u>{{ $item->user->name }}</u></label>                                        
                                         <p>{!! $item->komen !!}</p>                                        
                                     </div>
                                 </div>                                
@@ -108,7 +90,7 @@
                     <p>komentar</p>
                 </div>
                 @auth
-                @if (auth()->user()->stat==='1')
+                @if (auth()->user())
                 <form action="{{ route('post-komentar') }}" method="POST" enctype="multipart/form-data">@csrf
                     <div class="block-content">
                         <div class="form-group">
@@ -130,6 +112,57 @@
                 @endif                                                               
             </div>
         </div>
+        
+        <div class="col-xl-5">
+            <div class="block block-rounded">
+                <div class="block-header block-header-default">                                        
+                    <div class="block-options">                    
+                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">                            
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="block-content text-center border-bottom"><p>daftar pertanyaan lain</p></div>
+                        <?php $i=1?>
+                        @foreach ($data_forum as $item)
+                        <div class="block block-bordered block-rounded mb-2">
+                            <div class="block-header" role="tab" id="accordion_h1">
+                                <a class="font-w600 collapsed" data-toggle="collapse" data-parent="#accordion" href="#accordion_<?=$i?>" aria-expanded="false" aria-controls="accordion_q1">{{ $item->judul_pertanyaan }} </a> <a href="/forum-detail-pertanyaan/{{ $item->slug }}" class="float-right">detail</a>
+                            </div>
+                            <div id="accordion_<?=$i?>" class="collapse" role="tabpanel" aria-labelledby="accordion_h1" data-parent="#accordion" style="">
+                                <div class="block-content">
+                                    <p>{!! $item->desc_pertanyaan !!}</p>
+                                </div>
+                            </div>
+                        </div>                                
+                        <?php $i++?>
+                        @endforeach                                
+                    </div>                            
+                </div>    
+                <div class="block-content text-center">{{ $data_forum->links() }}</div>
+            </div>
+        </div>        
     </div>
 </div>
+@endsection
+
+@section('script')    
+<script>
+    $(function(){
+        $('.css-control-input').change(function(){
+            var status = $(this).prop('checked')==true ? 1 : 0;
+            var id = $(this).data('id');
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "{{ route('benar') }}",
+                data: {'status': status, 'id': id},
+                success: function(data){
+                    console.log(data.success)
+                }
+            });
+        })
+    })
+</script>
 @endsection

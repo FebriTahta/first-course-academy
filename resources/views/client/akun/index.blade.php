@@ -31,18 +31,24 @@
                     <div class="block-header block-header-default">
                     {{-- nafigasi block --}}
                     </div>
-                    <div class="block-conten border-bottom">
-                        <div class="row">                        
-                            <div class="col-3 col-sm-3 mt-10 ml-10 mb-10">
-                                <img class="rounded" src="{{ asset('assets/media/photos/photo34@2x.jpg') }}" alt="" width="100px" height="100px">
-                            </div>
-                            <div class="col-8 col-sm-8 mt-10 ">
-                                <div class="block-content">
-                                    <p>{{ auth()->user()->name }}</p>
-                                    <p>{{ auth()->user()->email }}</p>
+                    <div class="block-conten border-bottom">                        
+                        <div class="col-xl-12">
+                            <a class="block block-link-shadow" href="javascript:void(0)">
+                                <div class="block-content block-content-full clearfix">
+                                    <div class="text-right float-right mt-10">
+                                        <div class="font-w600 mb-5">{{ auth()->user()->name }}</div>
+                                        <div class="font-size-sm text-muted">{{ auth()->user()->email }}</div>
+                                    </div>
+                                    <div class="float-left">
+                                        @if (auth()->user()->profile->photo==null)
+                                        <img class="img-avatar" src="{{ asset('assets/media/avatars/avatar14.jpg') }}" alt="">
+                                        @else
+                                        <img class="img-avatar" src="{{ asset('photo/'.auth()->user()->profile->photo) }}" alt="">
+                                        @endif                                        
+                                    </div>
                                 </div>
-                            </div>
-                        </div>             
+                            </a>
+                        </div>
                     </div>
                     
                     <div class="block-header block-header-default ">
@@ -76,6 +82,10 @@
                                 <div class="form-material mb-10">
                                     <input type="text" class="form-control" id="val-alumni" name="alumni" placeholder="Alumni / Sekolah" value="{{ auth()->user()->profile->alumni }}" required>
                                     <label for="val-alumni">Sekolah</label>
+                                </div>
+                                <div class="form-material mb-10">
+                                    <input type="file" class="form-control" id="val-photo" name="photo" accept=".jpg,.jpeg,.png">
+                                    <label for="val-photo">Photo</label>
                                 </div>
                             </div>
                             <div class="form-group">

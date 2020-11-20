@@ -32,21 +32,25 @@
                 {{-- nafigasi block --}}
                 </div>
                 <div class="block-conten border-bottom">
-                    <div class="row">                        
-                        <div class="col-3 col-sm-3 mt-10 ml-10 mb-10">
-                            @if ($data_profile->photo===null)
-                            <img class="rounded" src="{{ asset('assets/media/photos/photo34@2x.jpg') }}" alt="" width="100px" height="100px">
-                            @else
-                            <img class="rounded" src="{{ asset('photo/'.$data_profile->photo) }}" alt="" width="100px" height="100px"> 
-                            @endif                            
+                    <div class="block-conten border-bottom">                        
+                        <div class="col-xl-12">
+                            <a class="block block-link-shadow" href="javascript:void(0)">
+                                <div class="block-content block-content-full clearfix">
+                                    <div class="text-right float-right mt-10">
+                                        <div class="font-w600 mb-5">{{ $data_profile->user->name }}</div>
+                                        <div class="font-size-sm text-muted">{{ $data_profile->user->email }}</div>
+                                    </div>
+                                    <div class="float-left">
+                                        @if ($data_profile->photo==null)
+                                        <img class="img-avatar" src="{{ asset('assets/media/avatars/avatar14.jpg') }}" alt="">
+                                        @else
+                                        <img class="img-avatar" src="{{ asset('photo/'.$data_profile->photo) }}" alt="">
+                                        @endif                                        
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="col-8 col-sm-8 mt-10 ">
-                            <div class="block-content">
-                                <p>{{ $data_profile->user->name }}</p>
-                                <p>{{ $data_profile->user->email }}</p>
-                            </div>
-                        </div>
-                    </div>             
+                    </div>            
                 </div>
                 
                 <div class="block-header block-header-default ">
@@ -57,7 +61,7 @@
                     </div>
                 </div>
                 <div class="block-content">
-                    <form class="border-bottom" action="{{ route('storeProfile') }}" method="POST">@csrf
+                    <form class="border-bottom" action="{{ route('storeProfile') }}" method="POST" enctype="multipart/form-data">@csrf
                         <div class="form-group">
                             <div class="form-material mb-10">
                                 <input type="hidden" name="user_id" value="{{ $data_profile->user_id }}">
@@ -80,6 +84,10 @@
                             <div class="form-material mb-10">
                                 <input type="text" class="form-control" id="val-alumni" name="alumni" placeholder="Alumni / Sekolah" value="{{ $data_profile->alumni }}" required>
                                 <label for="val-alumni">Alumni</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="file" class="form-control" id="val-photo" name="photo" accept=".jpg,.jpeg,.png">
+                                <label for="val-photo">Photo</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -160,34 +168,7 @@
                 </div>
             </div>
 
-            <div class="block">
-                <div class="block-header block-header-default">
-                {{-- block nafigasi --}}
-                </div>
-                <div class="block-content border-bottom">
-                    <p class="text-center">FORUM DISKUSI</p>
-                </div>
-                <div class="block-content">                    
-                    <table class="table" id="forum">
-                        <thead>
-                            <tr>
-                                {{-- <th></th> --}}                                
-                                <th>Postingan</th>
-                                <th>Komen</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {{-- <td><i class="fa fa-question"></i></td> --}}                                
-                                <td>PERTANYAAN SAYA</td>                                
-                                <td>LOHE</td>
-                                <td class=""><button class="btn btn-outline-primary">pergi</button></td>
-                            </tr>
-                        </tbody>                        
-                    </table>
-                </div>
-            </div>
+            
         </div>
         @else
         <div class="col-xl-12">
@@ -209,21 +190,25 @@
                 {{-- nafigasi block --}}
                 </div>
                 <div class="block-conten border-bottom">
-                    <div class="row">                        
-                        <div class="col-3 col-sm-3 mt-10 ml-10 mb-10">
-                            @if ($data_profile->photo===null)
-                            <img class="rounded" src="{{ asset('assets/media/photos/photo34@2x.jpg') }}" alt="" width="100px" height="100px">
-                            @else
-                            <img class="rounded" src="{{ asset('photo/'.$data_profile->photo) }}" alt="" width="100px" height="100px">
-                            @endif                            
+                    <div class="block-conten border-bottom">                        
+                        <div class="col-xl-12">
+                            <a class="block block-link-shadow" href="javascript:void(0)">
+                                <div class="block-content block-content-full clearfix">
+                                    <div class="text-right float-right mt-10">
+                                        <div class="font-w600 mb-5">{{ $data_profile->user->name }}</div>
+                                        <div class="font-size-sm text-muted">{{ $data_profile->user->email }}</div>
+                                    </div>
+                                    <div class="float-left">
+                                        @if ($data_profile->photo==null)
+                                        <img class="img-avatar" src="{{ asset('assets/media/avatars/avatar14.jpg') }}" alt="">
+                                        @else
+                                        <img class="img-avatar" src="{{ asset('photo/'.$data_profile->photo) }}" alt="">
+                                        @endif                                        
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="col-8 col-sm-8 mt-10 ">
-                            <div class="block-content">
-                                <p>{{ $data_profile->user->name }}</p>
-                                <p>{{ $data_profile->user->email }}</p>
-                            </div>
-                        </div>
-                    </div>             
+                    </div>            
                 </div>
                 
                 <div class="block-header block-header-default ">
@@ -295,24 +280,7 @@
                 </div>
             </div>
 
-            <div class="block">
-                <div class="block-header block-header-default">
-                {{-- block nafigasi --}}
-                </div>
-                <div class="block-content border-bottom">
-                    <p class="text-center">FORUM DISKUSI</p>
-                </div>
-                <div class="block-content">
-                    <table class="table table-borderless">
-                        <tr>
-                            <td><i class="fa fa-question"></i></td>
-                            <td>PERTANYAAN SAYA</td>                                
-                            <td>5 KOMENTAR</td>
-                            <td class="float-right"><button class="btn btn-outline-primary">pergi</button></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            
         </div>
         @endif               
     </div>

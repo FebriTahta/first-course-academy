@@ -12,6 +12,7 @@ use App\Book;
 use App\kursus_profile;
 use App\Profile;
 use App\kursus_video;
+use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -127,6 +128,26 @@ class KursusController extends Controller
             'pesan-peringatan' => 'kursus tersebut berhasil dihapus',                
             );
         return redirect()->back()->with($notif);        
+    }
+
+    public function mykursus(Request $request)
+    {
+        $kursus     = Kursus::all();
+        return view('admin.daftarKonten.kursus', compact('kursus'));
+    }
+
+    public function allkursus()
+    {
+        $user       = Auth::id();
+        $kursus     = Kursus::where('status','aktif')->get(); 
+        return view('semuaKursus.index',compact('kursus'));
+    }
+
+    public function allkursusadmin()
+    {
+        $user       = Auth::id();
+        $kursus     = Kursus::where('status','aktif')->get(); 
+        return view('semuaKursus.index2',compact('kursus'));
     }
     
 }

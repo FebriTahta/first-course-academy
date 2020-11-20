@@ -79,7 +79,7 @@
                     <ul>                                    
                         <li>
                             @if (auth()->user()->role=='admin')
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">pengaturan</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">PENGATURAN</span></a>
                             <ul>
                                 <li>
                                     <a href="{{ route('daftar_user.index') }}">daftar pengguna</a>
@@ -92,28 +92,32 @@
                                 </li>
                             </ul>
                             @endif
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">konten</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">KONTEN</span></a>
                             <ul>
-                                @if (auth()->user()->role=='admin')
+                                @if (auth()->user()->role=='admin')                                
                                 <li>
-                                    <a href="#">daftar materi</a>
+                                    <a href="{{ route('my-video') }}">Daftar Video</a>
                                 </li>
                                 <li>
-                                    <a href="#">daftar video</a>
+                                    <a href="{{ route('my-book') }}">Daftar Buku</a>
                                 </li>
                                 <li>
-                                    <a href="#">daftar kuis</a>
+                                    <a href="{{ route('my-kuis') }}">Daftar Kuis</a>
                                 </li>
+                                
                                 @else
+                                <li>
+                                    <a href="{{ route('my-kursus') }}">Kursus Saya</a>
+                                </li>
                                 <li>
                                     <a href="{{ route('my-video') }}">Video Saya</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('my-kuis') }}">Kuis Saya</a>
-                                </li>
-                                <li>
                                     <a href="{{ route('my-book') }}">Buku Saya</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('my-kuis') }}">Kuis Saya</a>
+                                </li>                                
                                 @endif
                             </ul>
                         </li>                                                                                                                                                

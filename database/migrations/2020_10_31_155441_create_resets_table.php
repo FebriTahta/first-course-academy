@@ -20,6 +20,18 @@ class CreateResetsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
+
+        Schema::table('resets', function (Blueprint $table){
+            $table->foreign('kuis_id')->references('id')->on('kuis')->onDelete('cascade');
+        });
+
+        Schema::table('resets', function (Blueprint $table){
+            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
+        });
+
+        Schema::table('resets', function (Blueprint $table){
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**

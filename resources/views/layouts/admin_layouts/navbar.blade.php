@@ -338,9 +338,9 @@
 
                         <!-- Toggle Side Overlay -->
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="side_overlay_toggle">
+                        {{-- <button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="side_overlay_toggle">
                             <i class="fa fa-tasks"></i>
-                        </button>
+                        </button> --}}
                         <!-- END Toggle Side Overlay -->
                     </div>
                     <!-- END Right Section -->

@@ -37,7 +37,7 @@
             </a>
         </div>
         <div class="col-6 col-xl-3">
-            <a class="block block-link-pop text-right bg-earth" href="javascript:void(0)">
+            <a class="block block-link-pop text-right bg-earth" href="{{ route('my-video') }}">
                 <div class="block-content block-content-full clearfix border-black-op-b border-3x">
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="fa fa-film fa-3x text-earth-light"></i>
@@ -143,7 +143,7 @@
             @endif
         </div>
         <div class="col-6 col-xl-3">
-            <a class="block block-link-pop text-right bg-primary" href="javascript:void(0)">
+            <a class="block block-link-pop text-right bg-primary" href="{{ route('my-kursus') }}">
                 <div class="block-content block-content-full clearfix border-black-op-b border-3x">
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="si si-bar-chart fa-3x text-primary-light"></i>
@@ -154,7 +154,7 @@
             </a>
         </div>
         <div class="col-6 col-xl-3">
-            <a class="block block-link-pop text-right bg-earth" href="javascript:void(0)">
+            <a class="block block-link-pop text-right bg-earth" href="{{ route('my-video') }}">
                 <div class="block-content block-content-full clearfix border-black-op-b border-3x">
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="fa fa-film fa-3x text-earth-light"></i>
@@ -165,7 +165,7 @@
             </a>
         </div>
         <div class="col-6 col-xl-3">
-            <a class="block block-link-pop text-right bg-elegance" href="javascript:void(0)">
+            <a class="block block-link-pop text-right bg-elegance" href="{{ route('my-kuis') }}">
                 <div class="block-content block-content-full clearfix border-black-op-b border-3x">
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="fa fa-pencil fa-3x text-elegance-light"></i>
@@ -176,47 +176,90 @@
             </a>
         </div>
         <div class="col-6 col-xl-3">
-            <a class="block block-link-pop text-right bg-corporate" href="javascript:void(0)">
+            <a class="block block-link-pop text-right bg-corporate" href="{{ route('my-book') }}">
                 <div class="block-content block-content-full clearfix border-black-op-b border-3x">
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="fa fa-book fa-3x text-corporate-light"></i>
                     </div>
-                    <div class="font-size-h3 font-w600 text-white" data-toggle="countTo" data-speed="1000" data-to="100"></div>
+                    <div class="font-size-h3 font-w600 text-white" data-toggle="countTo" data-speed="1000" data-to="{{ auth()->user()->book->count() }}"></div>
                     <div class="font-size-sm font-w600 text-uppercase text-white-op">Buku</div>
                 </div>
             </a>
         </div>                                                        
 
-        <div class="col-xl-6">            
-            <div class="block block-rounded">
+        <div class="col-xl-6">
+            <div class="block block-mode-hidden">
                 <div class="block-header block-header-default">
-                    <div class="block-content text-center">
-                        KURSUS SAYA
+                {{-- nafigasi block --}}
+                </div>
+                <div class="block-conten border-bottom">                        
+                    <div class="col-xl-12">
+                        <a class="block block-link-shadow" href="javascript:void(0)">
+                            <div class="block-content block-content-full clearfix">
+                                <div class="text-right float-right mt-10">
+                                    <div class="font-w600 mb-5">{{ auth()->user()->name }}</div>
+                                    <div class="font-size-sm text-muted">{{ auth()->user()->email }}</div>
+                                </div>
+                                <div class="float-left">
+                                    @if (auth()->user()->profile->photo==null)
+                                    <img class="img-avatar" src="{{ asset('assets/media/avatars/avatar14.jpg') }}" alt="">
+                                    @else
+                                    <img class="img-avatar" src="{{ asset('photo/'.auth()->user()->profile->photo) }}" alt="">
+                                    @endif                                        
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="block-header block-header-default ">
+                    <h3 class="block-title">DATA DIRI</h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
                     </div>
                 </div>
                 <div class="block-content">
-                    <table class="table table-stripped" id="daftar_kursus">
-                        <thead>
-                            <tr>
-                                <th>mapel</th>
-                                <th>kelas</th>
-                                <th class="text-right">option</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (auth()->user()->kursus as $item)                            
-                                <tr>
-                                    <td>{{ $item->mapel->mapel_name }}</td>
-                                    <td class="text-left">{{ $item->kelas->kelas_name }}</td>
-                                    <td class="text-right">
-                                        <a href="/kursus/{{ $item->slug }}">check</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>                        
-                    </table>                                            
-                </div>            
-            </div>        
+                    <form class="border-bottom" action="{{ route('storeProfile') }}" method="POST" enctype="multipart/form-data">@csrf
+                        <div class="form-group">
+                            <div class="form-material mb-10">
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                <input type="text" class="form-control" id="val-alamat" name="alamat" placeholder="Alamat sekarang" value="{{ auth()->user()->profile->alamat }}" required>
+                                <label for="val-alamat">Alamat</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="number" class="form-control" id="val-telp" name="telp" placeholder="Nomor Telepon" value="{{ auth()->user()->profile->telp }}" required>
+                                <label for="val-telp">No.Telp</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <select class="js-select2 form-control js-select2-enabled select2-hidden-accessible" id="val-gender" name="gender" style="width: 100%;" data-placeholder="Choose one.." data-select2-id="val-gender" tabindex="-1" aria-hidden="true" required>
+                                    <option data-select2-id="5">{{ auth()->user()->profile->gender }}</option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Yang lain">Yang Lain</option>
+                                </select>
+                                <label for="val-select2">Gender</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="text" class="form-control" id="val-alumni" name="alumni" placeholder="Alumni / Sekolah" value="{{ auth()->user()->profile->alumni }}" required>
+                                <label for="val-alumni">Sekolah</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="file" class="form-control" id="val-photo" name="photo" accept=".jpg,.jpeg,.png">
+                                <label for="val-photo">Photo</label>
+                            </div>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-outline-primary">update</button>
+                        </div>
+                    </form>                        
+                </div>
+                <div class="block block-content bg-transparent">
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        {{ __('Forgot / Reset Your Password?') }}
+                    </a>
+                </div>                    
+            </div>                            
         </div>
 
         <div class="col-xl-6">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\Kursus;
 use Auth;
+use App\User;
+use App\Kelas;
+use App\Mapel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,7 +17,7 @@ class BookController extends Controller
     {   
         //model kursus untuk di attach pada tabel povot
         $id     = $request->kursus_id;
-        $kursus = Kursus::find($id);
+        
         //model book
         $data   =   new Book;
         //book file move to storage untuk download
@@ -35,11 +38,22 @@ class BookController extends Controller
         //save book
         $data->save();
         //insert to pivot
-        $kursus->book()->attach($data);
-        $notif = array(
-            'pesan-sukses' => 'Buku baru berhasil ditambahkan',                
-        );
-        return redirect()->back()->with($notif);        
+        if ($id === null) {
+            # code...
+            $notif = array(
+                'pesan-sukses' => 'Buku baru berhasil ditambahkan',                
+            );
+            return redirect()->back()->with($notif); 
+
+        } else {
+            # code...
+            $kursus = Kursus::find($id);
+            $kursus->book()->attach($data);
+            $notif = array(
+                'pesan-sukses' => 'Buku baru berhasil ditambahkan',                
+            );
+            return redirect()->back()->with($notif);   
+        }                     
     }
 
     public function salin(Request $request)
@@ -67,7 +81,37 @@ class BookController extends Controller
 
     public function mybook(){
         $user   = Auth::id();
-        $book  = Book::where('user_id', $user)->get();
-        return view('/admin/daftarKonten/book', compact('book'));
+        $users  = User::find($user);
+        $book   = Book::where('user_id', $user)->get();
+        $books  = Book::all();
+        $kelass = Kelas::all();
+        $mapels = Mapel::all();
+        return view('/admin/daftarKonten/book', compact('book','books','users','kelass','mapels','user'));
+    }
+
+    public function remove(Request $request){
+        $id         = $request->id;
+        $kursus_id  = $request->kursus_id;
+
+        $buku       = Book::find($id);
+        $book_name  = $buku->book_name;
+        $kursus     = Kursus::find($kursus_id);
+        $notif      = array(
+                        'message' => 'Buku "'.$book_name.'" berhasil dihapus',                
+                    );
+        $kursus->book()->detach($buku);
+        return redirect()->back()->with($notif);
+    }
+
+    public function hapusBukuPermanen(Request $request)
+    {
+        $id         = $request->id;
+        $books      = Book::find($id);
+        $book_name  = $books->book_name;        
+        $notif = array(
+            'pesan-bahaya' => 'Buku "'.$book_name.'" berhasil dihapus',                
+        );
+        $books->delete();
+        return redirect()->back()->with($notif);
     }
 }

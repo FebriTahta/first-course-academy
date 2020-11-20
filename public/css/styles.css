@@ -44,7 +44,7 @@ html,body{
 }
 
 .nav .links .mainlink{
-    color: #e0501b;
+    color:blue;
 }
 
 .nav h4{
@@ -291,7 +291,7 @@ li span{
     color: #000;
 }
 .footerlinks .mainlink{
-    color: #e0501b;
+    color: blue;
 }
 
 

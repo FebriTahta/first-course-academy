@@ -29,10 +29,11 @@
         <div class="col-md-4">
             <div class="block shadow">
                 <div class="block-content block-rounded ">
-                    <a  href="#" class="mb-20 nafigasi"><i class="si si-action-undo"></i> &nbsp; back</a>                    
-                </div>                
-                <div class="block-content border-bottom block-rounded text-center">
-                    <p>total soal : </p>
+                                  
+                </div>                                
+                <div class="block-content">
+                    Kuis : <p>{{ $data_3->kuis_name }}</p>
+                    Deskripsi : <p>{{ $data_3->kuis_desc }}</p>
                 </div>
             </div>
         </div>
@@ -67,7 +68,6 @@
                 </form>  
             </div>            
         </div>
-
     </div>
 </div>
 @endsection

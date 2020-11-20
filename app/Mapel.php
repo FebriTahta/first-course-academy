@@ -3,6 +3,7 @@
 namespace App;
 use App\Kelas;
 use App\Kursus;
+use App\Book;
 use App\Kuis;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +36,11 @@ class Mapel extends Model
     public function kuis()
     {
         return $this->hasMany(Kuis::class);
+    }
+
+    public function book()
+    {
+        return $this->hasMany(Book::class);
     }
     
 }

@@ -5,6 +5,7 @@ use App\Mapel;
 use App\Kelas;
 use App\Forum;
 use Auth;
+use App\Komentar;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -23,26 +24,29 @@ class ForumController extends Controller
         $data_kelas_id  = $data_kelas->id;
         $data_mapel     = Mapel::where('slug',$slug_m)->first();
         $data_mapel_id  = $data_mapel->id;
-        $data_forum     = Forum::where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->get();
+        $data_forum     = Forum::where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->orderBy('id', 'DESC')->paginate(10);
         $id             = Auth::id();
-        $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->get();
+        $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->orderBy('id','DESC')->get();
         return view('forum.daftar_pertanyaan', compact('data_kelas','data_mapel','data_forum','pertanyaanku'));
     }
 
     public function detailpertanyaan($slug)
     {
         $data_pertanyaan_forum  = Forum::where('slug',$slug)->first();
+        $forum_id               = $data_pertanyaan_forum->id;        
         $get_kelas_id           = $data_pertanyaan_forum->kelas_id;
         $data_kelas             = Kelas::where('id', $get_kelas_id)->first();
         $get_mapel_id           = $data_pertanyaan_forum->mapel_id;
         $data_mapel             = Mapel::where('id', $get_mapel_id)->first();
-        $data_forum             = Forum::where('kelas_id', $get_kelas_id)->where('mapel_id', $get_mapel_id)->get();
-        return view('forum.detail_pertanyaan',compact('data_pertanyaan_forum','data_kelas','data_mapel','data_forum'));
+        $data_forum             = Forum::where('kelas_id', $get_kelas_id)->where('mapel_id', $get_mapel_id)->paginate(5);
+
+        $komen                 = Komentar::where('forum_id', $forum_id)->orderBy('status','DESC')->get();
+                return view('forum.detail_pertanyaan',compact('komen','data_pertanyaan_forum','data_kelas','data_mapel','data_forum'));
     }
 
     public function store(Request $request)
     {
-        Forum::updateOrCreate([
+        Forum::updateOrCreate(['id'=>$request->id],[
             'user_id'=>$request->user_id,
             'kelas_id'=>$request->kelas_id,
             'mapel_id'=>$request->mapel_id,

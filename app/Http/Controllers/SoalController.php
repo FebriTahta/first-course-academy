@@ -18,6 +18,14 @@ class SoalController extends Controller
         $datas= $data->kursus->first();
         return view('admin.daftarSoal.create', compact('data_slug','data','data_id','datas'));
     }
+
+    public function creates($id){
+        $data = Kuis::find($id);
+        $data_id = $data->id;//id kuis
+        $data_slug = $data->slug;//slug kuis        
+        $datas= $data->kursus->first();
+        return view('admin.daftarSoal.create', compact('data_slug','data','data_id','datas'));
+    }
  
     public function store(Request $request)
     {
@@ -54,28 +62,42 @@ class SoalController extends Controller
         return view('admin.daftarSoal.detail',compact('datas','data_pertanyaan','data_kuis','total_soal'));
     }
 
-    public function edit($id)
+    public function details($id)
     {
-        $data_1 = Pertanyaan::find($id);
-        $data_id = $data_1->id;
-        $data_2 = Answer::where('pertanyaan_id', $data_id)->get();
-        return view('admin.daftarSoal.edit',compact('data_1','data_2'));
+        
+        $data_kuis = Kuis::find($id);
+        $data1 = $data_kuis->id;
+        $data_pertanyaan = Pertanyaan::where('kuis_id',$data1)->get();
+        $total_soal = $data_pertanyaan->count();
+        
+        $datas = $data_kuis->kursus->first();
+        return view('admin.daftarSoal.detail',compact('datas','data_pertanyaan','data_kuis','total_soal'));
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $data = $request->all(); 
-    //     $pertanyaan = (new Pertanyaan)->updatePertanyaan($id, $request);
-    //     $answer = (new Answer)->updateAnswer($request, $pertanyaan);
+    public function edit($id)
+    {
+        $data_1     = Pertanyaan::find($id);
+        $data_id    = $data_1->id;
+        $data_2     = Answer::where('pertanyaan_id', $data_id)->get();
+        $data_x     = $data_1->kuis_id;
+        $data_3     = Kuis::find($data_x);
+        return view('admin.daftarSoal.edit',compact('data_1','data_2','data_3'));
+    }
 
-    //     $data_1 = Pertanyaan::where('id', $id)->first();
-    //     $data_2 = $data_1->kuis_id;
-    //     $data_3 = Kuis::where('id', $data_2)->first();
-    //     $data_4 = $data_3->slug;
-    //     $notif = array(
-    //         'pesan-sukses' => 'soal berhasil diperbarui'
-    //     );
+    public function update(Request $request, $id)
+    {
+        $data = $request->all(); 
+        $pertanyaan = (new Pertanyaan)->updatePertanyaan($id, $request);
+        $answer = (new Answer)->updateAnswer($request, $pertanyaan);
+
+        $data_1 = Pertanyaan::where('id', $id)->first();
+        $data_2 = $data_1->kuis_id;
+        $data_3 = Kuis::where('id', $data_2)->first();
+        $data_4 = $data_3->id;
+        $notif = array(
+            'pesan-sukses' => 'soal berhasil diperbarui'
+        );
         
-    //     return redirect('/detail-soal/'.$data_4)->with($notif);
-    // }
+        return redirect('/details-soal/'.$data_4)->with($notif);
+    }
 }

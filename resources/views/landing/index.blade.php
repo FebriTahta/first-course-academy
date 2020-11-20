@@ -5,15 +5,18 @@
 
 <div class="landing">
     <div class="landingText" data-aos="fade-up" data-aos-duration="1000">
-        <h1>Belajar.<span style="color:#e0501b;font-size: 4vw"> di Rumah.</span> </h1>
-        <h3>Kini kami hadir dalam bentuk <span style="color:#e0501b;font-size: 2vw">digital / online.</span> 
-        <br>Fitur khusus bagi anda yang telah mengikuti kursus private kami</h3>
-        <div class="btn">
-            <a href="#">Lihat Kursus</a>
+        <h1>Course.<span style="color:blue;font-size: 4vw"> Academy.</span> </h1>
+        {{-- <h3>Kini kami hadir dalam bentuk <span style="color:#e0501b;font-size: 2vw">digital / online.</span>  --}}
+            <h3>Kini kami hadir dalam bentuk Digital
+        <br>Belajar dengan aman dan menyenangkan bersama kami</h3>
+        <div class="btn">            
+            {{-- <a href="{{ route('kursusAdmin') }}">semua kursus</a> --}}
+            <a href="{{ route('allkursus') }}">semua kursus</a>            
         </div>
     </div>
     <div class="landingImage" data-aos="fade-down" data-aos-duration="2000">
-        <img src="{{ asset('assets/media/ui/bg.png') }}" alt="">
+        {{-- <img src="{{ asset('assets/media/ui/bg.png') }}" alt=""> --}}
+        <img src="{{ asset('assets/media/drawkit/8-SCENE.svg') }}" alt="">
     </div>
 </div>
 
@@ -62,7 +65,7 @@
                 <p>3 jam / hari & 3x / minggu kami datang untuk mengarahkan anda belajar</p>
                 <a href="#">
                     <div class="cardBtn">
-                        <img src="{{ asset('assets/media/ui/next.png') }}" alt="" class="cardIcon">
+                        <img src="{{ asset('assets/media/ui/next.png') }}" alt="" class="cardIcon">                        
                     </div>
                 </a>
             </div>
@@ -92,8 +95,8 @@
                     </div>
                 </a>
             </div>
-        </div>
-    </div>
+        </div>        
+    </div>   
 </div>
 
 @endsection

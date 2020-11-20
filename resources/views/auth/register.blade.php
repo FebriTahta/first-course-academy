@@ -6,14 +6,23 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
-
+                @if (Session::has('message'))
+                <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
+                @endif
+                @if (Session::has('pesan-peringatan'))
+                        <div class="alert alert-warning text-bold">{{ Session::get('pesan-peringatan') }}</div>                
+                @endif
+                @if (Session::has('pesan-sukses'))
+                    <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
+                @endif
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    {{-- <form method="POST" action="{{ route('register') }}"> --}}
+                    <form method="POST" action="{{ route('daftar') }}">
                         @csrf
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
+                            <input type="hidden" name="role">
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 

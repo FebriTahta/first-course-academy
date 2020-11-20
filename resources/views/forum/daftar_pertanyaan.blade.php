@@ -41,12 +41,17 @@
                                 <tbody>
                                     @foreach ($pertanyaanku as $item)
                                         <tr>
-                                            <td>{{ $item->judul_pertanyaan }}</td>
-                                            <td class="text-right"><a href="#">Check</a></td>
-                                        </tr>
+                                            <td><a href="/forum-detail-pertanyaan/{{ $item->slug }}">{{ $item->judul_pertanyaan }}</a></td>
+                                            {{-- <td class="text-right">                                                
+                                                <a href="#" class="fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit" data-id="{{ $item->id }}"
+                                                data-user_id="{{ $item->user_id }}" data-kelas_id="{{ $item->kelas_id }}" data-mapel_id="{{ $item->mapel_id }}" data-slug="{{ $item->slug }}"
+                                                data-judul_pertanyaan="{{ $item->judul_pertanyaan }}" data-desc_pertanyaan="{{ $item->desc_pertanyaan }}"></a>
+                                            </td> --}}
+                                        </tr>                                        
                                     @endforeach
-                                </tbody>
+                                </tbody>                                
                             </table>
+                            <div class="block block-content"></div>
                         @endif
                     @else
                     <div class="block-content text-center mb-20">
@@ -66,30 +71,85 @@
                 </div>
                 <div class="block-content">
                     @if (count($data_forum)==0)
-                        <p></p>
-                    @else
-                        @foreach ($data_forum as $item)
-                        <div class="block block-mode-hidden">
-                            <div class="block-header block-header-default">
-                                <h3 class="block-title"> <small><a href="/forum-detail-pertanyaan/{{ $item->slug }}"> {{ $item->judul_pertanyaan }}</a></small></h3>
-                                <div class="block-options">
-                                    <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
-                                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-down"></i></button>
-                                </div>
-                            </div>
-                            
-                            <div class="block-content">
-                                <p>Oleh : {{ $item->user->name }}</p>
-                                <p>{!! $item->desc_pertanyaan !!}</p>
-                            </div>
+                        <div class="block-content text-center">
+                            <p> BELUM ADA PERTANYAAN </p>
                         </div>
-                        @endforeach                        
+                    @else                                               
+                        <div class="block-content">                            
+                            <div id="accordion" role="tablist" aria-multiselectable="true">
+                                <?php $i=1?>
+                                @foreach ($data_forum as $item)
+                                <div class="block block-bordered block-rounded mb-2">
+                                    <div class="block-header" role="tab" id="accordion_h1">
+                                        <a class="font-w600 collapsed" data-toggle="collapse" data-parent="#accordion" href="#accordion_<?=$i?>" aria-expanded="false" aria-controls="accordion_q1">{{ $item->judul_pertanyaan }} </a> <a href="/forum-detail-pertanyaan/{{ $item->slug }}" class="float-right">detail</a>
+                                    </div>
+                                    <div id="accordion_<?=$i?>" class="collapse" role="tabpanel" aria-labelledby="accordion_h1" data-parent="#accordion" style="">
+                                        <div class="block-content">
+                                            <p>{!! $item->desc_pertanyaan !!}</p>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <?php $i++?>
+                                @endforeach                                
+                            </div>                            
+                        </div>    
+                        <div class="block-content text-center">{{ $data_forum->links() }}</div>                    
                     @endif                                                      
                 </div>                                
             </div>    
         </div> 
     </div>    
 </div>
+
+<!--modal edit pertanyaan-->
+<div class="modal fade" id="modal-fromleft-edit" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('pertanyaan') }}" method="POST" enctype="multipart/form-data">@csrf                    
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">UPLOAD</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" id="id" name="id">
+                                <input type="text" class="form-control" id="user_id" name="user_id"
+                                    value="" required>
+                                    <input type="text" class="form-control" id="kelas_id" name="kelas_id"
+                                    value="" required>
+                                    <input type="text" class="form-control" id="mapel_id" name="mapel_id"
+                                    value="" required>
+                                <input type="text" id="slug" name="slug">                          
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="name" class="control-label">Judul</label>
+                                
+                                    <input type="text" class="form-control" name="judul" id="judul_pertanyaan" required>
+                                
+                            </div>
+                            <label for="name" class="control-label">Deskripsi Kuis</label>
+                            
+                                <textarea class="form-control js-summernote" name="desc" id="desc_pertanyaan" cols="30" rows="10"> Pesan / Deskripsi seputar kuis yang akan dibuat</textarea>
+                            
+                        </div>
+                        <div class="form-group float-right">
+                            <button class="btn btn-outline-primary fa fa-plus" type="submit"> UPLOAD</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal edit pertanyaan-->
 @endsection
 
 @section('script')
@@ -110,7 +170,7 @@ function getslug(){
         var addButton   =   $('.add_button');
         var content     =   $('.content_pertanyaan');
         var contenthapus=   $('.content_hapus');
-        var formPertanyaan  =   '@auth<div><button class="form-group float-right btn btn-outline-danger cancel_form fa fa-minus"></button><form action="{{ route('pertanyaan') }}" method="POST" class="border-bottom" enctype="multipart/form-data">@csrf<div class="form-group"><input type="hidden" name="slug" id="slug" value=""><input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}"><input type="hidden" name="kelas_id" value="{{ $data_kelas->id }}"><input type="hidden" name="mapel_id" value="{{ $data_mapel->id }}"><input type="text" class="form-control" name="judul" id="judul" onkeyup="getslug();" placeholder="Judul Pertanyaan" required></div><div class="form-group"><textarea class="js-summernote form-control" name="desc" id="desc" cols="30" rows="10">Detail Pertanyaan</textarea></div><div class="form-group text-right"><button class="btn btn-outline-primary" type="submit">POST</button></div></form></div>@endauth';
+        var formPertanyaan  =   '@auth<div><button class="form-group float-right btn btn-outline-danger cancel_form fa fa-minus"></button><form action="{{ route('pertanyaan') }}" method="POST" class="border-bottom" enctype="multipart/form-data">@csrf<div class="form-group"><input type="hidden" name="slug" id="slug" value=""><input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}"><input type="hidden" name="kelas_id" value="{{ $data_kelas->id }}"><input type="hidden" name="mapel_id" value="{{ $data_mapel->id }}"><input type="text" class="form-control" name="judul" id="judul" onkeyup="getslug();" placeholder="Judul Pertanyaan" required></div><div class="form-group"><textarea class="js-summernote form-control" name="desc" id="desc" cols="30" rows="10">Jika anda mengunggah gambar Pastikan Gambar anda memiliki kualitas yang baik. Apabila gambar anda terlalu besar untuk dapat di tampilkan maka resize gambar anda ke 75% atau 50%.</textarea></div><div class="form-group text-right"><button class="btn btn-outline-primary" type="submit">POST</button></div></form></div>@endauth';
         var max         =   1;
         $(addButton).click(function(){
             if(max < maxfield){
@@ -127,5 +187,26 @@ function getslug(){
             console.log('hapus'+'_'+max);           
         });
     });                                                                  
+</script>
+<script>
+    $('#modal-fromleft-edit').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)        
+        var id = button.data('id')
+        var user_id = button.data('user_id')
+        var kelas_id = button.data('kelas_id')
+        var mapel_id = button.data('mapel_id')
+        var judul_pertanyaan = button.data('judul_pertanyaan')
+        var desc_pertanyaan = button.data('desc_pertanyaan')
+        var slug = button.data('slug')
+        var modal = $(this)
+        modal.find('.block-title').text('EDIT KUIS');        
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #user_id').val(user_id);
+        modal.find('.block-content #kelas_id').val(kelas_id);
+        modal.find('.block-content #mapel_id').val(mapel_id);
+        modal.find('.block-content #judul_pertanyaan').val(judul_pertanyaan);
+        modal.find('.block-content #desc_pertanyaan').val(desc_pertanyaan);
+        modal.find('.block-content #slug').val(slug);
+    })
 </script>
 @endsection

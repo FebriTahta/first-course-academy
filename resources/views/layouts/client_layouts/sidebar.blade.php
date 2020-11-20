@@ -132,20 +132,11 @@
                                     <li class="open">
                                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i>My Course</a>
                                         <ul>
-                                            <li>
-                                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">kursus name</a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="javascript:void(0)">Another Link</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0)">Another Link</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0)">Another Link</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            @foreach (auth()->user()->profile->kursus as $item)
+                                                <li>
+                                                    <a href="/my-course/{{ $item->slug }}">{{ $item->mapel->mapel_name }} <br>| {{ $item->kelas->kelas_name }}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </li>
                                 @endif                
@@ -158,7 +149,7 @@
                                         <a href="{{ route('forum') }}">Forum</a>                            
                                     </li>
                                     <li>
-                                        <a href="#">All Course</a>                            
+                                        <a href="{{ route('allkursus') }}">All Course</a>                            
                                     </li>
                                 </ul>
                             </li>

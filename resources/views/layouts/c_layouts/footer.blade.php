@@ -13,12 +13,13 @@
     </div>
 </div> --}}
 
-<div class="footer">
-    <h2>Course Academy</h2>
+<div class="footer">    
+    <p>Untuk dapat berpartisipasi pada forum anda dapat mendaftar pada menu registrasi</p>
     <div class="footerlinks">        
-        <a href="#">Help</a>
+        {{-- <a href="#">Help</a>
         <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="#">Contact</a> --}}
+        <p>081-329-146-514</p>
     </div>
 </div>
 </div>

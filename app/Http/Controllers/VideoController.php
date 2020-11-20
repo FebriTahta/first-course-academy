@@ -5,6 +5,9 @@ use App\Video;
 use Illuminate\Support\Str;
 use Auth;
 use App\Kursus;
+use App\User;
+Use App\Kelas;
+Use App\Mapel;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -23,15 +26,31 @@ class VideoController extends Controller
                             'video_name'=>$request->video_name,                    
                             ]);
         $data_video         = Video::find($video_id);
-        //cek data video tersebut sudah ada apa belum, kalo sudah hanya update, kalo belum add lagi ke kursus
-        if ($data_video     ===     null) {
+        
+        if ($kursus_id === null) {
             # code...
-            $kursus->video()->attach($video);
-        }        
-        $notif = array(
-            'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
-        );
-        return redirect()->back()->with($notif);                                
+            $notif = array(
+                'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
+            );
+            return redirect()->back()->with($notif);
+        } else {
+            # code...
+            //cek data video tersebut sudah ada apa belum, kalo sudah hanya update, kalo belum add lagi ke kursus
+            if ($data_video   ===     null) {
+                # code...
+                $kursus->video()->attach($video);
+                $notif = array(
+                    'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
+                );
+                return redirect()->back()->with($notif);
+            }else{
+                $notif = array(
+                    'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
+                );
+                return redirect()->back()->with($notif);
+            }
+        }                        
+                                        
     }
 
     public function storecopy(Request $request)
@@ -75,35 +94,26 @@ class VideoController extends Controller
         echo json_encode($video_id);                
     }
 
-    // public function get_kelasId()
-    // {
-    //     $kelsId_ = (new Video)->get_kelasId();
-    //     echo json_encode($kelsId_);
-    // }
-
-    // public function get_mapelId()
-    // {
-    //     $maplId_ = (new Video)->get_mapelId();
-    //     echo json_encode($maplId_);
-    // }
-
-    public function get_videoLink()
-    {
-        $vidL_ = (new Video)->get_videoLink();
-        echo json_encode($vidL_);
-    }
-
-    // public function get_slugV()
-    // {
-    //     $slugV_ = (new Video)->get_slugV();
-    //     echo json_encode($slugV_);
-    // }
-    //end start copy video encode
-
     public function myvideo()
     {
         $user   = Auth::id();
+        $users  = User::find($user);
         $video  = Video::where('user_id', $user)->get();
-        return view('admin/daftarKonten/video', compact('video'));
+        $videos = Video::all();
+        $mapels = Mapel::all();
+        $kelass = Kelas::all();
+        return view('admin/daftarKonten/video', compact('video','user','users','kelass','mapels','videos'));
+    }
+
+    public function removeVideoPermanen(Request $request){
+        $id             = $request->id;
+        $video          = Video::find($id);
+        $video_name     = $video->video_name;
+
+        $notif          = array(
+                        'pesan-bahaya' => 'video "'.$video_name.'" berhasil dihapus',                
+                        );
+        $video->delete();
+        return redirect()->back()->with($notif); 
     }
 }

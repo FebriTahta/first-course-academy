@@ -11,7 +11,7 @@
 </div>
 <!-- END Hero -->
 <div class="content">
-    <h2 class="content-heading">News | <small>tampilkan berita pada halaman utama</small></h2>
+    <h2 class="content-heading">News | <small>tampilkan berita pada menu utama</small></h2>
         @if (Session::has('message'))
         <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
         @endif
@@ -25,8 +25,26 @@
     <div class="row">
         <div class="col-xl-4">
             <div class="block">
-                <div class="block-header block-header-default">
-
+                <div class="block-header block-header-default"> 
+                    <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>                   
+                </div>
+                <div class="block-content">
+                    <table class="table table-borderless">
+                        <tbody>
+                            @if (count($news)===0)
+                                <p class="text-center text-primary"> BELUM ADA NEWS</p>
+                            @endif
+                            @foreach ($news as $item)
+                                <tr>
+                                    <td>{{ $item->news_tittle }}</td>
+                                    <td class="text-right">
+                                        <a href="#" class="fa fa-trash text-danger" type="button" data-id="{{ $item->id }}" data-toggle="modal" data-target="#modal-fromleft-remove"> hapus</a> &nbsp;&nbsp;&nbsp;
+                                        <a href="#" class="fa fa-pencil" type="button" data-id="{{ $item->id }}" data-toggle="modal" data-target="#modal-fromleft-edit" data-news_tittle="{{ $item->news_tittle }}" data-news_desc="{{ $item->news_desc }}"> edit</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -34,16 +52,20 @@
         <div class="col-xl-8">
             <div class="block">
                 <div class="block-header block-header-default">
-
+                    <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>
                 </div>
 
                 <div class="block-content">
-                    <form action="" method="POST">@csrf
-                        <div class="form-group">                            
+                    <form action="{{ route('postNews') }}" method="POST" enctype="multipart/form-data">@csrf
+                        <div class="form-group">
+                            <input type="hidden" id="id" name="id">
                             <input class="form-control" id="val-tittle" type="text" name="news_tittle" placeholder="judul berita" required>                            
                         </div>
                         <div class="form-group">                            
-                            <textarea class="js-summernote" name="news_desc" id="val-desc" cols="30" rows="10" placeholder="deskripsi berita" required> Deskripsi Berita!</textarea>
+                            <textarea class="js-summernote" name="news_desc" id="val-desc" cols="30" rows="10" placeholder="deskripsi berita" required> Deskripsi Berita! <br>
+                                Jika anda mengunggah gambar Pastikan Gambar anda memiliki kualitas yang baik. Apabila gambar anda terlalu besar untuk dapat di tampilkan maka resize gambar anda ke 75% atau 50%.
+                                Jangan lupa untuk memberi "Jarak baris" antara gambar / tulisan dengan "enter". 
+                            </textarea>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-outline-primary">post</button>
@@ -54,4 +76,106 @@
         </div>
     </div>
 </div>
+
+<!--modal remove news-->
+<div class="modal fade" id="modal-fromleft-remove" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeNews') }}" method="POST" enctype="multipart/form-data">@csrf                    
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">REMOVE</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <input type="hidden" id="id" name="id">
+                            <div class="form-group text-danger text-center border-bottom">
+                                <p>NEWS AKAN DIHAPUS PERMANEN DARI SISTEM</p>
+                            </div>
+                            <div class="form-group text-center">
+                                <p>Yakin akan menghapus kuis ini ?</p>
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-danger fa fa-trash" type="submit"> HAPUS</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal remove news-->
+
+<!--modal edit news-->
+<div class="modal fade" id="modal-fromleft-edit" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('postNews') }}" method="POST" enctype="multipart/form-data">@csrf                    
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">UPDATE</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <input type="hidden" id="id" name="id">
+                            <input type="hidden" id="user_id" name="user_id">
+                            <div class="form-group">
+                                <input type="text" name="news_tittle" id="news_tittle" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="js-summernote" name="news_desc" id="val-desc" cols="30" rows="10" placeholder="deskripsi berita" required> Deskripsi Berita! <br>
+                                    Jika anda mengunggah gambar Pastikan Gambar anda memiliki kualitas yang baik. Apabila gambar anda terlalu besar untuk dapat di tampilkan maka resize gambar anda ke 75% atau 50%.
+                                    Jangan lupa untuk memberi "Jarak baris" antara gambar / tulisan dengan "enter". 
+                                </textarea>
+                            </div>                                                       
+                        </div>
+                        <div class="form-group float-right">
+                            <button class="btn btn-outline-primary fa fa-pencil" type="submit"> EDIT</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal edit news-->
+@endsection
+
+@section('script')
+<script>
+    $('#modal-fromleft-remove').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)        
+        var id = button.data('id')        
+        var modal = $(this)
+        modal.find('.block-title').text('HAPUS NEWS');        
+        modal.find('.block-content #id').val(id);        
+    })
+</script>
+
+<script>
+    $('#modal-fromleft-edit').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)        
+        var id = button.data('id')
+        var user_id = button.data('user_id')
+        var news_tittle = button.data('news_tittle')
+        var news_desc = button.data('news_desc')
+        var modal = $(this)
+        modal.find('.block-title').text('UPDATE');        
+        modal.find('.block-content #id').val(id);        
+        modal.find('.block-content #user_id').val(user_id);        
+        modal.find('.block-content #news_tittle').val(news_tittle);        
+        modal.find('.block-content #news_desc').val(news_desc);        
+    })
+</script>
 @endsection

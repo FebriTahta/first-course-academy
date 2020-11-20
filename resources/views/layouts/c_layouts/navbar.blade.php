@@ -15,11 +15,11 @@
     <div class="wrapper">
         <div class="nav">
             <div class="logo links">
-                <a href="/" class="mainlink"><h4>Course Academy.</h4></a>
+                <a href="/" class="mainlink"><h4>Course Academy.</h4></a>                                
             </div>
             <div class="links">
                 {{-- <a href="#" class="mainlink">Corona Updates</a> --}}                
-                <a href="#">News</a>
+                <a href="{{ route('berita') }}">News</a>
                 <a href="{{ route('forum') }}">Forum</a>
                 @auth
                     @if (auth()->user()->role=='siswa')

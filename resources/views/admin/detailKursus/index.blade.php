@@ -240,22 +240,19 @@
                             <tbody>
                                 @foreach ($data_kursus->kuis as $kuis_item)
                                 <tr>
-                                    <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp; {{ $kuis_item->kuis_name }}</td>
-                                    <td class="border-bottom">{{ $kuis_item->pertanyaan->count() }} soal</td>                                    
-                                    @if (auth()->user()->role=='student')
-                                    <td class="text-right border-bottom"><i></i>&nbsp; <a href="">start</a></td>
-                                    @else
-                                    <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('detailSoal', $kuis_item->slug) }}">detail</a></td>    
+                                    <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp;{{ $kuis_item->pertanyaan->count() }} soal &nbsp;&nbsp; <a href="{{ route('detailsSoal', $kuis_item->id) }}"> {{ $kuis_item->kuis_name }}</a></td>
+                                    <td class="border-bottom"></td>                                    
+                                    
                                         @if ($data_kursus->user_id !== $kuis_item->user_id)
                                             @if (auth()->user()->role === 'admin')
-                                            <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoal', $kuis_item->slug) }}"><i class="fa fa-plus"></i> soal</a></td>
+                                            <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                             @else
                                             <td class="text-right border-bottom text-danger"><i></i>&nbsp; fixed</td>
                                             @endif                                            
                                         @else
-                                        <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoal', $kuis_item->slug) }}"><i class="fa fa-plus"></i> soal</a></td>
+                                        <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                         @endif                                    
-                                    @endif                                    
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -270,6 +267,7 @@
                                 @foreach ($data_kursus->book as $book_item)                                                                    
                                 <tr>
                                     <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp; {{ $book_item->book_name }}</td>
+                                    <td class="text-right border-bottom text-danger"><a href="#" class="text-danger" data-id="{{ $book_item->id }}" data-toggle="modal" data-target="#modal-fromright-removebuku"> hapus</a></td>
                                     <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('download', $book_item->book_file) }}">unduh</a></td>
                                 </tr>
                                 @endforeach
@@ -765,7 +763,7 @@
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                         <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
                                         <label>{{ $item_kuis->kuis_name }}</label>
-                                        <a href="/detail-soal/{{ $item_kuis->slug }}" class="form-group float-right text-right">detail</a>
+                                        <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="form-group float-right text-right">detail</a>
                                     </div>
                                     @else
                                     @endif                                    
@@ -813,7 +811,7 @@
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                         <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
                                         <label>{{ $item_kuis->kuis_name }}</label>
-                                        <a href="/detail-soal/{{ $item_kuis->slug }}" class="form-group float-right text-right">detail</a>
+                                        <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="form-group float-right text-right">detail</a>
                                     </div>
                                     @else
                                     @endif                                    
@@ -1014,6 +1012,44 @@
     </div>
 </div>
 <!--end modal salin bukuku-->
+<!--modal salin bukuku-->
+<div class="modal fade" id="modal-fromright-removebuku" tabindex="-1" role="dialog" aria-labelledby="modal-fromrigt" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromright" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('removeBuku') }}" method="POST" enctype="multipart/form-data">@csrf 
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">REMOVE</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="hidden" id="id" name="id">
+                                <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                            </div>
+                            <div class="form-group">                                
+                                <div class="block-content">                                                                            
+                                    <p class="text-center text-danger border-bottom">Jika anda uploader dari buku ini. buku ini tetap dapat anda temukan pada menu "Buku Saya"</p>                                    
+                                    <p class="text-center"> Yakin akan menghapus buku ini ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-danger fa fa-trash" type="submit"> HAPUS</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal salin bukuku-->
 
 @endsection
 
@@ -1102,45 +1138,20 @@
             modal.find('.block-content #kursus_id').val(kursus_id);
         })
     </script>
-
-    {{-- <script> encode setelah compare array to array tidak jadi dipakai
-        // open modal get total video        
-        $('#modal-popout').on('show.bs.modal', function(event){
-            var button = $(event.relatedTarget)
-            var total_video = button.data('total_video')
-            var modal = $(this)            
-            console.log('dor');
-
-        // decode & loop berdasarkan banyaknya video
-            for (let i = 1; i <=total_video; i++) {
-                // const element = array[i];
-                console.log([i]);
-                $('#video_id'+[i]).ready(function(){
-                    let tot = $('#video_id'+[i]).val();
-                    //cek video name 
-                    console.log(tot);
-                    $.ajax({
-                            url : "http://127.0.0.1:8000/get_video_name",
-                            data : {video_id : tot},
-                            method : "get",
-                            dataType : 'json',
-                            success : function (data){
-                            //cek creatornya siapa
-                            console.log(data);
-                            $("#video_name"+[i]).val(data);
-                            }
-                    });
-                    
-                    
-                });
-            }            
-        })
-    </script> --}}
-    
+        
     <script>
         $('#modal-addsiswa').on('show.bs.modal', function(event){
             console.log('dor');
             
         })
     </script>
+
+<script>
+    $('#modal-fromright-removebuku').on('show.bs.modal', function(event){
+        var button  = $(event.relatedTarget)
+        var id      = button.data('id')        
+        var modal = $(this)        
+        modal.find('.block-content #id').val(id);        
+    })
+</script>
 @endsection
