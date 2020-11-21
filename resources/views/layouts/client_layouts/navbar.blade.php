@@ -30,8 +30,10 @@
                     @auth                                    
                         @if (auth()->user()->role=='siswa')
                             <a href="/home"><i class="fa fa-user"></i>HOME</a>
-                        @else
+                        @elseif(auth()->user()->role=='instruktur')
                             <a href="{{ route('dashboard') }}"><i class="si si-compass"></i>Dashboard</a>
+                        @else
+                        <a href="{{ route('home') }}"><i class="si si-compass"></i>Dashboard</a>
                         @endif
                     @endauth
                 </li>
@@ -66,7 +68,13 @@
                 <li>
                     @auth                                                
                         @if (auth()->user()->role=='siswa')
-                            <a href="{{ route('/logout') }}"><i class="si si-action-undo"></i>Logout </a>                        
+                            <a href="{{ route('/logout') }}"><i class="si si-action-undo"></i>Logout </a>
+                        @elseif(auth()->user()->role=='pengunjung')
+                            <a href="{{ route('/logout') }}"><i class="si si-action-undo"></i>Logout </a>
+                            @elseif(auth()->user()->role=='instruktur')
+                            <a href="{{ route('/logout') }}"><i class="si si-action-undo"></i>Logout </a>
+                            @elseif(auth()->user()->role=='admin')
+                            <a href="{{ route('/logout') }}"><i class="si si-action-undo"></i>Logout </a>
                     @endauth
                         @else
                             <a href="/login"><i class="fa fa-lock"></i>Login </a>

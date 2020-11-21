@@ -45,6 +45,7 @@ Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     Route::get('/changeStatus','ChangeStatus@changestatus')->name('changestatus');
     Route::post('/aktifkankursus','ChangeStatus@aktifkankursus')->name('aktifkan');
     Route::post('/nonaktifkankursus','ChangeStatus@nonaktifankursus')->name('nonaktifkan');
+    Route::post('/ubahpengguna','AkunController@ubahpengguna')->name('ubahpengguna');
     //kategori
     Route::get('/daftar-kategori','KategoriController@index')->name('daftarKategori');
     Route::post('/addMapel','KategoriController@storemapel')->name('addMapel');

@@ -5,7 +5,7 @@ use App\User;
 use App\Profile;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
-use App\Mail\DaftarPengunjung;
+use App\Mail\UbahPengguna;
 use Illuminate\Http\Request;
 
 class AkunController extends Controller
@@ -17,11 +17,11 @@ class AkunController extends Controller
 
     public function daftar(Request $request)
     {
-        $email      = $request->email;
-        $result     = User::where('email', $email)->first();
-        $result_mail= $result->email;
+        $email       = $request->email;
+        $result      = User::where('email', $request->email)->first();
+        // $result_mail = $result->email;
         
-        if ($result_mail == $email) {
+        if ($result !== null) {
             # code...
             $notif = array(
                 'message' => 'Email sudah pernah terdaftar. Gunakan Email Lain'
@@ -58,5 +58,50 @@ class AkunController extends Controller
         }
         
         
+    }
+
+    public function ubahpengguna(Request $request)
+    {
+        $id             = $request->id;
+        $nama           = $request->name;
+        $email          = $request->email;
+        $result         = User::where('email', $request->email)->first();
+        if ($result == $email) {
+            # code...
+            $notif = array(
+                'pesan-bahaya' => 'Email sudah pernah terdaftar. Gunakan Email Lain'
+            );
+            return redirect()->back()->with($notif);
+        } else {
+            # code...
+            $post           =   User::updateOrCreate(['id' => $id],
+                            [
+                                'name' => $request->name,
+                                'role' => $request->role,     
+                                'email' => $request->email,
+                                'stat' => '0',                        
+                                                              
+                            ]);
+            $data_profile   = Profile::where(['user_id'=>$request->id])->first();
+
+            $detail         = [
+                'title'     => 'Hai '.$nama.'',
+                'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). Untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
+                'link'      => 'course-academy.top/login'
+            ];
+            //kirim email dulu
+            $when           = Carbon::now()->addSeconds(10);
+
+            Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
+
+            if ($data_profile===null) {
+                # code...
+                $post->profile()->save(new Profile);
+            }
+            $notif = array(
+                'pesan-sukses' => 'User berhasil ditambahkan'
+            );
+            return redirect()->back()->with($notif);
+        }
     }
 }

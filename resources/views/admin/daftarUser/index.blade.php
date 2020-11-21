@@ -103,11 +103,11 @@
                                     <td>{{ $item->email }}</td>
                                     <td>
                                       @if ($item->role=='admin')
-                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft"
+                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
                                       data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-role="{{ $item->role }}"></button>
                                       @else
                                       <a href="/profile/{{ $item->id }}" class="btn btn-outline-success fa fa-user"></a>
-                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft"
+                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
                                       data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-role="{{ $item->role }}"></button>
                                       <button class="btn btn-outline-danger fa fa-trash" data-toggle="modal" data-target="#modal-fromleftdel"
                                       data-name="{{ $item->name }}" data-id="{{ $item->id }}"></button>  
@@ -128,6 +128,54 @@
     <div class="modal-dialog modal-dialog-fromleft" role="document">                            
         <div class="modal-content">
             <form id="form-update-user" name="form-update-user" class="form-horizontal" action="{{ route('daftar_user.store') }}" method="POST" enctype="multipart/form-data">@csrf
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary">
+                        <h3 class="block-title">ADD USER</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">
+                        <div class="form-group text-center border-bottom text-danger">
+                            <p class="text-danger"> Perubahan data pengguna akan diberikan password baru berupa "secret" dan akan diinformasikan melalui email pengguna</p>
+                        </div>
+                        <div class="form-group border-bottom">
+                            <input class="form-control" type="hidden" id="id" name="id" value="" required>
+                            <label for="">Nama </label>               
+                            <input class="form-control" type="text" id="name" name="name" value="" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input class="form-control" type="email" id="email" name="email" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Role </label>
+                            <select name="role" id="role" class="form-control" required>
+                                <option value=""> == pilih role == </option>
+                                <option value="admin">admin</option>
+                                <option value="instruktur">instruktur</option>
+                                <option value="siswa">siswa</option>
+                            </select>
+                        </div>
+                        <div class="form-group float-right">
+                            <button class="btn btn-outline-primary" type="submit">tambahkan</button>
+                        </div>                                                                                                               
+                    </div>                                                             
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal edit user-->
+
+<!--modal edit user-->
+<div class="modal fade" id="modal-fromleft-edit" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-update-user" name="form-update-user" class="form-horizontal" action="{{ route('ubahpengguna') }}" method="POST" enctype="multipart/form-data">@csrf
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary">
                         <h3 class="block-title">ADD USER</h3>
@@ -239,6 +287,21 @@
         var role = button.data('role')
         var modal = $(this)
         modal.find('.block-title').text('Lengkapi Data Berikut');
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #name').val(name);
+        modal.find('.block-content #email').val(email);
+        modal.find('.block-content #role').val(role);
+    })
+</script>
+<script>
+    $('#modal-fromleft-edit').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var name = button.data('name')
+        var email = button.data('email')
+        var role = button.data('role')
+        var modal = $(this)
+        modal.find('.block-title').text('Ubah data pengguna');
         modal.find('.block-content #id').val(id);
         modal.find('.block-content #name').val(name);
         modal.find('.block-content #email').val(email);
