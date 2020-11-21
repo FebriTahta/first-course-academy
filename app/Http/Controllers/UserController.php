@@ -17,8 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $data_user = User::where('email_verified_at', )->get();
         $data_user = User::all();
-        return view('admin.daftarUser.index', compact('data_user'));
+        return view('admin.daftarUser.index', compact('data_user'));                                
+        
     }
 
     /**
@@ -43,15 +45,8 @@ class UserController extends Controller
         $nama           = $request->name;
         $email          = $request->email;
         $result         = User::where('email', $request->email)->first();
-        if ($result == $email) {
-            # code...
-            $notif = array(
-                'pesan-bahaya' => 'Email sudah pernah terdaftar. Gunakan Email Lain'
-            );
-            return redirect()->back()->with($notif);
-        } else {
-            # code...
-            $post           =   User::updateOrCreate(['id' => $id],
+        
+        $post           =   User::updateOrCreate(['id' => $id],
                             [
                                 'name' => $request->name,
                                 'role' => $request->role,     
@@ -63,7 +58,7 @@ class UserController extends Controller
 
             $detail         = [
                 'title'     => 'Hai '.$nama.'',
-                'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). Untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
+                'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). perbarui password anda pada menu Reset / Lupa password',
                 'link'      => 'course-academy.top/login'
             ];
             //kirim email dulu
@@ -78,10 +73,7 @@ class UserController extends Controller
             $notif = array(
                 'pesan-sukses' => 'User berhasil ditambahkan'
             );
-            return redirect()->back()->with($notif);
-        }
-        
-        
+            return redirect()->back()->with($notif);        
     }    
 
     /**

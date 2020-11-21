@@ -69,10 +69,10 @@
                 </div>
             </a>
         </div>
-    </div>
+    </div> 
     <div class="row invisible" data-toggle="appear">
         <!-- Row #4 -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
                     <div class="py-20 text-center">
@@ -80,7 +80,7 @@
                             <i class="fa fa-group fa-3x text-success"></i>
                         </div>
                         <div class="font-size-h4 font-w600">{{ $data_instruktur->count() }} Instruktur</div>
-                        <div class="text-muted">Instruktur aktif</div>
+                        <div class="text-muted">Instruktur</div>
                         <div class="pt-20">
                             <a class="btn btn-rounded btn-alt-success" href="{{ route('daftar_user.index') }}">
                                 <i class="fa fa-check mr-5"></i> cek detail
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
                     <div class="py-20 text-center">
@@ -98,7 +98,7 @@
                             <i class="fa fa-group fa-3x text-warning"></i>
                         </div>
                         <div class="font-size-h4 font-w600">{{ $data_siswa->count() }} Siswa</div>
-                        <div class="text-muted">Siswa Aktif</div>
+                        <div class="text-muted">Siswa</div>
                         <div class="pt-20">
                             <a class="btn btn-rounded btn-alt-warning" href="{{ route('daftar_user.index') }}">
                                 <i class="fa fa-check mr-5"></i> cek detail
@@ -108,17 +108,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
                     <div class="py-20 text-center">
                         <div class="mb-20">
-                            <i class="fa fa-group fa-3x text-info"></i>
+                            <i class="fa fa-group fa-3x text-success"></i>
                         </div>
-                        <div class="font-size-h4 font-w600">{{ $data_user_non_acc->count() }} non aktif</div>
-                        <div class="text-muted">pengguna non aktif / belum di setujui.</div>
+                        <div class="font-size-h4 font-w600">{{ $pengunjung->count() }} Pengunjung</div>
+                        <div class="text-muted">Pengunjung</div>
                         <div class="pt-20">
-                            <a class="btn btn-rounded btn-alt-info" href="{{ route('daftar_user.index') }}">
+                            <a class="btn btn-rounded btn-alt-success" href="{{ route('daftar_user.index') }}">
+                                <i class="fa fa-check mr-5"></i> cek detail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="block">
+                <div class="block-content block-content-full">
+                    <div class="py-20 text-center">
+                        <div class="mb-20">
+                            <i class="fa fa-group fa-3x text-danger"></i>
+                        </div>
+                        <div class="font-size-h4 font-w600">{{ $belum_verif->count() }} belum verifikasi</div>
+                        <div class="text-muted">pengguna belum verifikasi email.</div>
+                        <div class="pt-20">
+                            <a class="btn btn-rounded btn-alt-danger" href="{{ route('notverif') }}">
                                 <i class="fa fa-check mr-5"></i> cek detail
                             </a>
                         </div>

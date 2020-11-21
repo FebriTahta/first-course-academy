@@ -24,10 +24,13 @@ class AdminDashboardController extends Controller
         $data_siswa             =   User::where('role','siswa')->get();
         $data_user_non_acc      =   User::where('stat','0')->get();
 
+        $belum_verif            =   User::where('email_verified_at', null)->get();
+        $pengunjung             =   User::where('role','pengunjung')->get();
+
         $id = Auth::id();
         $kursus_user    = Kursus::where('user_id', $id)->with('profile')->get();
         
-        return view('admin.dashboard.index',compact('kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'));                                      
+        return view('admin.dashboard.index',compact('pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'));                                      
     }
     
 }

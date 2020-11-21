@@ -28,6 +28,7 @@
                                     <div class="text-right float-right mt-10">
                                         <div class="font-w600 mb-5">{{ auth()->user()->name }}</div>
                                         <div class="font-size-sm text-muted">{{ auth()->user()->email }}</div>
+                                        <span class="badge badge-primary">{{ auth()->user()->role }}</span>
                                     </div>
                                     <div class="float-left">
                                         @if (auth()->user()->profile->photo==null)
@@ -36,7 +37,7 @@
                                         <img class="img-avatar" src="{{ asset('photo/'.auth()->user()->profile->photo) }}" alt="">
                                         @endif                                        
                                     </div>
-                                </div>
+                                </div>                                                                                                    
                             </a>
                         </div>
                     </div>

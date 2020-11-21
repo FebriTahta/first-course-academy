@@ -75,7 +75,7 @@
                     <!-- Property -->
                     <div class="block block-rounded">
                         <div class="block-content p-0 overflow-hidden">
-                            <a class="img-link" href="be_pages_real_estate_listing.html">
+                            <a class="img-link" href="{{ route('kursus', $item->slug) }}">
                                 <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
                             </a>                    
                         </div>

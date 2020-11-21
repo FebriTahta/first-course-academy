@@ -91,8 +91,7 @@
                         </thead>
                         <tbody>
                             @foreach ($data_user as $item)
-                                @if ($item->email_verified_at ===null)
-                                @else
+                               
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->role }}</td>
@@ -110,18 +109,14 @@
                                     <td>{{ $item->email }}</td>
                                     <td>
                                       @if ($item->role=='admin')
-                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
-                                      data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-stat="{{ $item->stat }}" data-role="{{ $item->role }}"></button>
-                                      @else
-                                      <a href="/profile/{{ $item->id }}" class="btn btn-outline-success fa fa-user"></a>
-                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
-                                      data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-stat="{{ $item->stat }}" data-role="{{ $item->role }}"></button>
+                                      
+                                      @else                                      
                                       <button class="btn btn-outline-danger fa fa-trash" data-toggle="modal" data-target="#modal-fromleftdel"
                                       data-name="{{ $item->name }}" data-id="{{ $item->id }}"></button>  
                                       @endif                                                                              
                                     </td>
                                 </tr>
-                                @endif                                
+                                                          
                             @endforeach                                    
                         </tbody>                        
                     </table>

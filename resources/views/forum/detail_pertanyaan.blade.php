@@ -90,26 +90,31 @@
                     <p>komentar</p>
                 </div>
                 @auth
-                @if (auth()->user())
-                <form action="{{ route('post-komentar') }}" method="POST" enctype="multipart/form-data">@csrf
-                    <div class="block-content">
-                        <div class="form-group">
-                            <input type="hidden" name="forum_id" value="{{ $data_pertanyaan_forum->id }}">
-                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                            <textarea name="komen" id="komen" cols="30" rows="10" class="js-summernote form-control">Silahkan Isi Komentar Anda</textarea>
+                    @if (auth()->user()->email_virified_at === null)
+                        <div class="block-content text-center">
+                            <a href="/home" class="btn btn-primary">lakukan Verifikasi email</a>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary">post komentar</button>
+                        <div class="block-content"></div>
+                    @elseif(auth()->user()->email_virified_at !== null)
+                    <form action="{{ route('post-komentar') }}" method="POST" enctype="multipart/form-data">@csrf
+                        <div class="block-content">
+                            <div class="form-group">
+                                <input type="hidden" name="forum_id" value="{{ $data_pertanyaan_forum->id }}">
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                <textarea name="komen" id="komen" cols="30" rows="10" class="js-summernote form-control">Silahkan Isi Komentar Anda</textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-primary">post komentar</button>
+                            </div>
                         </div>
-                    </div>
-                </form>                 
+                    </form>
                 @endauth
-                @else
-                <div class="block-content text-center">
-                    <a href="/login" class="btn btn-primary">Silahkan Login untuk memberikan komentar</a>
-                </div>
-                <div class="block-content"></div>
-                @endif                                                               
+                    @else
+                        <div class="block-content text-center">
+                            <a href="/login" class="btn btn-primary">Silahkan Login untuk memberikan komentar</a>
+                        </div>
+                        <div class="block-content"></div>
+                    @endif                                                               
             </div>
         </div>
         

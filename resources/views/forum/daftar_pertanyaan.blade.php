@@ -33,9 +33,15 @@
                         {{-- form pertanyaan --}}                        
                     </div>
 
-                    @auth                    
-                    @if (count(auth()->user()->forum)==0)
-                    <p class="text-center text-primary">BELUM ADA PERTANYAAN</p>
+                    @auth
+                    {{-- user login yang belom verifiaksi --}}
+                    @if (auth()->user()->email_verified_at === null)
+                    <div class="block-content text-center mb-20">
+                        <a href="{{ route('home') }}" class="button btn btn-outline-primary">lakukan verifikasi email</a>
+                    </div>                    
+                    @else
+                        @if (count(auth()->user()->forum)==0)
+                        <p class="text-center text-primary">BELUM ADA PERTANYAAN</p>
                         @else
                             <table class="table table-borderless">
                                 <tbody>
@@ -53,6 +59,8 @@
                             </table>
                             <div class="block block-content"></div>
                         @endif
+                    @endif
+                    {{-- pengguna tidak login --}}
                     @else
                     <div class="block-content text-center mb-20">
                         <a href="{{ route('login') }}" class="button btn btn-outline-primary">login untuk bertanya</a>

@@ -65,6 +65,7 @@ class AkunController extends Controller
         $id             = $request->id;
         $nama           = $request->name;
         $email          = $request->email;
+        $roles          = $request->role;
         $result         = User::where('email', $request->email)->first();
         if ($result == $email) {
             # code...
@@ -74,19 +75,20 @@ class AkunController extends Controller
             return redirect()->back()->with($notif);
         } else {
             # code...
+                        
             $post           =   User::updateOrCreate(['id' => $id],
                             [
                                 'name' => $request->name,
                                 'role' => $request->role,     
                                 'email' => $request->email,
-                                'stat' => '0',                        
+                                'stat' => $request->stat,                        
                                                               
                             ]);
             $data_profile   = Profile::where(['user_id'=>$request->id])->first();
 
             $detail         = [
                 'title'     => 'Hai '.$nama.'',
-                'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). Untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
+                'body'      => 'pemilik akun '.$email.'. Kini status anda telah berubah menjadi ('.$roles.')',
                 'link'      => 'course-academy.top/login'
             ];
             //kirim email dulu
@@ -103,5 +105,11 @@ class AkunController extends Controller
             );
             return redirect()->back()->with($notif);
         }
+    }
+
+    public function notverif(Request $request)
+    {
+        $data_user  = User::where('email_verified_at', null)->get();
+        return view('admin.daftarUser.notverif', compact('data_user'));
     }
 }

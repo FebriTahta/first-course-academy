@@ -48,6 +48,14 @@
                                         @endif                                        
                                     </div>
                                 </div>
+                                <div class="block-content">
+                                    <label class="css-control css-control-success css-switch">
+                                        <input data-id="{{ $data_profile->user_id }}" type="checkbox" class="css-control-input" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $data_profile->user->stat ? 'checked' : '' }}>
+                                        <span class="css-control-indicator"></span>
+                                    </label>
+                                    <p class="float-right"> ubah status</p>
+                                </div>
+                                <div class="block-content mt-10"></div>
                             </a>
                         </div>
                     </div>            
@@ -170,6 +178,124 @@
 
             
         </div>
+        @elseif($data_profile->user->role=='siswa')
+        <div class="col-xl-12">
+            <h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Akun</small></h2>
+            @if (Session::has('message'))
+            <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
+            @endif
+            @if (Session::has('pesan-peringatan'))
+                    <div class="alert alert-warning text-bold">{{ Session::get('pesan-peringatan') }}</div>                
+            @endif
+            @if (Session::has('pesan-sukses'))
+                <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
+            @endif
+        </div>
+
+        <div class="col-xl-4">
+            <div class="block block-mode-hidden">
+                <div class="block-header block-header-default">
+                {{-- nafigasi block --}}
+                </div>
+                <div class="block-conten border-bottom">
+                    <div class="block-conten border-bottom">                        
+                        <div class="col-xl-12">
+                            <a class="block block-link-shadow" href="javascript:void(0)">
+                                <div class="block-content block-content-full clearfix">
+                                    <div class="text-right float-right mt-10">
+                                        <div class="font-w600 mb-5">{{ $data_profile->user->name }}</div>
+                                        <div class="font-size-sm text-muted">{{ $data_profile->user->email }}</div>
+                                    </div>
+                                    <div class="float-left">
+                                        @if ($data_profile->photo==null)
+                                        <img class="img-avatar" src="{{ asset('assets/media/avatars/avatar14.jpg') }}" alt="">
+                                        @else
+                                        <img class="img-avatar" src="{{ asset('photo/'.$data_profile->photo) }}" alt="">
+                                        @endif                                        
+                                    </div>
+                                </div>
+                                <div class="block-content">
+                                    <label class="css-control css-control-success css-switch">
+                                        <input data-id="{{ $data_profile->user_id }}" type="checkbox" class="css-control-input" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $data_profile->user->stat ? 'checked' : '' }}>
+                                        <span class="css-control-indicator"></span>
+                                    </label>
+                                    <p class="float-right"> ubah status</p>
+                                </div>
+                                <div class="block-content mt-10"></div>
+                            </a>
+                        </div>
+                    </div>            
+                </div>
+                
+                <div class="block-header block-header-default ">
+                    <h3 class="block-title">DATA DIRI</h3>
+                    <div class="block-options">
+                        <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
+                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <form class="border-bottom" action="{{ route('storeProfile') }}" method="POST" enctype="multipart/form-data">@csrf
+                        <div class="form-group">
+                            <div class="form-material mb-10">
+                                <input type="hidden" name="user_id" value="{{ $data_profile->user_id }}">
+                                <input type="text" class="form-control" id="val-alamat" name="alamat" placeholder="Alamat sekarang" value="{{ $data_profile->alamat }}" >
+                                <label for="val-alamat">Alamat</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="number" class="form-control" id="val-telp" name="telp" placeholder="Nomor Telepon" value="{{ $data_profile->telp }}" >
+                                <label for="val-telp">No.Telp</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <select class="js-select2 form-control js-select2-enabled select2-hidden-accessible" id="val-gender" name="gender" style="width: 100%;" data-placeholder="Choose one.." data-select2-id="val-gender" tabindex="-1" aria-hidden="true" required>
+                                    <option data-select2-id="5">{{ $data_profile->gender }}</option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Yang lain">Yang Lain</option>
+                                </select>
+                                <label for="val-select2">Gender</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="text" class="form-control" id="val-alumni" name="alumni" placeholder="Alumni / Sekolah" value="{{ $data_profile->alumni }}">
+                                <label for="val-alumni">Sekolah</label>
+                            </div>
+                            <div class="form-material mb-10">
+                                <input type="file" class="form-control" id="val-photo" name="photo">
+                                <label for="val-photo">Photo</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-primary">update</button>
+                        </div>
+                    </form>                  
+                </div>                                        
+            </div>                
+        </div>
+
+        <div class="col-xl-8">
+            <div class="block">
+                <div class="block-header block-header-default">
+                {{-- nafigasi block --}}
+                </div>
+
+                <div class="block-content border-bottom">
+                    <p class="text-center">KURSUS SAYA</p>
+                </div>
+                <div class="block-content">
+                    <table class="table table-borderless">
+                        @foreach ($data_profile->kursus as $item)
+                            <tr>
+                                <td class=""><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
+                                <td class="text-center">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>
+                                <td class="float-right">
+                                    <a href="{{ route('kursus', $item->slug) }}" type="button" class="btn btn-outline-primary">pergi</a>
+                                </td>                                    
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>            
+        </div>
         @else
         <div class="col-xl-12">
             <h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Akun</small></h2>
@@ -206,6 +332,14 @@
                                         @endif                                        
                                     </div>
                                 </div>
+                                <div class="block-content">
+                                    <label class="css-control css-control-success css-switch">
+                                        <input data-id="{{ $data_profile->user_id }}" type="checkbox" class="css-control-input" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $data_profile->user->stat ? 'checked' : '' }}>
+                                        <span class="css-control-indicator"></span>
+                                    </label>
+                                    <p class="float-right"> ubah status</p>
+                                </div>
+                                <div class="block-content mt-10"></div>
                             </a>
                         </div>
                     </div>            
@@ -297,5 +431,23 @@
     $(document).ready(function(){    
         table= $('#forum').DataTable({});        
     });    
+    </script>
+    <script>
+        $(function(){
+            $('.css-control-input').change(function(){
+                var stat = $(this).prop('checked')==true ? 1 : 0;
+                var user_id = $(this).data('id');
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "{{ route('changestatus') }}",
+                    data: {'stat': stat, 'user_id': user_id},
+                    success: function(data){
+                        console.log(data.success)
+                    }
+                });
+            })
+        })
     </script>
 @endsection

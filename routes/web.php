@@ -15,12 +15,10 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','HomeController@logout')->name('/logout');
-
-//profile from admin
 Route::get('/profile/{id}','ProfileController@index')->name('profile');
 Route::post('/store-profile','ProfileController@store')->name('storeProfile');
 //detail result for admin & instruktur
@@ -36,7 +34,7 @@ Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
 Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
 Route::post('/daftar','AkunController@daftar')->name('daftar');
 
-Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
+Route::group(['middleware'=>['auth','verified','checkrole:admin,instruktur']], function(){
     //dashboard
     Route::get('/dashboard','AdminDashboardController@index')->name('dashboard');
     //pengguna
@@ -46,6 +44,7 @@ Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     Route::post('/aktifkankursus','ChangeStatus@aktifkankursus')->name('aktifkan');
     Route::post('/nonaktifkankursus','ChangeStatus@nonaktifankursus')->name('nonaktifkan');
     Route::post('/ubahpengguna','AkunController@ubahpengguna')->name('ubahpengguna');
+    Route::get('/pengguna-belum-verifikasi','AkunController@notverif')->name('notverif');
     //kategori
     Route::get('/daftar-kategori','KategoriController@index')->name('daftarKategori');
     Route::post('/addMapel','KategoriController@storemapel')->name('addMapel');
@@ -112,7 +111,7 @@ Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
             
 });
 
-Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung']], function(){
+Route::group(['middleware'=>['auth','verified','checkrole:siswa,pengunjung']], function(){
     //new
     Route::get('kursus-saya','KursusSayaController@index')->name('kursus-saya');
     //old    
