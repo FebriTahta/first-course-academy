@@ -123,11 +123,23 @@ class KursusController extends Controller
     public function remove(Request $request)
     {
         $data = $request->id;
-        Kursus::where('id', $data)->delete();
-        $notif = array(
-            'pesan-peringatan' => 'kursus tersebut berhasil dihapus',                
-            );
-        return redirect()->back()->with($notif);        
+
+        $kursus = Kursus::find($data);
+
+        if (count($kursus->profile)) {
+            # code...
+            $notif = array(
+                'pesan-peringatan' => 'GAGAL menghapus karena pada kursus tersebut terdapat siswa yang berlangganan kursus',                
+                );
+            return redirect()->back()->with($notif);
+        } else {
+            # code...
+            Kursus::where('id', $data)->delete();
+            $notif = array(
+                'pesan-peringatan' => 'kursus tersebut berhasil dihapus',                
+                );
+            return redirect()->back()->with($notif);
+        }                        
     }
 
     public function mykursus(Request $request)
