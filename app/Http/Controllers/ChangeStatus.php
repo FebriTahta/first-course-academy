@@ -29,17 +29,29 @@ class ChangeStatus extends Controller
     {
         $id_kursus      = $request->id;
         $data           = $request->all();
+        $kursus         = Kursus::find($id_kursus);
+        $mapel          = $kursus->mapel->mapel_name;
+        $kelas          = $kursus->kelas->kelas_name;
         $data_kursus    = Kursus::where('id', $id_kursus)->update(['status'=>$request->status]);        
 
-        return redirect()->back();
+        $notif      = array(
+            'pesan-sukses' => 'Kursus "'.$mapel.' '.$kelas.'" berhasil "diaktifkan"',                
+        );        
+        return redirect()->back()->with($notif);
     }
 
     public function nonaktifankursus(Request $request)
     {
         $id_kursus      = $request->id;
+        $kursus         = Kursus::find($id_kursus);
+        $mapel          = $kursus->mapel->mapel_name;
+        $kelas          = $kursus->kelas->kelas_name;
         $data           = $request->all();
-        $data_kursus    = Kursus::where('id', $id_kursus)->update(['status'=>$request->status]);        
-
-        return redirect()->back();
+        $data_kursus    = Kursus::where('id', $id_kursus)->update(['status'=>$request->status]);
+        
+        $notif      = array(
+            'message' => 'Kursus "'.$mapel.' '.$kelas.'" berhasil "di non aktifkan"',
+        );        
+        return redirect()->back()->with($notif);                
     }
 }

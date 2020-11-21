@@ -125,13 +125,19 @@
                                 </div>
                                 @else
                                 <table class="table table-borderless">
-                                    @foreach (auth()->user()->profile->kursus as $item)
+                                    @foreach (auth()->user()->profile->kursus as $item)                                        
                                         <tr>
                                             <td class="push"><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
                                             <td class=""><p>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} </p></td>
+                                            @if ($item->status === 'aktif')
                                             <td class="float-right">
                                                 <a href="/my-course/{{ $item->slug }}" type="button" class="btn btn-outline-primary">pergi</a>
-                                            </td>                                    
+                                            </td>
+                                            @else
+                                            <td class="float-right">
+                                                <a href="#" class="btn btn-outline-warning"> Non Aktif / Dalam Perbaikan</a>    
+                                            </td>                             
+                                            @endif                                            
                                         </tr>
                                     @endforeach
                                 </table>

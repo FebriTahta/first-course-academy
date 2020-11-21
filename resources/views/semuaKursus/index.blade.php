@@ -57,7 +57,7 @@
                                 @if ($punya !== null)
                                     @if (auth()->user()->stat == 0)
                                     <div class="block-content text-center">
-                                        <a href="#" class="btn btn-outline-warning"> ANDA SEDAN TIDAK AKTIF</a>
+                                        <a href="#" class="btn btn-outline-warning"> ANDA SEDANG TIDAK AKTIF</a>
                                     </div>
                                     @else
                                     <div class="block-content text-center">
@@ -81,7 +81,7 @@
                                 @endif
                             @elseif(auth()->user()->role=='admin')
                             <div class="block-content text-center">
-                                <a href="{{ route('kursusAdmin', $item->slug) }}" class="btn btn-outline-primary"> START</a>
+                                <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary"> START</a>
                             </div>
                             @elseif(auth()->user()->role=='pengunjung')
                             <div class="block-content text-center">

@@ -69,76 +69,100 @@
             <!--end custom button add-->
 
             <!--custom card instruktur-->
-            @foreach ($data_kursus as $item_i)
-                <div class="col-12 col-md-3" data-category="{{ $item_i->kelas->kelas_name }}|{{ $item_i->mapel->mapel_name }}" style="display: none">
-                    <div class="block text-center">
-                        <div class="block-content block-content-full block-sticky-options pt-30" style="background-image: url({{ asset('assets/media/photos/photo34@2x.jpg') }});">
-                            <div class="block-options">
-                                <div class="dropdown">
-                                    <button type="button" class="btn-block-option text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-cog"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(22px, 28px, 0px);">
-                                        <?php
-                                        $this_kelas = $item_i->kelas->slug;
-                                        $this_mapel = $item_i->mapel->slug;
-                                        $slug = $this_kelas.'-'.$this_mapel.'-instruktur-';
-                                        ?>
-                                        <a class="dropdown-item" href="{{ route('kursus', $item_i->slug) }}">
-                                            <i class="fa fa-fw fa-angle-double-right mr-5"></i>check
-                                        </a>
-                                        <a class="dropdown-item" type="button" data-toggle="modal" data-target="#modal-fromleft-remove"
-                                        data-id="{{ $item_i->id }}">
-                                            <i class="fa fa-fw fa-times mr-5"></i>hapus
-                                        </a>                                                                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <img class="img-avatar" src="assets/media/avatars/avatar6.jpg" alt="">
+            @foreach ($data_kursus as $item)
+                
+                <div class="col-md-6 col-xl-4 js-appear-enabled animated fadeIn" data-category="{{ $item->kelas->kelas_name }}|{{ $item->mapel->mapel_name }}" style="display: none" data-toggle="appear">
+                    <!-- Property -->
+                    <div class="block block-rounded">
+                        <div class="block-content p-0 overflow-hidden">
+                            <a class="img-link" href="be_pages_real_estate_listing.html">
+                                <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                            </a>                    
                         </div>
-                        <div class="block-content block-content-full block-content-sm bg-body-light" >
-                            <div class="font-w600 mb-5">{{ $item_i->user->name }}  | 
-                                @if ($item_i->status==='aktif')
-                                <i class="text-primary">{{ $item_i->status }}</i></div>    
-                                @else
-                                <i class="text-danger">{{ $item_i->status }}</i></div>    
-                                @endif
-                                
-                            @if ($item_i->status=='aktif')                            
+                        <div class="block-content border-bottom">
+                            <h4 class="font-size-h5 mb-10"> {{ $item->kelas->kelas_name }}</h4>
+                            <h5 class="font-size-h1 font-w300 mb-5"> {{ $item->mapel->mapel_name }}</h5>
+                            <p class="text-muted">
+                                <i class="fa fa-map-pin mr-5"></i> Instruktur : {{ $item->user->name }}
+                            </p>
+                            @if ($item->status=='aktif')                            
                             <form action="{{ route('nonaktifkan') }}" method="POST">@csrf
-                                <input type="hidden" name="id" value="{{ $item_i->id }}">
+                                <input type="hidden" name="id" value="{{ $item->id }}">
                                 <input type="hidden" name="status" value="nonaktif">
                                 <button type="submit" class="btn btn-otline-primary text-danger">non aktifkan</button>
                             </form>
                             @else
                             <form action="{{ route('aktifkan') }}" method="POST">@csrf
-                                <input type="hidden" name="id" value="{{ $item_i->id }}">
+                                <input type="hidden" name="id" value="{{ $item->id }}">
                                 <input type="hidden" name="status" value="aktif">
                                 <button type="submit" class="btn btn-otline-primary text-primary">aktifkan</button>
                             </form>
                             @endif                            
                         </div>
-                        <div class="block-content">
-                            <div class="row items-push">
+                        <div class="block-content border-bottom">
+                            <div class="row">                        
                                 <div class="col-4">
-                                    <small>
-                                        <div class="mb-5 font-size-sm text-muted">{{ $item_i->book->count() }} <i class="si si-notebook"></i></div>
-                                    </small>
+                                    <div class="mb-5 font-size-sm text-muted">{{ $item->book->count() }} &nbsp;<i class="si si-notebook"></i> Buku</div>
                                 </div>
                                 <div class="col-4">
-                                    <small>
-                                        <div class="mb-5 font-size-sm text-muted">{{ $item_i->video->count() }} <i class="si si-control-play"></i></div>
-                                    </small>                                    
+                                    <div class="mb-5 font-size-sm text-muted">{{ $item->video->count() }} &nbsp;<i class="si si-control-play"></i>  Video</div>
                                 </div>
                                 <div class="col-4">
-                                    <small>
-                                        <div class="mb-5 font-size-sm text-muted">{{ $item_i->kuis->count() }} <i class="fa fa-pencil"></i></div>
-                                    </small>
+                                    <div class="mb-5 font-size-sm text-muted">{{ $item->kuis->count() }} &nbsp;<i class="fa fa-pencil"></i> Kuis</div>
                                 </div>
                             </div>
                         </div>
-                    </div>                                                                
-                </div>                                                    
+                        <div class="block-content block-content-full text-center">
+                            <div class="row">
+                                @auth
+                                    @if (auth()->user()->role=='siswa')
+                                        <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
+                                        @if ($punya !== null)
+                                            @if (auth()->user()->stat == 0)
+                                            <div class="block-content text-center">
+                                                <a href="#" class="btn btn-outline-warning"> ANDA SEDANG TIDAK AKTIF</a>
+                                            </div>
+                                            @else
+                                            <div class="block-content text-center">
+                                                <a href="{{ route('myCourse', $item->slug) }}" class="btn btn-outline-primary"> START</a>
+                                            </div>
+                                            @endif                                    
+                                        @else
+                                            <div class="block-content">
+                                                <a href="#" class="btn btn-outline-danger"> BUKAN KURSUS ANDA</a>
+                                            </div>                            
+                                        @endif
+                                    @elseif(auth()->user()->role=='instruktur')                                
+                                        @if ($item->user_id == auth()->user()->id)
+                                            <div class="block-content text-center">
+                                                <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary"> START</a>
+                                            </div>
+                                        @else
+                                            <div class="block-content">
+                                                <a href="#" class="btn btn-outline-danger"> BUKAN KURSUS ANDA</a>
+                                            </div>
+                                        @endif
+                                    @elseif(auth()->user()->role=='admin')
+                                    <div class="block-content">
+                                        <a href="#" data-toggle="modal" data-target="#modal-fromleft-remove" class="btn btn-outline-danger fa fa-trash text-danger" data-id="{{ $item->id }}"> HAPUS</a>
+                                        <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary fa fa-check"> PERGI</a>                                        
+                                    </div>
+                                    @elseif(auth()->user()->role=='pengunjung')
+                                    <div class="block-content text-center">
+                                        <a href="#" class="btn btn-outline-primary"> HUBUNGI ADMIN UNTUK MENDAPATKAN KURSUS</a>
+                                    </div>
+                                    @endif
+                                                     
+                                @else
+                                <div class="block-content text-center">
+                                    <a href="{{ route('login') }}" class="btn btn-primary"> SILAHKAN LOGIN </a>
+                                </div>                            
+                                @endauth                        
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Property -->            
+                </div>
             @endforeach
             <!--end custom card instruktur-->
 
@@ -189,7 +213,7 @@
                                 <select name="user_id" id="" class="form-control" required>
                                     <option value=""> == pilih instruktur == </option>
                                     @foreach ($data_instruktur as $item_i)
-                                        <option value="{{ $item_i->id }}">{{ $item_i->name }}</option>
+                                        <option value="{{ $item_i->id }}" checked>{{ $item_i->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -256,7 +280,8 @@
     
     <script>
         $('#modal-fromleft').on('show.bs.modal', function(event){
-            var button = $(event.relatedTarget)        
+            var button = $(event.relatedTarget)
+            var id =     button.data('id')
             var kelas_id = button.data('kelas_id')
             var mapel_id = button.data('mapel_id')
             var slug = button.data('slug')
