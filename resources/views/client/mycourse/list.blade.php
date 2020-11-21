@@ -107,21 +107,35 @@
                             </div>
                         @else
                             @if (count(auth()->user()->profile->kursus) == 0)
+                                @if (auth()->user()->stat == 1)
+                                    <div class="block-content text-center">
+                                        <p>TUNGGU SEBENTAR LAGI. KAMI SEDANG MENYIAPKAN KURSUS ANDA</p>
+                                    </div>
+                                @else
                                 <div class="block-content text-center">
-                                    <p>TUNGGU SEBENTAR LAGI. KAMI SEDANG MENYIAPKAN KURSUS ANDA</p>
+                                    <p>Mungkin anda adalah salah satu siswa kami. Namun saat ini status anda sedang tidak aktif</p>
+                                    <p>Untuk informasi lebih lanjut. Silahkan hubungi admin pada <i class="fa fa-phone"> 081-329-146-514</i></p>
                                 </div>
+                                @endif                                
                             @else
-                            <table class="table table-borderless">
-                                @foreach (auth()->user()->profile->kursus as $item)
-                                    <tr>
-                                        <td class="push"><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
-                                        <td class=""><p>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} </p></td>
-                                        <td class="float-right">
-                                            <a href="/my-course/{{ $item->slug }}" type="button" class="btn btn-outline-primary">pergi</a>
-                                        </td>                                    
-                                    </tr>
-                                @endforeach
-                            </table>
+                                @if (auth()->user()->stat == 0)
+                                <div class="block-content text-center">
+                                    <p>Mungkin anda adalah salah satu siswa kami. Namun saat ini status anda sedang tidak aktif</p>
+                                    <p>Untuk informasi lebih lanjut. Silahkan hubungi admin pada <i class="fa fa-phone"> 081-329-146-514</i></p>
+                                </div>
+                                @else
+                                <table class="table table-borderless">
+                                    @foreach (auth()->user()->profile->kursus as $item)
+                                        <tr>
+                                            <td class="push"><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
+                                            <td class=""><p>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} </p></td>
+                                            <td class="float-right">
+                                                <a href="/my-course/{{ $item->slug }}" type="button" class="btn btn-outline-primary">pergi</a>
+                                            </td>                                    
+                                        </tr>
+                                    @endforeach
+                                </table>
+                                @endif                            
                             @endif                                                                             
                         @endif
                     </div>

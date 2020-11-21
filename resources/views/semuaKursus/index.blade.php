@@ -55,9 +55,15 @@
                             @if (auth()->user()->role=='siswa')
                                 <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
                                 @if ($punya !== null)
+                                    @if (auth()->user()->stat == 0)
+                                    <div class="block-content text-center">
+                                        <a href="#" class="btn btn-outline-warning"> ANDA SEDAN TIDAK AKTIF</a>
+                                    </div>
+                                    @else
                                     <div class="block-content text-center">
                                         <a href="{{ route('myCourse', $item->slug) }}" class="btn btn-outline-primary"> START</a>
                                     </div>
+                                    @endif                                    
                                 @else
                                     <div class="block-content">
                                         <a href="#" class="btn btn-outline-danger"> BUKAN KURSUS ANDA</a>

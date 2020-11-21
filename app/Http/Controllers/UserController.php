@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Profile;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UbahPengguna;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -36,7 +39,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $id             = $request->id;               
+        $id             = $request->id;
+        $nama           = $request->name;
+        $email          = $request->email;        
         $post           =   User::updateOrCreate(['id' => $id],
                             [
                                 'name' => $request->name,
@@ -46,7 +51,17 @@ class UserController extends Controller
                                 'password'=>bcrypt('secret'),                                                
                             ]);
         $data_profile   = Profile::where(['user_id'=>$request->id])->first();
-        
+
+        $detail         = [
+            'title'     => 'Hai '.$nama.'',
+            'body'      => 'Silahkan masuk dengan Email : '.$email.' dan Password : secret <br> untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
+            'link'      => 'course-academy.top/login'
+        ];
+        //kirim email dulu
+        $when           = Carbon::now()->addSeconds(10);
+
+        Mail::to($request->email)->send((new UbahPengguna($detail))->delay($when));
+
         if ($data_profile===null) {
             # code...
             $post->profile()->save(new Profile);

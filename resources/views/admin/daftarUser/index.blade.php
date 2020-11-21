@@ -129,7 +129,7 @@
         <div class="modal-content">
             <form id="form-update-user" name="form-update-user" class="form-horizontal" action="{{ route('daftar_user.store') }}" method="POST" enctype="multipart/form-data">@csrf
                 <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-primary-dark">
+                    <div class="block-header bg-primary">
                         <h3 class="block-title">ADD USER</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
@@ -138,15 +138,21 @@
                         </div>
                     </div>
 
-                    <div class="block-content">                            
-                        <div class="form-group">
-                            <input class="form-control" type="hidden" id="id" name="id" value="" required>                            
-                            <input class="form-control" type="text" id="name" name="name" value="" required>                                                                      
+                    <div class="block-content">
+                        <div class="form-group text-center border-bottom text-danger">
+                            <p class="text-danger"> Perubahan data pengguna akan diberikan password baru berupa "secret" dan akan diinformasikan melalui email pengguna</p>
+                        </div>
+                        <div class="form-group border-bottom">
+                            <input class="form-control" type="hidden" id="id" name="id" value="" required>
+                            <label for="">Nama </label>               
+                            <input class="form-control" type="text" id="name" name="name" value="" required>                            
                         </div>
                         <div class="form-group">
+                            <label for="">Email</label>
                             <input class="form-control" type="email" id="email" name="email" value="" required>
                         </div>
                         <div class="form-group">
+                            <label for="">Role </label>
                             <select name="role" id="role" class="form-control" required>
                                 <option value=""> == pilih role == </option>
                                 <option value="admin">admin</option>
