@@ -36,11 +36,13 @@
                     @foreach ($news as $item)
                     <div class="block-content">
                         <div class="soal">
-                            <p class="border-bottom border-top" >Oleh : {{ $item->user->name }} as {{ $item->user->role }}<label class="float-right">{{ $item->created_at }}</label></p>                            
+                            <p class="border-bottom border-top" >Oleh : {{ $item->user->name }} as {{ $item->user->role }}</p>                            
                         </div>                        
                         <h1 class=""><u>{!! $item->news_tittle !!}</u></h1>
                     </div>
-                    
+                    <div class="block-content">
+                        <label>{{ $item->created_at }}</label>
+                    </div>
                     <div class="block-content">
                         <p>{!! $item->news_desc !!}</p>
                     </div>

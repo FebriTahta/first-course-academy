@@ -49,7 +49,7 @@ class AkunController extends Controller
             
             foreach ($admin as $item) {
                 # code...
-                Mail::to($item->email)->send((new DaftarPengunjung($detail))->delay($when));
+                Mail::to($item->email)->send((new UbahPengguna($detail))->delay($when));
                 $notif = array(
                     'pesan-sukses' => 'Registrasi sukses '
                 );

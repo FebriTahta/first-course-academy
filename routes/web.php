@@ -101,6 +101,8 @@ Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     Route::get('/news','NewsController@index')->name('news');
     Route::post('/post','NewsController@store')->name('postNews');
     Route::post('/remove' ,'NewsController@remove')->name('removeNews');
+    Route::get('/editnews/{id}','NewsController@edit')->name('editNews');
+    Route::post('/update/news','NewsController@update')->name('updateNews');
     //dashboard result
     Route::get('/detail-result/{slug}','MyCourseController@detailresult');
     Route::post('/reset-kuis','MyCourseController@resetkuis')->name('resetkuis');

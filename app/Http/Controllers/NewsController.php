@@ -22,6 +22,12 @@ class NewsController extends Controller
         return view('news.index', compact('news','course'));
     }
 
+    public function edit($id)
+    {
+        $news   = News::find($id);
+        return view('admin.news.edit' , compact('news'));
+    }
+
     public function store(Request $request)
     {
         $user_id    = Auth::id();
@@ -32,7 +38,7 @@ class NewsController extends Controller
             'news_desc'     => $request->news_desc
         ]);
         $notif = array(
-            'pesan-sukses' => 'kuis baru berhasil ditambahkan pada kursus',                
+            'pesan-sukses' => 'News baru saja diterbitkan',                
         );
         return redirect()->back()->with($notif);
     }
@@ -50,5 +56,20 @@ class NewsController extends Controller
         
         return redirect()->back()->with($notif);
 
+    }
+
+    public function update(Request $request)
+    {
+        $user_id    = Auth::id();
+        $id         = $request->id;
+        $post       = News::updateOrCreate(['id'=> $id], [
+            'user_id'       => $user_id,
+            'news_tittle'   => $request->news_tittle,
+            'news_desc'     => $request->news_desc
+        ]);
+        $notif = array(
+            'pesan-sukses' => 'News telah disunting',                
+        );
+        return redirect('/news')->with($notif);
     }
 }
