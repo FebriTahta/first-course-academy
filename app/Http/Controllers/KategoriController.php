@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Kelas;
 use App\Mapel;
 use App\kelas_mapel;
+use App\Kursus;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -129,12 +130,23 @@ class KategoriController extends Controller
     public function dellkategori(Request $request)
     {        
         $kelas      = Kelas::where('id', $request->kelas_id)->first();
-        $mapel      = Mapel::where('id', $request->mapel_id)->first();
-        $kelas->mapel()->detach($mapel);
+        $mapel      = Mapel::where('id', $request->mapel_id)->first();        
+        $kursus     = Kursus::where('kelas_id', $request->kelas_id)->where('mapel_id', $request->mapel_id)->first();
+        
+        if ($kursus === null) {
+            # code...
+            $kelas->mapel()->detach($mapel);
 
-        $notif  = array(
-            'pesan-peringatan' => 'Kategori Tersebut Berhasil Dihapus',            
-        );  
-        return redirect()->back()->with($notif);
+            $notif  = array(
+                'pesan-peringatan' => 'Kategori Tersebut Berhasil Dihapus',            
+            );  
+            return redirect()->back()->with($notif);
+        } else {
+            # code...
+            $notif  = array(
+                'pesan-peringatan' => 'Gagal Menghapus Kategori Kursus karena terdapat kursus dalam kategori tersebut',            
+            );  
+            return redirect()->back()->with($notif);
+        }                
     }
 }

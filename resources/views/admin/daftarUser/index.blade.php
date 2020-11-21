@@ -256,9 +256,9 @@
                     </div>
 
                     <div class="block-content">                            
-                        <div class="form-group">
+                        <div class="form-group border-bottom mb-10">
                             <input type="hidden" id="id" name="id">
-                            <div class="form-control text-center text-danger">
+                            <div class="text-center text-danger">
                                 <p>Anda yakin akan menghapus user tersebut ?</p>
                             </div>                            
                         </div>

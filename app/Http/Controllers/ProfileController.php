@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Profile;
 use App\User;
+use App\Kursus;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -42,12 +43,34 @@ class ProfileController extends Controller
     //hapus user disini, karena user controller pake route
     public function dell(Request $request)
     {
-        $id = $request->id;
-        User::find($id)->delete();
+        $id         = $request->id;
+        $kursus     = Kursus::where('user_id', $id)->first();
+        $profile    = Profile::where('user_id',$id)->first();
+        if ($kursus === null) {
+            # code...
+            if (count($profile->kursus)) {
+                # code...
+                $notif = array(
+                    'pesan-peringatan' => 'Hapus Pengguna gagal. Pengguna tersebut adalah User yang berlangganan kursus'
+                );
+                return redirect()->back()->with($notif);
+            } else {
+                # code...
+                User::find($id)->delete();
         
-        $notif = array(
-            'pesan-bahaya' => 'User berhasil dihapus'
-        );
-        return redirect()->back()->with($notif);
+                $notif = array(
+                    'pesan-bahaya' => 'User berhasil dihapus'
+                );
+                return redirect()->back()->with($notif);
+            }            
+        } else {
+            # code...            
+            $notif = array(
+                'pesan-peringatan' => 'Hapus Pengguna gagal. Pengguna tersebut adalah Admin dan memiliki kursus'
+            );
+            return redirect()->back()->with($notif);
+                        
+        }
+                
     }
 }
