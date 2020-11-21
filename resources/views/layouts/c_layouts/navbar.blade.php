@@ -36,7 +36,7 @@
                     @endif                
                 @else
                 <a href="{{ 'login' }}">SignIn</a>
-                <a href="{{ 'register' }}">Register</a>
+                <a href="{{ 'register' }}">SignUp</a>
                 @endauth
             </div>
         </div>
