@@ -54,13 +54,13 @@ class UserController extends Controller
 
         $detail         = [
             'title'     => 'Hai '.$nama.'',
-            'body'      => 'Silahkan masuk dengan Email : '.$email.' dan Password : secret <br> untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
+            'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). Untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
             'link'      => 'course-academy.top/login'
         ];
         //kirim email dulu
         $when           = Carbon::now()->addSeconds(10);
 
-        Mail::to($request->email)->send((new UbahPengguna($detail))->delay($when));
+        Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
 
         if ($data_profile===null) {
             # code...
