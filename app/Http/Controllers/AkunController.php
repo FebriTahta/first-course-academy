@@ -17,31 +17,46 @@ class AkunController extends Controller
 
     public function daftar(Request $request)
     {
-        $post   =   User::create([
-            'name'=>$request->name,
-            'role'=>'pengunjung',
-            'stat'=>'0',
-            'email'=>$request->email,
-            'password'=>bcrypt($request->password), 
-        ]);
-        $post->profile()->save(new Profile);
-
-        $detail         = [
-            'title'     => 'Hai Admin',
-            'body'      => '"'.$request->name.'" telah bergabung sebagai pengunjung ',
-            'link'      => 'course-academy.top/dashboard'
-        ];
-        //kirim email dulu
-        $when           = Carbon::now()->addSeconds(10);
-        $admin  = User::where('role','admin')->get();
+        $email      = $request->email;
+        $result     = User::where('email', $email)->first();
+        $result_mail= $result->email;
         
-        foreach ($admin as $item) {
+        if ($result_mail == $email) {
             # code...
-            Mail::to($item->email)->send((new DaftarPengunjung($detail))->delay($when));
             $notif = array(
-                'pesan-sukses' => 'Registrasi sukses '
+                'message' => 'Email sudah pernah terdaftar. Gunakan Email Lain'
             );
             return redirect()->back()->with($notif);
-        }       
+        } else {
+            # code...
+            $post   =   User::create([
+                'name'=>$request->name,
+                'role'=>'pengunjung',
+                'stat'=>'0',
+                'email'=>$request->email,
+                'password'=>bcrypt($request->password), 
+            ]);
+            $post->profile()->save(new Profile);
+    
+            $detail         = [
+                'title'     => 'Hai Admin',
+                'body'      => '"'.$request->name.'" telah bergabung sebagai pengunjung ',
+                'link'      => 'course-academy.top/dashboard'
+            ];
+            //kirim email dulu
+            $when           = Carbon::now()->addSeconds(10);
+            $admin  = User::where('role','admin')->get();
+            
+            foreach ($admin as $item) {
+                # code...
+                Mail::to($item->email)->send((new DaftarPengunjung($detail))->delay($when));
+                $notif = array(
+                    'pesan-sukses' => 'Registrasi sukses '
+                );
+                return redirect()->back()->with($notif);
+            }       
+        }
+        
+        
     }
 }

@@ -41,35 +41,47 @@ class UserController extends Controller
     {
         $id             = $request->id;
         $nama           = $request->name;
-        $email          = $request->email;        
-        $post           =   User::updateOrCreate(['id' => $id],
+        $email          = $request->email;
+        $result         = User::where('email', $request->email)->first();
+        if ($result == $email) {
+            # code...
+            $notif = array(
+                'pesan-bahaya' => 'Email sudah pernah terdaftar. Gunakan Email Lain'
+            );
+            return redirect()->back()->with($notif);
+        } else {
+            # code...
+            $post           =   User::updateOrCreate(['id' => $id],
                             [
                                 'name' => $request->name,
-                                'role' => $request->role,                        
+                                'role' => $request->role,     
                                 'email' => $request->email,
                                 'stat' => '0',                        
                                 'password'=>bcrypt('secret'),                                                
                             ]);
-        $data_profile   = Profile::where(['user_id'=>$request->id])->first();
+            $data_profile   = Profile::where(['user_id'=>$request->id])->first();
 
-        $detail         = [
-            'title'     => 'Hai '.$nama.'',
-            'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). Untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
-            'link'      => 'course-academy.top/login'
-        ];
-        //kirim email dulu
-        $when           = Carbon::now()->addSeconds(10);
+            $detail         = [
+                'title'     => 'Hai '.$nama.'',
+                'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). Untuk kedepannya anda bisa memperbarui password anda sendiri pada menu Reset / Lupa password',
+                'link'      => 'course-academy.top/login'
+            ];
+            //kirim email dulu
+            $when           = Carbon::now()->addSeconds(10);
 
-        Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
+            Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
 
-        if ($data_profile===null) {
-            # code...
-            $post->profile()->save(new Profile);
+            if ($data_profile===null) {
+                # code...
+                $post->profile()->save(new Profile);
+            }
+            $notif = array(
+                'pesan-sukses' => 'User berhasil ditambahkan'
+            );
+            return redirect()->back()->with($notif);
         }
-        $notif = array(
-            'pesan-sukses' => 'User berhasil ditambahkan'
-        );
-        return redirect()->back()->with($notif);
+        
+        
     }    
 
     /**

@@ -25,9 +25,50 @@
             <!-- Property -->
             <div class="block block-rounded">
                 <div class="block-content p-0 overflow-hidden">
-                    <a class="img-link" href="be_pages_real_estate_listing.html">
-                        <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
-                    </a>                    
+                    @auth
+                        @if (auth()->user()->role == 'siswa')
+                            <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
+                            @if ($punya !== null)
+                                @if (auth()->user()->stat==0)
+                                    <a class="img-link" href="#">
+                                        <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                                    </a>
+                                @else
+                                    <a class="img-link" href="{{ route('myCourse', $item->slug) }}">
+                                        <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                                    </a>
+                                @endif
+                            @else
+                            <a class="img-link" href="#">
+                                <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                            </a>                                                 
+                            @endif
+                        @elseif(auth()->user()->role == 'instruktur')
+                            @if ($item->user_id == auth()->user()->id)
+                                @if (auth()->user()->stat==1)
+                                <a class="img-link" href="{{ route('kursus', $item->slug) }}">
+                                    <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                                </a>
+                                @else
+                                <a class="img-link" href="#">
+                                    <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                                </a>
+                                @endif                         
+                            @else
+                                <a class="img-link" href="#">
+                                    <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                                </a>
+                            @endif
+                        @else
+                        <a class="img-link" href="#">
+                            <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                        </a>
+                        @endif
+                    @else
+                        <a class="img-link" href="#">
+                            <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                        </a>
+                    @endauth                    
                 </div>
                 <div class="block-content border-bottom">
                     <h4 class="font-size-h5 mb-10"> {{ $item->kelas->kelas_name }}</h4>
