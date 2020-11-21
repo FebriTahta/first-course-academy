@@ -141,9 +141,9 @@
 
             <!-- Open Search Section -->
             <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="header_search_on">
+            {{-- <button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="header_search_on">
                 <i class="fa fa-search"></i>
-            </button>
+            </button> --}}
             <!-- END Open Search Section -->
 
             <!-- Toggle Sidebar -->
