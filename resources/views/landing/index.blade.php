@@ -10,8 +10,7 @@
             <h3>Kini kami hadir dalam bentuk Digital
         <br>Belajar dengan aman dan menyenangkan bersama kami</h3>
         <div class="btn">            
-            {{-- <a href="{{ route('kursusAdmin') }}">semua kursus</a> --}}
-            <a href="{{ route('allkursus') }}">semua kursus</a>            
+            <a href="{{ route('allkursus') }}">semua kursus</a>
         </div>
     </div>
     <div class="landingImage" data-aos="fade-down" data-aos-duration="2000">

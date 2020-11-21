@@ -20,23 +20,23 @@
     <div class="wrapper">
         <div class="nav">
             <div class="logo links">
-                <a href="/" class="mainlink"><h4>Course Academy.</h4></a>                                
+                <a href="/" class="mainlink"><h3>CourseAcademy</h3></a>                                
             </div>
-            <div class="links">
-                {{-- <a href="#" class="mainlink">Corona Updates</a> --}}                
-                <a href="{{ route('berita') }}">News</a>
+            <div class="links" style="text-align: center">
+                
+                <a href="{{ route('berita') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; News</a>
                 <a href="{{ route('forum') }}">Forum</a>
                 @auth
                     @if (auth()->user()->role=='siswa')
-                    <a href="{{ route('home') }}">Kursus Saya</a>
-                    <a href="{{ 'logout' }}">Logout</a>
+                        <a href="{{ route('home') }}">My Course</a>
+                        <a href="{{ 'logout' }}">SignOut</a>
                     @else
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                    <a href="{{ 'logout' }}">Logout</a>
+                        <a href="{{ route('dashboard') }}">Dashboard</a>
+                        <a href="{{ 'logout' }}">SignOut</a>
                     @endif                
                 @else
-                <a href="{{ 'login' }}">Masuk</a>
-                <a href="{{ 'register' }}">Daftar</a>
-                @endauth                
+                <a href="{{ 'login' }}">SignIn</a>
+                <a href="{{ 'register' }}">Register</a>
+                @endauth
             </div>
         </div>
