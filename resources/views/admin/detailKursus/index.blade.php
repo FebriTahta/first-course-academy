@@ -902,7 +902,7 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-12 control-label">file buku</label>
                                 <div class="col-sm-12">
-                                    <input type="file" name="book_file" id="book_file" accept=".docx,.pdf">
+                                    <input type="file" name="book_file" id="book_file" accept=".docx,.pdf" required>
                                 </div>
                             </div>
                         </div>
