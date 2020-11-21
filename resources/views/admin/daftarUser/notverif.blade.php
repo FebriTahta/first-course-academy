@@ -6,20 +6,20 @@
     <div class="bg-primary-dark-op">
         <div class="content content-top text-center overflow-hidden">
             <div class="pb-20">
-                <h1 class="font-w700 text-white mb-10 invisible" data-toggle="appear" data-class="animated fadeInUp">User Management</h1>
-                <h2 class="h4 font-w400 text-white-op invisible" data-toggle="appear" data-class="animated fadeInUp">Welcome to your user management page!</h2>
+                <h1 class="font-w700 text-white mb-10 invisible" data-toggle="appear" data-class="animated fadeInUp">Daftar Pengguna</h1>
+                <h2 class="h4 font-w400 text-white-op invisible" data-toggle="appear" data-class="animated fadeInUp">Berikut adalah daftar pengguna yang tidak aktif / registrasi menggunakan email yang tidak benar</h2>
             </div>
         </div>
     </div>
 </div>
 <!-- END Hero -->
 
-<div class="container-fluid row">
+<div class="content row">
     <!--form-->
     <div class="col-12">
         <nav class="breadcrumb push content-heading">
             {{-- <a class="breadcrumb-item" href="be_pages_elearning_courses.html">Courses</a> --}}
-            <span class="breadcrumb-item active">User Management</span>
+            <span class="breadcrumb-item active">Daftar Pengguna</span>
         </nav>
         {{-- <h2 class="content-heading breadcumb push">User Management</h2> --}}
         @if (Session::has('pesan-bahaya'))
@@ -32,47 +32,8 @@
             <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
         @endif
     </div>
-    <div class="col-md-4">
-      <div class="block">
-        <div class="block-header block-header-default ">
-            <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
-            <h3 class="block-title"></h3>
-        </div>
-        <div class="block-content">
-            <form class="" action="{{ route('daftar_user.store') }}" method="post" > @csrf
-                <div class="form-group">
-                    <div class="form-material">
-                        <input type="text" class="form-control" id="val-name" name="name" placeholder="Enter user name" required>
-                        <label for="val-name">Nama</label>
-                    </div>                    
-                </div>
-                <div class="form-group">
-                    <div class="form-material">
-                        <input type="email" class="form-control" id="val-email" name="email" placeholder="Your valid email.." required>
-                        <label for="val-email">Email</label>
-                    </div>
-                </div> 
-                <div class="form-group">
-                    <div class="form-material">
-                        <select class="js-select2 form-control js-select2-enabled select2-hidden-accessible" id="val-select22" name="role" style="width: 100%;" data-placeholder="Choose one.." data-select2-id="val-select22" tabindex="-1" aria-hidden="true" required>
-                            <option data-select2-id="5"></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
-                            <option value="admin">admin</option>
-                            <option value="instruktur">instruktur</option>
-                            <option value="siswa">siswa</option>
-                            
-                        </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="4" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-val-select22-container"><span class="select2-selection__rendered" id="select2-val-select22-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Choose one..</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                        <label for="val-select2">Role</label>
-                    </div>
-                </div>                                   
-                <div class="form-group">
-                    <button type="submit" class="btn btn-alt-primary">Submit</button>
-                </div>
-            </form>
-        </div>
-      </div>
-    </div>
-    <!--end form-->
-    <div class="col-md-8">
+    
+    <div class="col-md-12">
         <div class="block ">
             <div class="block-header block-header-default">                
                 <h3 class="block-title">DAFTAR USER</h3>

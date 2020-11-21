@@ -14,7 +14,7 @@
 </div>
 <!-- END Hero -->
 
-<div class="container-fluid row">
+<div class="content row">
     <!--form-->
     <div class="col-12">
         <nav class="breadcrumb push content-heading">
@@ -33,7 +33,19 @@
         @endif
     </div>
     <div class="col-md-4">
-      <div class="block">
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
+            </div>
+            <div class="block-content text-primary">
+                <ol>
+                    <li>daftar pengguna disini hanya menampilkan pengguna yang sudah melakukan verifikasi email</li>
+                    <li>pastikan anda mendaftarkan pengguna menggunakan email aktif</li>
+                    <li>pengguna yang belum melakukan verifikasi email hanya dapat dilihat pada menu (dashboard:pengguna yang belum melakukan verifikasi)</li>
+                </ol>
+            </div>
+        </div>    
+        <div class="block">
         <div class="block-header block-header-default ">
             <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
             <h3 class="block-title"></h3>
