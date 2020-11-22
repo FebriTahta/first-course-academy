@@ -90,12 +90,12 @@
                     <p>komentar</p>
                 </div>
                 @auth
-                    @if (auth()->user()->email_virified_at === null)
-                        <div class="block-content text-center">
-                            <a href="/home" class="btn btn-primary">lakukan Verifikasi email</a>
-                        </div>
-                        <div class="block-content"></div>
-                    @elseif(auth()->user()->email_virified_at !== null)
+                    @if (auth()->user()->email_verified_at===null)
+                    <div class="block-content text-center">
+                        <a href="/home" class="btn btn-primary">Verifikasi email anda</a>
+                    </div>
+                    <div class="block-content"></div>
+                    @else
                     <form action="{{ route('post-komentar') }}" method="POST" enctype="multipart/form-data">@csrf
                         <div class="block-content">
                             <div class="form-group">
@@ -108,13 +108,13 @@
                             </div>
                         </div>
                     </form>
-                @endauth
-                    @else
-                        <div class="block-content text-center">
-                            <a href="/login" class="btn btn-primary">Silahkan Login untuk memberikan komentar</a>
-                        </div>
-                        <div class="block-content"></div>
-                    @endif                                                               
+                    @endif
+                @else
+                    <div class="block-content text-center">
+                        <a href="/login" class="btn btn-primary">Silahkan Login untuk memberikan komentar</a>
+                    </div>
+                    <div class="block-content"></div>
+                @endauth                                                                                    
             </div>
         </div>
         

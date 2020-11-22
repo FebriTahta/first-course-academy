@@ -19,6 +19,13 @@ class KomentarController extends Controller
             'status'    => '0',
             'komen'     => $request->komen
         ]);
+        if($request -> hasFile('komen'))
+        {
+            $request->file('komen')->move('komen/',$request->file('komen')->getClientOriginalName());
+            $post->komen = $request->file('komen')->getClientOriginalName();
+            $post->save();
+        }
+        
         $komentator     = User::find($request->user_id);
         $komentator_name= $komentator->name;
         $forum          = Forum::find($request->forum_id);

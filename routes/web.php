@@ -33,8 +33,9 @@ Route::get('/berita','NewsController@display')->name('berita');
 Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
 Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
 Route::post('/daftar','AkunController@daftar')->name('daftar');
+Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
 
-Route::group(['middleware'=>['auth','verified','checkrole:admin,instruktur']], function(){
+Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     //dashboard
     Route::get('/dashboard','AdminDashboardController@index')->name('dashboard');
     //pengguna
@@ -107,11 +108,11 @@ Route::group(['middleware'=>['auth','verified','checkrole:admin,instruktur']], f
     Route::post('/reset-kuis','MyCourseController@resetkuis')->name('resetkuis');
     Route::get('/getreset','AdminDashboardController@getreset');
     //forum
-    Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
+    
             
 });
 
-Route::group(['middleware'=>['auth','verified','checkrole:siswa,pengunjung']], function(){
+Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung']], function(){
     //new
     Route::get('kursus-saya','KursusSayaController@index')->name('kursus-saya');
     //old    
@@ -119,6 +120,6 @@ Route::group(['middleware'=>['auth','verified','checkrole:siswa,pengunjung']], f
     Route::get('/kuis-form/{slug}','MyCourseController@kuisform');    
     Route::get('/akun','AkunController@index')->name('akun');
     Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');
-    Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
+    
     Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 });

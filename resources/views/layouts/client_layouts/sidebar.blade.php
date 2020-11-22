@@ -157,12 +157,12 @@
                             <li>
                                 @auth                                                
                                     @if (auth()->user()->role=='siswa')
-                                        <a href="{{ route('/logout') }}"><i class="si si-action-undo"></i>Logout </a>
+                                        <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a>
                                     
                                 @endauth
                                     @else
-                                        <a href="/login"><i class="fa fa-lock"></i>Login </a>
-                                        <a href="/register"><i class="si si-lock"></i>register </a>
+                                        <a href="{{ route('login') }}"><i class="fa fa-lock"></i>Login </a>
+                                        <a href="{{ route('register') }}"><i class="si si-lock"></i>register </a>
                                     @endif                                            
                             </li>
                         </ul>

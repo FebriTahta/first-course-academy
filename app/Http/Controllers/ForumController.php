@@ -46,19 +46,20 @@ class ForumController extends Controller
 
     public function store(Request $request)
     {
-        Forum::updateOrCreate(['id'=>$request->id],[
+        
+        $a=Forum::create([
             'user_id'=>$request->user_id,
             'kelas_id'=>$request->kelas_id,
             'mapel_id'=>$request->mapel_id,
-            'judul_pertanyaan'=>$request->judul,
-            'desc_pertanyaan'=>$request->desc,
+            'judul_pertanyaan'=>$request->judul_pertanyaan,
+            'desc_pertanyaan'=>$request->desc_pertanyaan,
             'slug'=>Str::slug($request->slug)
         ]);
-        if($request -> hasFile('kursus_desc'))
+        if($request -> hasFile('desc_pertanyaan'))
         {
-            $request->file('kursus_desc')->move('kursus_desc/',$request->file('kursus_desc')->getClientOriginalName());
-            $addinstrukturkursus->kursus_desc = $request->file('kursus_desc')->getClientOriginalName();
-            $addinstrukturkursus->save();
+            $request->file('desc_pertanyaan')->move('desc_pertanyaan/',$request->file('desc_pertanyaan')->getClientOriginalName());
+            $a->desc_pertanyaan = $request->file('desc_pertanyaan')->getClientOriginalName();
+            $a->save();
         }
         $notif = array(
             'pesan-sukses' => 'Pertanyaan anda berhasil di publikasi',                
