@@ -34,6 +34,7 @@ Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
 Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
 Route::post('/daftar','AkunController@daftar')->name('daftar');
 Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
+Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 
 Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     //dashboard
@@ -119,7 +120,5 @@ Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung']], function(){
     Route::post('/submit-kuis','MyCourseController@submitkuis')->name('submit-kuis');    
     Route::get('/kuis-form/{slug}','MyCourseController@kuisform');    
     Route::get('/akun','AkunController@index')->name('akun');
-    Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');
-    
-    Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
+    Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');        
 });
