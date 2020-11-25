@@ -1,11 +1,11 @@
-@extends('layouts.app')
-
+{{-- @extends('layouts.app') --}}
+@extends('layouts.client_layouts.master')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+        <div class="col-md-8 mt-150">
+            <div class="block block-shadow block-rounded">
+                <div class="block-header block-header-default">{{ __('Register') }}</div>
                 @if (Session::has('message'))
                 <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
                 @endif
@@ -15,7 +15,7 @@
                 @if (Session::has('pesan-sukses'))
                     <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
                 @endif
-                <div class="card-body">
+                <div class="block-content">
                     {{-- <form method="POST" action="{{ route('register') }}"> --}}
                     <form method="POST" action="{{ route('daftar') }}">
                         @csrf
@@ -78,6 +78,9 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="block-content">
+
                 </div>
             </div>
         </div>

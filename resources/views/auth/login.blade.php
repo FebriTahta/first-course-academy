@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.client_layouts.master')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-150">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <div class="block block-shadow block-rounded">
+                <div class="block-header block-header-default">{{ __('Login') }}</div>
 
-                <div class="card-body">
+                <div class="block-content">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -66,6 +66,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="block-content"></div>
             </div>
         </div>
     </div>

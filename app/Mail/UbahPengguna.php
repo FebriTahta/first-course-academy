@@ -30,6 +30,6 @@ class UbahPengguna extends Mailable
      */
     public function build()
     {
-        return $this->subject('Subject: Perubahan Status & Data')->view('email.pengajuanresetkuis');
+        return $this->subject('Subject: User baru')->view('email.pengajuanresetkuis');
     }
 }

@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.client_layouts.master')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-150">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+            <div class="block block-shadow block-rounded">
+                <div class="block-header block-header-default">{{ __('Verify Your Email Address') }}</div>
 
-                <div class="card-body">
+                <div class="block-content">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
                             {{-- {{ __('A fresh verification link has been sent to your email address.') }} --}}
@@ -23,6 +23,7 @@
                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('klik disini untuk verifikasi') }}</button>.
                     </form>
                 </div>
+                <div class="block-content"></div>
             </div>
         </div>
     </div>

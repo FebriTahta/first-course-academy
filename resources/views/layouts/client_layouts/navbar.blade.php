@@ -60,7 +60,16 @@
                             <a href="{{ route('forum') }}">Forum</a>                            
                         </li>
                         <li>
-                            <a href="{{ route('allkursus') }}">All Course</a>                            
+                            <a href="{{ route('allkursus') }}">All Course</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>                            
                         </li>
                     </ul>
                 </li>
@@ -69,18 +78,71 @@
                     @auth                                                
                         @if (auth()->user()->role=='siswa')
                             <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                         @elseif(auth()->user()->role=='pengunjung')
-                            <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a>
-                            @elseif(auth()->user()->role=='instruktur')
-                            <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a>
-                            @elseif(auth()->user()->role=='admin')
-                            <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a>
+                            {{-- <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a> --}}
+                            <a class="si si-action-undo" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+            
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                        @elseif(auth()->user()->role=='instruktur')
+                            {{-- <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a> --}}
+                            <a class="si si-action-undo" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+            
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                        @elseif(auth()->user()->role=='admin')
+                            {{-- <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a> --}}
+                            {{-- <li>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> --}}
+                                    <a class="si si-action-undo" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+            
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                {{-- </div>
+                            </li> --}}
                     @endauth
                         @else
                             <a href="/login"><i class="fa fa-lock"></i>Login </a>
-                            <a href="{{ 'register' }}"><i class="si si-lock"></i>register </a>
+                            <a href="{{ 'register' }}"><i class="si si-lock"></i>register </a>                     
                         @endif                                            
                 </li>
+                {{-- <li>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </li> --}}
             </ul>
             <!-- END Header Navigation -->
         </div>
