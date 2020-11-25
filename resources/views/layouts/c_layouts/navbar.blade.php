@@ -29,17 +29,17 @@
                 @auth
                     @if (auth()->user()->role=='siswa')
                         <a href="{{ route('home') }}">My Course</a>
-                        <a href="{{ route('logout') }}">SignOut</a>
+                        <a href="{{ route('logout') }}">Logout</a>
                     @elseif(auth()->user()->role=='instruktur')
                         <a href="{{ route('dashboard') }}">Dashboard</a>
-                        <a href="{{ 'logout' }}">SignOut</a>
+                        <a href="{{ 'logout' }}">Login</a>
                     @else
                         <a href="{{ route('home') }}">Dashboard</a>
-                        <a href="{{ route('logout') }}">SignOut</a>
+                        <a href="{{ route('logout') }}">Logout</a>
                     @endif                
                 @else
-                <a href="{{ route('login') }}">SignIn</a>
-                <a href="{{ route('register') }}">SignUp</a>
+                <a href="{{ route('login') }}">Login</a>
+                <a href="{{ route('register') }}">Register</a>
                 @endauth
             </div>
         </div>
