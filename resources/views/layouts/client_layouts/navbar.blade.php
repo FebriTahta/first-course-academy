@@ -60,16 +60,7 @@
                             <a href="{{ route('forum') }}">Forum</a>                            
                         </li>
                         <li>
-                            <a href="{{ route('allkursus') }}">All Course</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>                            
+                            <a href="{{ route('allkursus') }}">All Course</a>                                                      
                         </li>
                     </ul>
                 </li>
@@ -77,8 +68,8 @@
                 <li>
                     @auth                                                
                         @if (auth()->user()->role=='siswa')
-                            <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            {{-- <a href="{{ route('logout') }}"><i class="si si-action-undo"></i>Logout </a> --}}
+                            <a class="si si-action-undo" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
@@ -129,20 +120,7 @@
                             <a href="/login"><i class="fa fa-lock"></i>Login </a>
                             <a href="{{ 'register' }}"><i class="si si-lock"></i>register </a>                     
                         @endif                                            
-                </li>
-                {{-- <li>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </li> --}}
+                </li>                
             </ul>
             <!-- END Header Navigation -->
         </div>

@@ -6,14 +6,14 @@
 
         <title>CA | course</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="Fitur khusus bagi pengguna kursus private X Generation hadir dalam bentuk digital yaitu online course.">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
 
         <!-- Open Graph Meta -->
-        <meta property="og:title" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework">
-        <meta property="og:site_name" content="Codebase">
-        <meta property="og:description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta property="og:title" content="Course Academy">
+        <meta property="og:site_name" content="Course Academy">
+        <meta property="og:description" content="Fitur khusus bagi pengguna kursus private X Generation hadir dalam bentuk digital yaitu online course.">
         <meta property="og:type" content="website">
         <meta property="og:url" content="">
         <meta property="og:image" content="">
