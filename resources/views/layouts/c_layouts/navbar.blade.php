@@ -30,7 +30,7 @@
                     @if (auth()->user()->role=='siswa')
                         <a href="{{ route('home') }}">My Course</a>
                         <a href="{{ route('logout') }}">Logout</a>
-                    @elseif(auth()->user()->role=='instruktur')
+                    @elseif(auth()->user()->role=='instruktur') 
                         <a href="{{ route('dashboard') }}">Dashboard</a>
                         <a href="{{ 'logout' }}">Login</a>
                     @else
