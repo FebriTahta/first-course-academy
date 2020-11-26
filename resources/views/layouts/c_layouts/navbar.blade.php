@@ -10,11 +10,11 @@
     <meta property="og:type"               content="article" />
     <meta property="og:title"              content="Course Academy" />
     <meta property="og:description"        content="Kini kami hadir dalam bentuk digital untuk memenuhi kebutuhan belajar anda" />
-    <meta property="og:image"              content="{{ asset('gawr/gawr.jpg') }}"/>
+    <meta property="og:image"              content="{{ asset('gawr/gawr.jpg') }}"/> 
     <title>Course Academy</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> 
 </head>
 <body>    
     <div class="wrapper">
