@@ -43,7 +43,7 @@ class AkunController extends Controller
                 'body'      => '"'.$request->name.'" telah bergabung sebagai pengunjung ',
                 'link'      => 'course-academy.top/dashboard'
             ];
-            //kirim email dulu
+            //kirim email 
             $when           = Carbon::now()->addSeconds(10);
             $admin  = User::where('role','admin')->get();
             

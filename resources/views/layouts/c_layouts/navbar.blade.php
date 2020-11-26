@@ -32,7 +32,7 @@
                         <a href="{{ route('logout') }}">Logout</a>
                     @elseif(auth()->user()->role=='instruktur') 
                         <a href="{{ route('dashboard') }}">Dashboard</a>
-                        <a href="{{ 'logout' }}">Login</a>
+                        <a href="{{ 'logout' }}">Logout</a>
                     @else
                         <a href="{{ route('home') }}">Dashboard</a>
                         <a href="{{ route('logout') }}">Logout</a>
