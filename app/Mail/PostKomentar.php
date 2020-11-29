@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PostKomentar extends Mailable
+class PostKomentar extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

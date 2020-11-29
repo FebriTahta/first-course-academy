@@ -268,8 +268,8 @@
                             <button type="submit" class="btn btn-outline-primary">update</button>
                         </div>
                     </form>                  
-                </div>                                        
-            </div>                
+                </div>                
+            </div>                        
         </div>
 
         <div class="col-xl-8">
@@ -279,14 +279,14 @@
                 </div>
 
                 <div class="block-content border-bottom">
-                    <p class="text-center">KURSUS SAYA</p>
+                    <p class="text-center"></p>
                 </div>
                 <div class="block-content">
                     <table class="table table-borderless">
                         @foreach ($data_profile->kursus as $item)
                             <tr>
                                 <td class=""><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
-                                <td class="text-center">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>
+                                <td class="">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                    
                                 <td class="float-right">
                                     <a href="{{ route('kursus', $item->slug) }}" type="button" class="btn btn-outline-primary">pergi</a>
                                 </td>                                    
@@ -294,8 +294,30 @@
                         @endforeach
                     </table>
                 </div>
-            </div>            
-        </div>
+            </div>
+            
+            <div class="block">
+                @foreach ($data_profile->kursus as $item)                                    
+                    <div class="block-header block-header-default">
+                        <p>Kuis : {{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</p>
+                    </div>
+                    <div class="block-content">
+                        @foreach ($item->kuis as $items)                                                    
+                        <ul>
+                            <li>{{ $items->kuis_name }}
+                                <?php $sudah_dikerjakan = App\Result::where('user_id', $data_profile->user_id)->where('kuis_id', $items->id)->first()?>
+                                @if ($sudah_dikerjakan==null)
+                                    <a class="float-right text-danger" href="#"> belum</a>
+                                @else
+                                    <a class="float-right" href="#"> sudah</a>
+                                @endif                                
+                            </li>                            
+                        </ul>                        
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </div>        
         @else
         <div class="col-xl-12">
             <h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Akun</small></h2>

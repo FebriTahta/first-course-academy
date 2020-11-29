@@ -19,7 +19,7 @@
     <div class="col-12">
         <nav class="breadcrumb push content-heading">
             {{-- <a class="breadcrumb-item" href="be_pages_elearning_courses.html">Courses</a> --}}
-            <span class="breadcrumb-item active">User Management</span>
+            <span class="breadcrumb-item active">User Management | <a href="{{ route('userExport') }}"> download</a> </span>
         </nav>
         {{-- <h2 class="content-heading breadcumb push">User Management</h2> --}}
         @if (Session::has('pesan-bahaya'))

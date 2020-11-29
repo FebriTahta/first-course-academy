@@ -125,7 +125,8 @@
                                     <p>Untuk informasi lebih lanjut. Silahkan hubungi admin pada <i class="fa fa-phone"> 081-329-146-514</i></p>
                                 </div>
                                 @else
-                                <table class="table table-borderless">
+                                
+                                <table class="table table-borderless block-content">
                                     @foreach (auth()->user()->profile->kursus as $item)                                        
                                         <tr>
                                             <td class="push"><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
@@ -136,13 +137,14 @@
                                             </td>
                                             @else
                                             <td class="float-right">
-                                                <a href="#" class="btn btn-outline-warning"> Non Aktif / Dalam Perbaikan</a>    
+                                                <a href="#" class="btn btn-outline-warning">non aktif</a>    
                                             </td>                             
                                             @endif                                            
                                         </tr>
                                     @endforeach
                                 </table>
-                                @endif                            
+                                <div class="block-content"></div>
+                                @endif                          
                             @endif                                                                             
                         @endif
                     </div>

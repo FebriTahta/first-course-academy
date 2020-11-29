@@ -344,7 +344,7 @@
                     <table class="table table-borderless border-top">
                         @foreach ($data_kursus->profile as $siswa_kursus_ini)                                                    
                             <tr>
-                                <td><a type="button" data-toggle="modal" data-target="#modal-removesiswa" data-kursus_id="{{ $data_kursus->id }}" data-profile_id="{{ $siswa_kursus_ini->id }}" class="fa fa-group">&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-trash text-danger"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; {{ $siswa_kursus_ini->user->name }}</td>
+                                <td><a type="button" data-toggle="modal" data-target="#modal-removesiswa" data-kursus_id="{{ $data_kursus->id }}" data-profile_id="{{ $siswa_kursus_ini->id }}" class="fa fa-group">&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-trash text-danger"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="{{ route('profile', $siswa_kursus_ini->user->id) }}">{{ $siswa_kursus_ini->user->name }}</a></td>
                             </tr>
                         @endforeach
                     </table>
@@ -583,7 +583,7 @@
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">pastikan konten sesuai dengan materi anda</p>                        
                         @foreach ($list_data_video_kursus as $item_v)                        
-                        @if ($item_v->user_id !== $data_kursus->user_id)
+                        @if ($item_v->user_id !== auth()->user()->id)
                             <div class="form-group">
                                 <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                 <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
@@ -623,7 +623,7 @@
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">VIDEOKU</p>                        
                         @foreach ($list_data_video_kursus as $item_v)                        
-                        @if ($item_v->user_id === $data_kursus->user_id)
+                        @if ($item_v->user_id === auth()->user()->id)
                             <div class="form-group">
                                 <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                 <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
@@ -758,7 +758,8 @@
                                 <div class="block-content">                                                                            
                                     <p class="text-center text-danger border-bottom">pastikan kuis sesuai dengan materi anda</p>                                    
                                     @foreach ($data_kuis as $item_kuis)
-                                    @if ($item_kuis->user_id !== $data_kursus->user_id)
+                                    {{-- @if ($item_kuis->user_id !== $data_kursus->user_id) --}}
+                                    @if ($item_kuis->user_id !== auth()->user()->id)
                                     <div class="form-group">
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                         <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
@@ -766,7 +767,8 @@
                                         <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="form-group float-right text-right">detail</a>
                                     </div>
                                     @else
-                                    @endif                                    
+                                    
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -797,16 +799,17 @@
                         </div>
                     </div>
 
-                    <div class="block-content">                            
+                    <div class="block-content">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="hidden" id="id" name="id">                                
+                                <input type="hidden" id="id" name="id">
                             </div>
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
                                     <p class="text-center text-danger border-bottom">KUISKU</p>                                    
                                     @foreach ($data_kuis as $item_kuis)
-                                    @if ($item_kuis->user_id === $data_kursus->user_id)
+                                    {{-- @if ($item_kuis->user_id === $data_kursus->user_id) --}}
+                                    @if ($item_kuis->user_id === auth()->user()->id)
                                     <div class="form-group">
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                         <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
@@ -924,7 +927,7 @@
             <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('salinBuku') }}" method="POST" enctype="multipart/form-data">@csrf 
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">salin kuis</h3>
+                        <h3 class="block-title">salin buku</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="si si-close"></i>

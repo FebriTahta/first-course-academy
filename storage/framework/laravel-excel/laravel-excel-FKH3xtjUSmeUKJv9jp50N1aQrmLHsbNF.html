@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en" class="no-focus">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <meta name="csrf-token" content="BTnFxD4FTFgcaGy8xuqBdAjD9NEpijc3viHNbtlV">
+        <title>CourseAcademy</title>
+        <meta name="description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="author" content="pixelcave">
+        <meta name="robots" content="noindex, nofollow">
+
+        <!-- Open Graph Meta -->
+        <meta property="og:title" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework">
+        <meta property="og:site_name" content="Codebase">
+        <meta property="og:description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="">
+        
+        <!-- Icons -->
+        <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+        <link rel="shortcut icon" href="http://127.0.0.1:8000/assets/media/favicons/favicon.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="http://127.0.0.1:8000/assets/media/favicons/favicon-192x192.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="http://127.0.0.1:8000/assets/media/favicons/apple-touch-icon-180x180.png">
+        <!-- END Icons -->
+
+        <!-- Stylesheets -->                
+                
+        <!-- Page JS Plugins CSS -->
+        <link rel="stylesheet" href="http://127.0.0.1:8000/assets/js/plugins/datatables/dataTables.bootstrap4.css">
+        <link rel="stylesheet" href="http://127.0.0.1:8000/assets/js/plugins/summernote/summernote-bs4.css">
+        <link rel="stylesheet" href="http://127.0.0.1:8000/assets/js/plugins/sweetalert2/sweetalert2.min.css">
+
+        <!-- Fonts and Codebase framework -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">
+        <link rel="stylesheet" id="css-main" href="http://127.0.0.1:8000/assets/css/codebase.min.css">
+        
+        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+        <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
+        <!-- END Stylesheets -->
+    </head>
+    <body>
+        
+
+        <!-- Page Container -->
+        <!--
+            Available classes for #page-container:
+
+        GENERIC
+
+            'enable-cookies'                            Remembers active color theme between pages (when set through color theme helper Template._uiHandleTheme())
+
+        SIDEBAR & SIDE OVERLAY
+
+            'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
+            'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
+            'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
+            'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
+            'sidebar-inverse'                           Dark themed sidebar
+
+            'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
+            'side-overlay-o'                            Visible Side Overlay by default
+
+            'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
+
+            'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
+
+        HEADER
+
+            ''                                          Static Header if no class is added
+            'page-header-fixed'                         Fixed Header
+
+        HEADER STYLE
+
+            ''                                          Classic Header style if no class is added
+            'page-header-modern'                        Modern Header style
+            'page-header-inverse'                       Dark themed Header (works only with classic Header style)
+            'page-header-glass'                         Light themed Header with transparency by default
+                                                        (absolute position, perfect for light images underneath - solid light background on scroll if the Header is also set as fixed)
+            'page-header-glass page-header-inverse'     Dark themed Header with transparency by default
+                                                        (absolute position, perfect for dark images underneath - solid dark background on scroll if the Header is also set as fixed)
+
+        MAIN CONTENT LAYOUT
+
+            ''                                          Full width Main Content if no class is added
+            'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
+            'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
+        -->
+        <div id="page-container" class="sidebar-mini sidebar-o sidebar-inverse enable-page-overlay side-scroll page-header-fixed page-header-glass page-header-inverse main-content-boxed">
+            <!-- Side Overlay-->
+            <aside id="side-overlay">
+                <!-- Side Header -->
+                <div class="content-header content-header-fullrow">
+                    <div class="content-header-section align-parent">
+                        <!-- Close Side Overlay -->
+                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                        <button type="button" class="btn btn-circle btn-dual-secondary align-v-r" data-toggle="layout" data-action="side_overlay_close">
+                            <i class="fa fa-times text-danger"></i>
+                        </button>
+                        <!-- END Close Side Overlay -->
+
+                        <!-- User Info -->
+                        
+                        <!-- END User Info -->
+                    </div>
+                </div>
+                <!-- END Side Header -->
+
+                <!-- Side Content -->
+                <div class="content-side">
+                    
+                </div>
+                <!-- END Side Content -->
+            </aside>
+            <!-- END Side Overlay -->
+
+            <!-- Sidebar -->
+            <!--
+                Helper classes
+
+                Adding .sidebar-mini-hide to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
+                Adding .sidebar-mini-show to an element will make it visible (opacity: 1) when the sidebar is in mini mode
+                    If you would like to disable the transition, just add the .sidebar-mini-notrans along with one of the previous 2 classes
+
+                Adding .sidebar-mini-hidden to an element will hide it when the sidebar is in mini mode
+                Adding .sidebar-mini-visible to an element will show it only when the sidebar is in mini mode
+                    - use .sidebar-mini-visible-b if you would like to be a block when visible (display: block)
+            -->
+            <!-- Header -->
+            <header id="page-header">
+                <!-- Header Content -->
+                <div class="content-header">
+                    <!-- Left Section -->
+                    <div class="content-header-section">
+                        <!-- Toggle Sidebar -->
+                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                        <button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout" data-action="sidebar_toggle">
+                            <i class="fa fa-navicon"></i>
+                        </button>
+                        <!-- END Toggle Sidebar -->
+
+                        <!-- Open Search Section -->
+                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                        
+                        <!-- END Open Search Section -->
+
+                        <!-- Layout Options (used just for demonstration) -->
+                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-circle btn-dual-secondary" id="page-header-options-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <div class="dropdown-menu min-width-300" aria-labelledby="page-header-options-dropdown">
+                                <h5 class="h6 text-center py-10 mb-10 border-b text-uppercase">Settings</h5>
+                                <h6 class="dropdown-header">Color Themes</h6>
+                                <div class="row no-gutters text-center mb-5">
+                                    <div class="col-2 mb-5">
+                                        <a class="text-default" data-toggle="theme" data-theme="default" href="javascript:void(0)">
+                                            <i class="fa fa-2x fa-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-2 mb-5">
+                                        <a class="text-elegance" data-toggle="theme" data-theme="assets/css/themes/elegance.min.css" href="javascript:void(0)">
+                                            <i class="fa fa-2x fa-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-2 mb-5">
+                                        <a class="text-pulse" data-toggle="theme" data-theme="assets/css/themes/pulse.min.css" href="javascript:void(0)">
+                                            <i class="fa fa-2x fa-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-2 mb-5">
+                                        <a class="text-flat" data-toggle="theme" data-theme="assets/css/themes/flat.min.css" href="javascript:void(0)">
+                                            <i class="fa fa-2x fa-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-2 mb-5">
+                                        <a class="text-corporate" data-toggle="theme" data-theme="assets/css/themes/corporate.min.css" href="javascript:void(0)">
+                                            <i class="fa fa-2x fa-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-2 mb-5">
+                                        <a class="text-earth" data-toggle="theme" data-theme="assets/css/themes/earth.min.css" href="javascript:void(0)">
+                                            <i class="fa fa-2x fa-circle"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <h6 class="dropdown-header">Header</h6>
+                                <div class="row gutters-tiny text-center mb-5">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-sm btn-block btn-alt-secondary" data-toggle="layout" data-action="header_fixed_toggle">Fixed Mode</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-sm btn-block btn-alt-secondary d-none d-lg-block mb-10" data-toggle="layout" data-action="header_style_classic">Classic Style</button>
+                                    </div>
+                                </div>
+                                <h6 class="dropdown-header">Sidebar</h6>
+                                <div class="row gutters-tiny text-center mb-5">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-sm btn-block btn-alt-secondary mb-10" data-toggle="layout" data-action="sidebar_style_inverse_off">Light</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-sm btn-block btn-alt-secondary mb-10" data-toggle="layout" data-action="sidebar_style_inverse_on">Dark</button>
+                                    </div>
+                                </div>
+                                <div class="d-none d-xl-block">
+                                    <h6 class="dropdown-header">Main Content</h6>
+                                    <button type="button" class="btn btn-sm btn-block btn-alt-secondary mb-10" data-toggle="layout" data-action="content_layout_toggle">Toggle Layout</button>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="row gutters-tiny text-center">
+                                    <div class="col-6">
+                                        <a class="dropdown-item mb-0" href="be_layout_api.html">
+                                            <i class="si si-chemistry mr-5"></i> Layout API
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a class="dropdown-item mb-0" href="be_ui_color_themes.html">
+                                            <i class="fa fa-paint-brush mr-5"></i> Color Themes
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Layout Options -->
+                    </div>
+                    <!-- END Left Section -->
+
+                    <!-- Right Section -->
+                    <div class="content-header-section">
+                        <!-- User Dropdown -->
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user d-sm-none"></i>
+                                <span class="d-none d-sm-inline-block">Tahta</span>
+                                <i class="fa fa-angle-down ml-5"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
+                                <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User</h5>
+                                                                
+                                <div class="dropdown-divider"></div>
+
+                                <!-- Toggle Side Overlay -->
+                                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                                <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout" data-action="side_overlay_toggle">
+                                    <i class="si si-wrench mr-5"></i> Settings
+                                </a>
+                                <!-- END Side Overlay -->
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="http://127.0.0.1:8000/logout">
+                                    <i class="si si-logout mr-5"></i> Sign Out
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END User Dropdown -->
+
+                        <!-- Notifications -->
+                        
+                        <!-- END Notifications -->
+
+                        <!-- Toggle Side Overlay -->
+                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                        
+                        <!-- END Toggle Side Overlay -->
+                    </div>
+                    <!-- END Right Section -->
+                </div>
+                <!-- END Header Content -->
+
+                <!-- Header Search -->
+                
+                <!-- END Header Search -->
+
+                <!-- Header Loader -->
+                <!-- Please check out the Activity page under Elements category to see examples of showing/hiding it -->
+                <div id="page-header-loader" class="overlay-header bg-primary">
+                    <div class="content-header content-header-fullrow text-center">
+                        <div class="content-header-item">
+                            <i class="fa fa-sun-o fa-spin text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Header Loader -->
+            </header>
+            <!-- END Header --><!--Sidebar -->
+<nav id="sidebar">
+    <!-- Sidebar Content -->
+    <div class="sidebar-content">
+        <!-- Side Header -->
+        <div class="content-header content-header-fullrow px-15">
+            <!-- Mini Mode -->
+            <div class="content-header-section sidebar-mini-visible-b">
+                <!-- Logo -->
+                <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
+                    <span class="text-dual-primary-dark">c</span><span class="text-primary">b</span>
+                </span>
+                <!-- END Logo -->
+            </div>
+            <!-- END Mini Mode -->
+
+            <!-- Normal Mode -->
+            <div class="content-header-section text-center align-parent sidebar-mini-hidden">
+                <!-- Close Sidebar, Visible only on mobile screens -->
+                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                <button type="button" class="btn btn-circle btn-dual-secondary d-lg-none align-v-r" data-toggle="layout" data-action="sidebar_close">
+                    <i class="fa fa-times text-danger"></i>
+                </button>
+                <!-- END Close Sidebar -->
+
+                <!-- Logo -->
+                <div class="content-header-item">
+                    <a class="link-effect font-w700" href="/">
+                        <i class="si si-fire text-primary"></i>
+                        <span class="font-size-xl text-dual-primary-dark">code</span><span class="font-size-xl text-primary">base</span>
+                    </a>
+                </div>
+                <!-- END Logo -->
+            </div>
+            <!-- END Normal Mode -->
+        </div>
+        <!-- END Side Header -->
+
+        <!-- Side User -->
+        <div class="content-side content-side-full content-side-user px-10 align-parent">
+            <!-- Visible only in mini mode -->
+            <div class="sidebar-mini-visible-b align-v animated fadeIn">
+                <img class="img-avatar img-avatar32" src="http://127.0.0.1:8000/assets/media/avatars/avatar15.jpg" alt="">
+            </div>
+            <!-- END Visible only in mini mode -->
+
+            <!-- Visible only in normal mode -->
+            <div class="sidebar-mini-hidden-b text-center">
+                <a class="img-link" href="be_pages_generic_profile.html">
+                    <img class="img-avatar" src="http://127.0.0.1:8000/assets/media/avatars/avatar15.jpg" alt="">
+                </a>
+                <ul class="list-inline mt-10">
+                    <li class="list-inline-item">
+                        <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="be_pages_generic_profile.html">Tahta</a>
+                    </li>                    
+                    <li class="list-inline-item">
+                        <a class="link-effect text-dual-primary-dark" href="logout">
+                            <i class="si si-logout"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END Visible only in normal mode -->
+        </div>
+        <!-- END Side User -->
+
+        <!-- Side Navigation -->
+        <div class="content-side content-side-full">
+            <ul class="nav-main">
+                <li>                    
+                    <a href="http://127.0.0.1:8000/dashboard"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>                    
+                    <a href="http://127.0.0.1:8000/forum"><i class="si si-cup"></i><span class="sidebar-mini-hide">Forum</span></a>
+                                        
+                </li>                
+                <li class="nav-main-heading"><span class="sidebar-mini-visible">MU</span><span class="sidebar-mini-hidden">Menu Utama</span></li>                            
+                <li class="open">                                
+                    <ul>                                    
+                        <li>
+                                                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">KONTEN</span></a>
+                            <ul>
+                                                                <li>
+                                    <a href="http://127.0.0.1:8000/my-kursus">Kursus Saya</a>
+                                </li>
+                                <li>
+                                    <a href="http://127.0.0.1:8000/my-video">Video Saya</a>
+                                </li>
+                                <li>
+                                    <a href="http://127.0.0.1:8000/my-book">Buku Saya</a>
+                                </li>
+                                <li>
+                                    <a href="http://127.0.0.1:8000/my-kuis">Kuis Saya</a>
+                                </li>                                
+                                                            </ul>
+                        </li>                                                                                                                                                
+                    </ul>
+                </li>                                                                                       
+            </ul>
+        </div>
+        <!-- END Side Navigation -->
+    </div>
+    <!-- Sidebar Content -->
+</nav>
+<!-- END Sidebar -->
+    <!-- Hero -->
+<div class="bg-image bg-image-bottom" style="background-image: url(http://127.0.0.1:8000/assets/media/photos/photo34@2x.jpg);">
+    <div class="bg-primary-dark-op">
+        <div class="content content-top text-center overflow-hidden">
+            <div class="pb-20">
+                <h1 class="font-w700 text-white mb-10 invisible" data-toggle="appear" data-class="animated fadeInUp">User Management</h1>
+                <h2 class="h4 font-w400 text-white-op invisible" data-toggle="appear" data-class="animated fadeInUp">Welcome to your user management page!</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Hero -->
+
+<div class="content row">
+    <!--form-->
+    <div class="col-12">
+        <nav class="breadcrumb push content-heading">
+            
+            <span class="breadcrumb-item active">User Management</span>
+        </nav>
+        
+                            </div>
+    <div class="col-md-4">
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
+            </div>
+            <div class="block-content text-primary">
+                <ol>
+                    <li>daftar pengguna disini hanya menampilkan pengguna yang sudah melakukan verifikasi email</li>
+                    <li>pastikan anda mendaftarkan pengguna menggunakan email aktif</li>
+                    <li>pengguna yang belum melakukan verifikasi email hanya dapat dilihat pada menu (dashboard:pengguna yang belum melakukan verifikasi)</li>
+                </ol>
+            </div>
+        </div>    
+        <div class="block">
+        <div class="block-header block-header-default ">
+            <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
+            <h3 class="block-title"></h3>
+        </div>
+        <div class="block-content">
+            <form class="" action="http://127.0.0.1:8000/daftar_user" method="post" > <input type="hidden" name="_token" value="BTnFxD4FTFgcaGy8xuqBdAjD9NEpijc3viHNbtlV">                <div class="form-group">
+                    <div class="form-material">
+                        <input type="text" class="form-control" id="val-name" name="name" placeholder="Enter user name" required>
+                        <label for="val-name">Nama</label>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <div class="form-material">
+                        <input type="email" class="form-control" id="val-email" name="email" placeholder="Your valid email.." required>
+                        <label for="val-email">Email</label>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="form-material">
+                        <select class="js-select2 form-control js-select2-enabled select2-hidden-accessible" id="val-select22" name="role" style="width: 100%;" data-placeholder="Choose one.." data-select2-id="val-select22" tabindex="-1" aria-hidden="true" required>
+                            <option data-select2-id="5"></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                            <option value="admin">admin</option>
+                            <option value="instruktur">instruktur</option>
+                            <option value="siswa">siswa</option>
+                            
+                        </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="4" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-val-select22-container"><span class="select2-selection__rendered" id="select2-val-select22-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Choose one..</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        <label for="val-select2">Role</label>
+                    </div>
+                </div>                                   
+                <div class="form-group">
+                    <button type="submit" class="btn btn-alt-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    <!--end form-->
+    <div class="col-md-8">
+        <div class="block ">
+            <div class="block-header block-header-default">                
+                <h3 class="block-title">DAFTAR USER</h3>
+            </div>
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="daftar_user" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>nama</th>
+                                <th>role</th>
+                                <th>status</th>                                
+                                <th>email</th>
+                                <th>aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                                                            <tr>
+                                    <td>febri rizqi</td>
+                                    <td>admin</td>
+                                    <td>
+                                        
+                                                                                    <span class="badge badge-primary">aktif</span>
+                                                                            </td>
+                                    <td>febrirtah@gmail.com</td>
+                                    <td>
+                                                                            <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
+                                      data-id="1" data-name="febri rizqi" data-email="febrirtah@gmail.com" data-stat="1" data-role="admin"></button>
+                                                                                                                    
+                                    </td>
+                                </tr>
+                                                                
+                                                                                            <tr>
+                                    <td>Tahta</td>
+                                    <td>instruktur</td>
+                                    <td>
+                                        
+                                                                                    <span class="badge badge-primary">aktif</span>
+                                                                            </td>
+                                    <td>yugiblader2002@gmail.com</td>
+                                    <td>
+                                                                            <a href="/profile/2" class="btn btn-outline-success fa fa-user"></a>
+                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
+                                      data-id="2" data-name="Tahta" data-email="yugiblader2002@gmail.com" data-stat="1" data-role="instruktur"></button>
+                                      <button class="btn btn-outline-danger fa fa-trash" data-toggle="modal" data-target="#modal-fromleftdel"
+                                      data-name="Tahta" data-id="2"></button>  
+                                                                                                                    
+                                    </td>
+                                </tr>
+                                                                
+                                                                                                                            
+                                                                                                                            
+                                                                                            <tr>
+                                    <td>tahtahtah</td>
+                                    <td>siswa</td>
+                                    <td>
+                                        
+                                                                                    <span class="badge badge-primary">aktif</span>
+                                                                            </td>
+                                    <td>tahtahtahx@gmail.com</td>
+                                    <td>
+                                                                            <a href="/profile/5" class="btn btn-outline-success fa fa-user"></a>
+                                      <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
+                                      data-id="5" data-name="tahtahtah" data-email="tahtahtahx@gmail.com" data-stat="1" data-role="siswa"></button>
+                                      <button class="btn btn-outline-danger fa fa-trash" data-toggle="modal" data-target="#modal-fromleftdel"
+                                      data-name="tahtahtah" data-id="5"></button>  
+                                                                                                                    
+                                    </td>
+                                </tr>
+                                                                
+                                                                
+                        </tbody>                        
+                    </table>
+                </div>
+            </div>                                              
+        </div>
+    </div>    
+</div>
+
+<!--modal edit user-->
+<div class="modal fade" id="modal-fromleft" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-update-user" name="form-update-user" class="form-horizontal" action="http://127.0.0.1:8000/daftar_user" method="POST" enctype="multipart/form-data"><input type="hidden" name="_token" value="BTnFxD4FTFgcaGy8xuqBdAjD9NEpijc3viHNbtlV">                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary">
+                        <h3 class="block-title">ADD USER</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">
+                        <div class="form-group text-center border-bottom text-danger">
+                            <p class="text-danger"> Perubahan data pengguna akan diberikan password baru berupa "secret" dan akan diinformasikan melalui email pengguna</p>
+                        </div>
+                        <div class="form-group border-bottom">
+                            <input class="form-control" type="hidden" id="id" name="id" value="" required>
+                            <label for="">Nama </label>               
+                            <input class="form-control" type="text" id="name" name="name" value="" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input class="form-control" type="email" id="email" name="email" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Role </label>
+                            <select name="role" id="role" class="form-control" required>
+                                <option value=""> == pilih role == </option>
+                                <option value="admin">admin</option>
+                                <option value="instruktur">instruktur</option>
+                                <option value="siswa">siswa</option>
+                            </select>
+                        </div>
+                        <div class="form-group float-right">
+                            <button class="btn btn-outline-primary" type="submit">tambahkan</button>
+                        </div>                                                                                                               
+                    </div>                                                             
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal edit user-->
+
+<!--modal edit user-->
+<div class="modal fade" id="modal-fromleft-edit" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-update-user" name="form-update-user" class="form-horizontal" action="http://127.0.0.1:8000/ubahpengguna" method="POST" enctype="multipart/form-data"><input type="hidden" name="_token" value="BTnFxD4FTFgcaGy8xuqBdAjD9NEpijc3viHNbtlV">                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary">
+                        <h3 class="block-title">ADD USER</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">
+                        <div class="form-group text-center border-bottom text-danger">
+                            <p class="text-danger"> Perubahan data pengguna akan diberikan password baru berupa "secret" dan akan diinformasikan melalui email pengguna</p>
+                        </div>
+                        <div class="form-group border-bottom">
+                            <input type="hidden" id="stat" name="stat">
+                            <input class="form-control" type="hidden" id="id" name="id" value="" required>
+                            <label for="">Nama </label>               
+                            <input class="form-control" type="text" id="name" name="name" value="" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input class="form-control" type="email" id="email" name="email" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Role </label>
+                            <select name="role" id="role" class="form-control" required>
+                                <option value=""> == pilih role == </option>
+                                <option value="admin">admin</option>
+                                <option value="instruktur">instruktur</option>
+                                <option value="siswa">siswa</option>
+                            </select>
+                        </div>
+                        <div class="form-group float-right">
+                            <button class="btn btn-outline-primary" type="submit">tambahkan</button>
+                        </div>                                                                                                               
+                    </div>                                                             
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal edit user-->
+
+<!--modal delete user-->
+<div class="modal fade" id="modal-fromleftdel" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-update-user" name="form-update-user" class="form-horizontal" action="http://127.0.0.1:8000/hapusUser" method="POST" enctype="multipart/form-data"><input type="hidden" name="_token" value="BTnFxD4FTFgcaGy8xuqBdAjD9NEpijc3viHNbtlV">                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">HAPUS USER</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group border-bottom mb-10">
+                            <input type="hidden" id="id" name="id">
+                            <div class="text-center text-danger">
+                                <p>Anda yakin akan menghapus user tersebut ?</p>
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-danger" type="submit">HAPUS</button>
+                        </div>
+                    </div>                                                             
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal delete user-->
+
+<!-- Footer -->
+<footer id="page-footer" class="opacity-0">
+    <div class="content py-20 font-size-xs clearfix">
+        <div class="float-right">
+            Crafted with <i class="fa fa-heart text-pulse"></i> by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+        </div>
+        <div class="float-left">
+            <a class="font-w600" href="https://1.envato.market/95j" target="_blank">Codebase 3.2</a> &copy; <span class="js-year-copy"></span>
+        </div>
+    </div>
+</footer>
+<!-- END Footer -->
+</div>
+<!-- END Page Container -->
+
+<!--
+Codebase JS Core
+
+Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
+to handle those dependencies through webpack. Please check out assets/_es6/main/bootstrap.js for more info.
+
+If you like, you could also include them separately directly from the assets/js/core folder in the following
+order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
+
+assets/js/core/jquery.min.js
+assets/js/core/bootstrap.bundle.min.js
+assets/js/core/simplebar.min.js
+assets/js/core/jquery-scrollLock.min.js
+assets/js/core/jquery.appear.min.js
+assets/js/core/jquery.countTo.min.js
+assets/js/core/js.cookie.min.js
+-->
+<script src="http://127.0.0.1:8000/assets/js/codebase.core.min.js"></script>
+
+<!--
+Codebase JS
+
+Custom functionality including Blocks/Layout API as well as other vital and optional helpers
+webpack is putting everything together at assets/_es6/main/app.js
+-->
+<script src="http://127.0.0.1:8000/assets/js/codebase.app.min.js"></script>
+
+<!-- Page JS Plugins -->
+<script src="http://127.0.0.1:8000/assets/js/plugins/chartjs/Chart.bundle.min.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<!-- Page JS Code -->
+<script src="http://127.0.0.1:8000/assets/js/pages/be_pages_dashboard.min.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/pages/be_tables_datatables.min.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/plugins/ckeditor/ckeditor.js"></script>
+<script src="http://127.0.0.1:8000/assets/js/pages/be_ui_activity.min.js"></script>
+
+<script>jQuery(function(){ Codebase.helpers('notify'); });</script>
+<script>jQuery(function(){ Codebase.helpers(['summernote', 'ckeditor', 'simplemde']); });</script>
+<script>jQuery(function(){ Codebase.helpers('content-filter'); });</script>
+<script>    
+    var table2;
+    $(document).ready(function(){    
+        table2= $('#daftar_user').DataTable({});        
+    });
+    
+</script>
+
+<script>
+    $('#modal-fromleft-edit').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var name = button.data('name')
+        var email = button.data('email')
+        var role = button.data('role')
+        var stat = button.data('stat')
+        var modal = $(this)
+        modal.find('.block-title').text('Ubah data pengguna');
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #name').val(name);
+        modal.find('.block-content #email').val(email);
+        modal.find('.block-content #role').val(role);
+        modal.find('.block-content #stat').val(stat);
+    })
+</script>
+<script>
+    $('#modal-fromleftdel').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var name = button.data('name')        
+        var modal = $(this)
+        modal.find('.block-title').text('HAPUS USER');
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #name').val(name);        
+    })
+</script>
+</body>
+</html>
