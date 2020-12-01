@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-4 col-xl-4">
                             <button class="btn fa fa-copy float-right" data-toggle="modal" data-target="#modal-fromright-salin-kuis">&nbsp; salin kuis </button>
-                        </div>                                                                        
+                        </div>                        
                     </div><br>
                     <div class="col-md-4 col-xl-12 row" data-category="book" style="display: none">
                         <div class="col-4 col-xl-4"><button class="btn fa fa-plus" data-toggle="modal" data-target="#modal-fromright_book">&nbsp; upload buku</button></div>
@@ -583,16 +583,16 @@
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">pastikan konten sesuai dengan materi anda</p>                        
                         @foreach ($list_data_video_kursus as $item_v)                        
-                        @if ($item_v->user_id !== auth()->user()->id)
-                            <div class="form-group">
-                                <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
-                                <label>{{ $item_v->video_name }}</label>
-                                <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
-                            </div>    
-                            @else
-                        @endif
-                        @endforeach                        
+                            @if ($item_v->user_id !== auth()->user()->id)
+                                <div class="form-group">
+                                    <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                                    <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
+                                    <label>{{ $item_v->video_name }}</label>
+                                    <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
+                                </div>
+                                @else
+                            @endif
+                        @endforeach
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -713,7 +713,7 @@
                             
                             <label for="name" class="col-sm-12 control-label">judul kuis</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="kuis_name" onkeydown="getslug();" name="kuis_name"
+                                <input type="text" class="form-control" id="kuis_name" onkeyup="getslug();" name="kuis_name"
                                     value="" required>
                             </div>
                             <div class="form-group">

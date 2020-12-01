@@ -39,6 +39,7 @@ Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     //report user
     // Route::get('/user-export-excel', 'LaporanController@userExcel')->name('userExport');
+    Route::get('/user-export-pdf', 'LaporanController@userPDF')->name('userpdf');
     //dashboard
     Route::get('/dashboard','AdminDashboardController@index')->name('dashboard');
     //pengguna

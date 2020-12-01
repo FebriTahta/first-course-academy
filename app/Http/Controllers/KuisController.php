@@ -34,7 +34,7 @@ class KuisController extends Controller
             if ($kursus_id === null) {
                 # code...
                 $notif = array(
-                    'pesan-sukses' => 'kuis baru berhasil ditambahkan pada kursus',                
+                    'pesan-sukses' => 'kuis berhasil ditambahkan',                
                 );
                 return redirect()->back()->with($notif);
 
@@ -96,7 +96,8 @@ class KuisController extends Controller
         $kuiss  = Kuis::all();
         $kelass = Kelas::all();
         $mapels = Mapel::all();
-        return view('/admin/daftarKonten/kuis', compact('kuis','kuiss','user','users','kelass','mapels'));
+        $instruktur = User::where('role', 'instruktur')->where('stat', '1')->get();
+        return view('/admin/daftarKonten/kuis', compact('kuis','kuiss','user','users','kelass','mapels','instruktur'));
     }
 
     public function hapusKuisPermanen(Request $request){
