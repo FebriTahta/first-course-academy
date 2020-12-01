@@ -160,7 +160,7 @@
                             <label for="name" class="control-label">Deskripsi Kuis</label>
                             
                                 <textarea class="form-control" name="kuis_desc" id="kuis_desc" cols="30" rows="10"> Pesan / Deskripsi seputar kuis yang akan dibuat</textarea>
-                            <input type="text" id="slug" name="slug">
+                            <input type="hidden" id="slug" name="slug">
                         </div>
                         <div class="form-group float-right">
                             <button class="btn btn-outline-primary fa fa-plus" type="submit"> UPLOAD</button>

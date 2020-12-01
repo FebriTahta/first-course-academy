@@ -42,6 +42,7 @@
                     <li>daftar pengguna disini hanya menampilkan pengguna yang sudah melakukan verifikasi email</li>
                     <li>pastikan anda mendaftarkan pengguna menggunakan email aktif</li>
                     <li>pengguna yang belum melakukan verifikasi email hanya dapat dilihat pada menu (dashboard:pengguna yang belum melakukan verifikasi)</li>
+                    <li>user / pengguna yang didaftarkan user melalui halaman user management akan diberikan password "secret" default</li>
                     <li>anda dapat mengunduh laporan data <a href="{{ route('userpdf') }}"><u> disini "download" </u></a></li>
                 </ol>
             </div>
@@ -161,7 +162,7 @@
 
                     <div class="block-content">
                         <div class="form-group text-center border-bottom text-danger">
-                            <p class="text-danger"> Informasi perubahan data akan dikirim ke email user</p>
+                            <p class="text-danger"> Perubahan data pengguna akan diinformasikan melalui email pengguna</p>
                         </div>
                         <div class="form-group border-bottom">
                             <input class="form-control" type="hidden" id="id" name="id" value="" required>
@@ -209,7 +210,7 @@
 
                     <div class="block-content">
                         <div class="form-group text-center border-bottom text-danger">
-                            <p class="text-danger"> Perubahan data pengguna akan diberikan password baru berupa "secret" dan akan diinformasikan melalui email pengguna</p>
+                            <p class="text-danger"> Perubahan data pengguna akan diinformasikan melalui email pengguna</p>
                         </div>
                         <div class="form-group border-bottom">
                             <input type="hidden" id="stat" name="stat">
@@ -260,7 +261,7 @@
                         <div class="form-group border-bottom mb-10">
                             <input type="hidden" id="id" name="id">
                             <div class="text-center text-danger">
-                                <p>Anda yakin akan menghapus user tersebut ?</p>
+                                <p>Yakin menghapus user tersebut ?</p>
                             </div>                            
                         </div>
                         <div class="form-group">
