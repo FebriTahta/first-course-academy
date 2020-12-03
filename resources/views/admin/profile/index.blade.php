@@ -309,7 +309,7 @@
                                 @if ($sudah_dikerjakan==null)
                                     <a class="float-right text-danger" href="#"> belum</a>
                                 @else
-                                    <a class="float-right" href="#"> sudah</a>
+                                    <a class="float-right" href="/detail-result-siswa/{{ $items->id }}/{{ $data_profile->user_id }}"> sudah</a>
                                 @endif                                
                             </li>                            
                         </ul>                        

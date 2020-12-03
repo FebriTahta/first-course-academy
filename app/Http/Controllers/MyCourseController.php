@@ -109,10 +109,10 @@ class MyCourseController extends Controller
         return view('client.mykuis.detail', compact('data_kuis','data_pertanyaan','data_result','data_result_benar','nilai'));
     }
 
-    public function detailresultsiswa($slug, $id)
+    public function detailresultsiswa($id, $user_id)
     {
-        $user_id            = $id;
-        $data_kuis          = Kuis::where('slug', $slug)->first();
+        $user_id            = $user_id;
+        $data_kuis          = Kuis::where('id', $id)->first();
         $data_kuis_id       = $data_kuis->id;                
         $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->get();
         $data_result        = Result::where('user_id', $user_id)

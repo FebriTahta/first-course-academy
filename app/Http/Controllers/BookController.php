@@ -15,9 +15,7 @@ class BookController extends Controller
 {
     public function store(Request $request)
     {   
-        //model kursus untuk di attach pada tabel povot
         $id     = $request->kursus_id;
-        
         //model book
         $data   =   new Book;
         //book file move to storage untuk download

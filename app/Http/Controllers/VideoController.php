@@ -25,8 +25,7 @@ class VideoController extends Controller
                             'video_link'=>$request->video_link,
                             'video_name'=>$request->video_name,                    
                             ]);
-        $data_video         = Video::find($video_id);
-        
+        $data_video         = Video::find($video_id);        
         if ($kursus_id === null) {
             # code...
             $notif = array(
@@ -86,6 +85,18 @@ class VideoController extends Controller
             
         return redirect()->back()->with($notif);        
     }
+    
+    public function removeVideoPermanen(Request $request){
+        $id             = $request->id;
+        $video          = Video::find($id);
+        $video_name     = $video->video_name;
+
+        $notif          = array(
+                        'pesan-bahaya' => 'video "'.$video_name.'" berhasil dihapus',                
+                        );
+        $video->delete();
+        return redirect()->back()->with($notif); 
+    }
 
     //start copy video encode anya test
     public function get_video_name()
@@ -105,15 +116,4 @@ class VideoController extends Controller
         return view('admin/daftarKonten/video', compact('video','user','users','kelass','mapels','videos'));
     }
 
-    public function removeVideoPermanen(Request $request){
-        $id             = $request->id;
-        $video          = Video::find($id);
-        $video_name     = $video->video_name;
-
-        $notif          = array(
-                        'pesan-bahaya' => 'video "'.$video_name.'" berhasil dihapus',                
-                        );
-        $video->delete();
-        return redirect()->back()->with($notif); 
-    }
 }

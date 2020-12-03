@@ -19,7 +19,7 @@ Route::get('/logout','HomeController@logout')->name('/logout');
 Route::get('/profile/{id}','ProfileController@index')->name('profile');
 Route::post('/store-profile','ProfileController@store')->name('storeProfile');
 //detail result for admin & instruktur
-Route::get('/detail-result-siswa/{slug}/{id}','MyCourseController@detailresultsiswa');
+Route::get('/detail-result-siswa/{id}/{user_id}','MyCourseController@detailresultsiswa');
 //forum untuk semua user
 Route::get('/forum','ForumController@index')->name('forum');
 Route::get('/forum-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaan');

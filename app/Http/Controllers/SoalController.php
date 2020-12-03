@@ -33,8 +33,7 @@ class SoalController extends Controller
         
         $pertanyaans = (new Pertanyaan)->storePertanyaan([//insert dari model question
             'kuis_id'=>$request->kuis_id,            
-            'pertanyaan_name'=>$request->pertanyaan_name,
-            
+            'pertanyaan_name'=>$request->pertanyaan_name,            
         ]);
         if($request -> hasFile('pertanyaan_name'))
             {
@@ -43,7 +42,6 @@ class SoalController extends Controller
                 $addpertanyaan->save();
             }
         $answer = (new Answer)->storeAnswer($data,$pertanyaans);//insert dari model answer
-
         $notif = array(
             'pesan-sukses' => 'soal baru berhasil ditambahkan'
         );

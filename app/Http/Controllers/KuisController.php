@@ -15,11 +15,8 @@ class KuisController extends Controller
     public function store(Request $request)
     {
         $kursus_id      = $request->kursus_id;        
-        $kuis_id        = $request->id;
-        
-        $cek_kuis       = Kuis::where('slug',$request->slug)->first();
-        
-        
+        $kuis_id        = $request->id;        
+        $cek_kuis       = Kuis::where('slug',$request->slug)->first();                
             # code...
             $new_kuis       = Kuis::updateOrCreate(['id' => $kuis_id],[
                 'user_id'   =>  $request->user_id,            
@@ -37,7 +34,6 @@ class KuisController extends Controller
                     'pesan-sukses' => 'kuis berhasil ditambahkan',                
                 );
                 return redirect()->back()->with($notif);
-
             } else {
                 # code...
                 if ($data_kuis  === null) {
@@ -49,10 +45,7 @@ class KuisController extends Controller
                                 'pesan-sukses' => 'kuis baru berhasil ditambahkan pada kursus',                
                             );
                     return redirect()->back()->with($notif);
-            }
-            
-            
-        
+            }                                
     }
 
     public function salin(Request $request)
