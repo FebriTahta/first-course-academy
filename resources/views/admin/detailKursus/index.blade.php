@@ -808,8 +808,8 @@
                                 <div class="block-content">                                                                            
                                     <p class="text-center text-danger border-bottom">KUISKU</p>                                    
                                     @foreach ($data_kuis as $item_kuis)
-                                    {{-- @if ($item_kuis->user_id === $data_kursus->user_id) --}}
-                                    @if ($item_kuis->user_id === auth()->user()->id)
+                                    @if ($item_kuis->user_id === $data_kursus->user_id)
+                                    {{-- @if ($item_kuis->user_id === auth()->user()->id) --}}
                                     <div class="form-group">
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                         <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
