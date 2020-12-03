@@ -756,14 +756,14 @@
                             </div>
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
-                                    <p class="text-center text-danger border-bottom">pastikan kuis sesuai dengan materi anda</p>                                    
+                                    <p class="text-center text-danger border-bottom">pastikan kuis sesuai dengan materi anda</p>
                                     @foreach ($data_kuis as $item_kuis)
                                     @if ($item_kuis->user_id !== $data_kursus->user_id)
                                     {{-- @if ($item_kuis->user_id !== auth()->user()->id) --}}
                                     <div class="form-group">
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                         <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
-                                        <label>{{ $item_kuis->kuis_name }}</label> <label class="float-right text-right">By : {{ $item_kuis->user->name }}</label>
+                                        <label>{{ $item_kuis->kuis_name }}</label> &nbsp; <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
                                         <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="form-group float-right text-right">detail</a>
                                     </div>
                                     @else
