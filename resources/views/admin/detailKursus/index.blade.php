@@ -757,19 +757,34 @@
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
                                     <p class="text-center text-danger border-bottom">pastikan kuis sesuai dengan materi anda</p>
-                                    @foreach ($data_kuis as $item_kuis)
-                                    @if ($item_kuis->user_id !== $data_kursus->user_id)
-                                    {{-- @if ($item_kuis->user_id !== auth()->user()->id) --}}
-                                    <div class="form-group">
-                                        <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                        <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
-                                        <label>{{ $item_kuis->kuis_name }}</label> &nbsp; <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
-                                        <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="form-group float-right text-right">detail</a>
-                                    </div>
-                                    @else
-                                    
-                                    @endif
-                                    @endforeach
+                                    <table class="table table-borderless">
+                                        @foreach ($data_kuis as $item_kuis)
+                                        <tr>
+                                        @if ($item_kuis->user_id !== $data_kursus->user_id)
+                                        {{-- @if ($item_kuis->user_id !== auth()->user()->id) --}}
+                                        <div class="form-group">
+                                            <td>
+                                                <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
+                                            </td>
+                                            <td>
+                                                <label>{{ $item_kuis->kuis_name }}</label> 
+                                            </td>
+                                            <td>
+                                                <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
+                                            </td>
+                                            <td class="form-group float-right text-right">
+                                                <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="">detail</a>
+                                            </td>                                                
+                                        </div>
+                                        @else
+                                        
+                                        @endif
+                                        </tr>
+                                        @endforeach
+                                    </table>                                    
                                 </div>
                             </div>
                         </div>
