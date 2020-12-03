@@ -55,9 +55,7 @@ class AkunController extends Controller
                 );
                 return redirect()->back()->with($notif);
             }       
-        }
-        
-        
+        }                
     }
 
     public function ubahpengguna(Request $request)
@@ -73,29 +71,22 @@ class AkunController extends Controller
                 'pesan-bahaya' => 'Email sudah pernah terdaftar. Gunakan Email Lain'
             );
             return redirect()->back()->with($notif);
-        } else {
-            # code...
-                        
+        } else {                    
             $post           =   User::updateOrCreate(['id' => $id],
                             [
                                 'name' => $request->name,
                                 'role' => $request->role,     
                                 'email' => $request->email,
-                                'stat' => $request->stat,                        
-                                                              
+                                'stat' => $request->stat,                                                              
                             ]);
             $data_profile   = Profile::where(['user_id'=>$request->id])->first();
-
             $detail         = [
                 'title'     => 'Hai '.$nama.'',
-                'body'      => 'pemilik akun '.$email.'. Kini status anda telah berubah menjadi ('.$roles.')',
+                'body'      => 'Email anda '.$email.'. sebagai ('.$roles.') silahkan login dengan email tersebut dan password lama anda',
                 'link'      => 'course-academy.top/login'
             ];
-            //kirim email dulu
             $when           = Carbon::now()->addSeconds(10);
-
             Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
-
             if ($data_profile===null) {
                 # code...
                 $post->profile()->save(new Profile);

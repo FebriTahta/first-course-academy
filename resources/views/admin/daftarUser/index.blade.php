@@ -56,7 +56,7 @@
             <form class="" action="{{ route('daftar_user.store') }}" method="post" > @csrf
                 <div class="form-group">
                     <div class="form-material">
-                        <input type="text" class="form-control" id="val-name" name="name" placeholder="Enter user name" required>
+                        <input type="text" class="form-control" id="val-name" name="name" placeholder="Enter user name" required onkeypress='return harusHuruf(event)'>
                         <label for="val-name">Nama</label>
                     </div>                    
                 </div>
@@ -216,7 +216,7 @@
                             <input type="hidden" id="stat" name="stat">
                             <input class="form-control" type="hidden" id="id" name="id" value="" required>
                             <label for="">Nama </label>               
-                            <input class="form-control" type="text" id="name" name="name" value="" required>                            
+                            <input class="form-control" type="text" id="name" name="name" value="" required onkeypress="return harusHuruf(event)">                            
                         </div>
                         <div class="form-group">
                             <label for="">Email</label>
@@ -277,6 +277,14 @@
 @endsection
 
 @section('script')
+<script>
+    function harusHuruf(evt){
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if ((charCode < 65 || charCode > 90)&&(charCode < 97 || charCode > 122)&&charCode>32)
+                return false;
+            return true;
+    }    
+</script>
 <script>    
     var table2;
     $(document).ready(function(){    

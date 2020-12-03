@@ -13,7 +13,8 @@ class CheckRole
      * @param  \Closure  $next
      * @return mixed
      */
-     public function handle($request, Closure $next,...$roles){
+    public function handle($request, Closure $next,...$roles)
+    {
         if(in_array ($request->user()->role, $roles)){
             return $next($request);
         }        

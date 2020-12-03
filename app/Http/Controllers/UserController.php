@@ -22,7 +22,6 @@ class UserController extends Controller
         return view('admin.daftarUser.index', compact('data_user'));                                
         
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +31,6 @@ class UserController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -44,6 +42,7 @@ class UserController extends Controller
         $id             = $request->id;
         $nama           = $request->name;
         $email          = $request->email;
+        $role           = $request->role;
         $result         = User::where('email', $request->email)->first();
         
         $post           =   User::updateOrCreate(['id' => $id],
@@ -55,15 +54,13 @@ class UserController extends Controller
                                 'password'=>bcrypt('secret'),                                                
                             ]);
             $data_profile   = Profile::where(['user_id'=>$request->id])->first();
-
             $detail         = [
                 'title'     => 'Hai '.$nama.'',
-                'body'      => 'Silahkan masuk dengan (Email : '.$email.') dan (Password : secret). perbarui password anda pada menu Reset / Lupa password',
+                'body'      => 'Anda telah didaftarkan sebagai '.$role.' Anda dapat login dengan menggunakan (Email : '.$email.') dan (Password : secret). perbarui password anda pada menu Reset / Lupa password',
                 'link'      => 'course-academy.top/login'
             ];
             //kirim email dulu
             $when           = Carbon::now()->addSeconds(10);
-
             Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
 
             if ($data_profile===null) {

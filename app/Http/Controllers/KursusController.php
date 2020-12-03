@@ -38,7 +38,6 @@ class KursusController extends Controller
             'kelas_id'=>$request->kelas_id,
             'mapel_id'=>$request->mapel_id
         ])->first();
-
         if ($result===null) {
             # code...
             $addinstrukturkursus=Kursus::firstOrCreate([
@@ -59,7 +58,6 @@ class KursusController extends Controller
                 'pesan-sukses' => 'Materi Kursus Baru Berhasil Ditambahkan',                
                 );
             return redirect()->back()->with($notif);
-
         } else {
             # code...
             $notif = array(
@@ -101,7 +99,7 @@ class KursusController extends Controller
                 'kursus_id'=>$request->kursus_id[$item],
                 'profile_id'=>$request->profile_id[$item]
             );
-            kursus_profile::updateOrCreate($datas);            
+            kursus_profile::updateOrCreate($datas);
         }
         $notif = array(
             'pesan-sukses' => 'siswa baru bergabung kedalam kursus',                

@@ -80,9 +80,9 @@
                                         <?php $sudah_dikerjakan = App\Result::where('user_id', auth()->user()->id)->where('kuis_id', $kuis_item->id)->first()?>
                                         
                                         @if ($sudah_dikerjakan===null)
-                                        <td class="border-bottom text-right"><a href="/kuis-form/{{ $kuis_item->slug }}"> start</a></td>
+                                        <td class="border-bottom text-right"><a href="/kuis-form/{{ $kuis_item->id }}"> start</a></td>
                                         @else
-                                        <td class="border-bottom text-right"><a href="/kuis-form/{{ $kuis_item->slug }}"> selesai </a></td>
+                                        <td class="border-bottom text-right"><a href="/kuis-form/{{ $kuis_item->id }}"> selesai </a></td>
                                         @endif                                        
                                     </tr>
                                     @endforeach

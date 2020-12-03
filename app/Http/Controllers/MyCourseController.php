@@ -31,11 +31,11 @@ class MyCourseController extends Controller
         return view('client.mycourse.index', compact('data_kursus','vid'));                
     }
 
-    public function kuisform($slug)
+    public function kuisform($id)
     {
         $user_id            = Auth::id();        
-        $data_kuis          = Kuis::where('slug',$slug)->first();
-        $data_kuis_id       = $data_kuis->id;        
+        $data_kuis          = Kuis::where('id',$id)->first();
+        $data_kuis_id       = $data_kuis->id;     
         // $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->inRandomOrder()->get();
         $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->get();
         $data_result        = Result::where('user_id', $user_id)->where('kuis_id', $data_kuis_id)->get();        

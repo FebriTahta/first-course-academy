@@ -123,8 +123,7 @@ class KategoriController extends Controller
                 'pesan-peringatan' => 'Tidak dapat menghapus mapel yang menjadi kategori kursus',            
             );  
             return redirect()->back()->with($notif);
-        }                        
-        
+        }         
     }
 
     public function dellkategori(Request $request)

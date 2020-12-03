@@ -13,10 +13,7 @@
 Route::get('/', function () {    
     return view('landing.index');
 });
-
-
 Auth::routes(['verify'=>true]);
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','HomeController@logout')->name('/logout');
 Route::get('/profile/{id}','ProfileController@index')->name('profile');
@@ -38,7 +35,6 @@ Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 
 Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     //report user
-    // Route::get('/user-export-excel', 'LaporanController@userExcel')->name('userExport');
     Route::get('/user-export-pdf', 'LaporanController@userPDF')->name('userpdf');
     //dashboard
     Route::get('/dashboard','AdminDashboardController@index')->name('dashboard');
@@ -121,7 +117,7 @@ Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung']], function(){
     Route::get('kursus-saya','KursusSayaController@index')->name('kursus-saya');
     //old    
     Route::post('/submit-kuis','MyCourseController@submitkuis')->name('submit-kuis');    
-    Route::get('/kuis-form/{slug}','MyCourseController@kuisform');    
+    Route::get('/kuis-form/{id}','MyCourseController@kuisform');    
     Route::get('/akun','AkunController@index')->name('akun');
     Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');        
 });
