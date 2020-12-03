@@ -762,11 +762,9 @@
                                         <tr>
                                         @if ($item_kuis->user_id !== $data_kursus->user_id)
                                         {{-- @if ($item_kuis->user_id !== auth()->user()->id) --}}
-                                        <div class="form-group">
+                                        <div class="form-group">                                                                                                                                        
                                             <td>
                                                 <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                            </td>
-                                            <td>
                                                 <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
                                             </td>
                                             <td>
