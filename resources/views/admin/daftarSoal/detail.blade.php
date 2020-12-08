@@ -61,7 +61,7 @@
                             <tbody>
                                 @foreach ($item->answer as $key=>$ans)
                                     <tr>
-                                        <td>{{ $key+1 }}). {{ $ans->answer }} 
+                                        <td>{{ $key+1 }}). {!! $ans->answer !!} 
                                             @if ($ans->is_correct) &nbsp; &nbsp; &nbsp;
                                                 <strong class="float-center badge badge-success"> benar</strong>
                                             @endif

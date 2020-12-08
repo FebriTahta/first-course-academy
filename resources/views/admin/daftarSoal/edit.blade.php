@@ -53,7 +53,7 @@
                             <div class="form-group ml-15">                            
                                 <div class="row">
                                     @foreach ($data_2 as $key=>$ans)
-                                    <input type="text" class="form-control col-7 mb-5" name="options[]" value="{{ $ans->answer }}" required>
+                                    <textarea type="text" class="js-summernote form-control col-7 mb-5" name="options[]" value="{{ $ans->answer }}" required></textarea>
                                     <input type="radio" class="form-control col-2" name="correct_answer" id="correct_answer" value="{{ $key }}"@if ($ans->is_correct){{ 'checked' }}                                        
                                     @endif><span>Benar</span>
                                     @endforeach

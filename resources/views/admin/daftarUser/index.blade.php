@@ -96,6 +96,7 @@
                     <table class="table table-striped table-bordered" id="daftar_user" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>nama</th>
                                 <th>role</th>
                                 <th>status</th>                                
@@ -103,11 +104,12 @@
                                 <th>aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($data_user as $item)
+                        <tbody>                            
+                            @foreach ($data_user as $key => $item)
                                 @if ($item->email_verified_at ===null)
                                 @else
                                 <tr>
+                                    <td>{{ $key+1 }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->role }}</td>
                                     <td>

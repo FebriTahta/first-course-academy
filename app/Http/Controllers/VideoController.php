@@ -17,6 +17,10 @@ class VideoController extends Controller
         $kursus_id          = $request->kursus_id;
         $video_id           = $request->id;
         $kursus             = Kursus::find($kursus_id);
+        $video_name         = Video::where('video_name', $request->video_name)->first();
+        $video_link         = Video::where('video_link', $request->video_link)->first();
+        $check_video         = Video::where('video_name', $request->video_name)->where('video_link', $request->video_link)->first();
+        // $golongan_video     = Video::where('kelas_id', $request->kelas_id)->where('mapel_id', $request->mapel_id)->first();
         $video              = Video::updateOrCreate(['id' => $video_id],
                             [
                             'user_id'=>$request->user_id,            
@@ -25,9 +29,10 @@ class VideoController extends Controller
                             'video_link'=>$request->video_link,
                             'video_name'=>$request->video_name,                    
                             ]);
-        $data_video         = Video::find($video_id);        
+        $data_video         = Video::find($video_id);
         if ($kursus_id === null) {
             # code...
+            
             $notif = array(
                 'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
             );
@@ -48,8 +53,58 @@ class VideoController extends Controller
                 );
                 return redirect()->back()->with($notif);
             }
-        }                        
-                                        
+        }
+        // if($kursus_id === null){
+        //      # code...
+        //      if ($video_link === null) {
+        //         # code...
+        //         // $video->updateOrCreate();
+        //         $video              = Video::updateOrCreate(['id' => $video_id],
+        //                 [
+        //                 'user_id'=>$request->user_id,            
+        //                 'kelas_id'=>$request->kelas_id,
+        //                 'mapel_id'=>$request->mapel_id,
+        //                 'video_link'=>$request->video_link,
+        //                 'video_name'=>$request->video_name,                    
+        //                 ]);
+        //         $notif = array('pesan-sukses' => 'video kursus baru berhasil ditambahkan');
+        //         return redirect()->back()->with($notif);
+        //     }else{
+        //         $notif = array('pesan-peringatan' => 'video dengan sumber "link" serupa sudah pernah dibuat. Anda bisa menyalinnya dihalaman kursus anda');
+        //         return redirect()->back()->with($notif);
+        //     }                                                       
+        // }else{
+        //     if ($video_link === null) {
+        //         # code...
+        //         //cek data video tersebut sudah ada apa belum, kalo sudah hanya update, kalo belum add lagi ke kursus
+        //         if ($data_video   ===     null) {
+        //             # code...
+        //             // $video->updateOrCreate();
+        //             $video              = Video::updateOrCreate(['id' => $video_id],
+        //                 [
+        //                 'user_id'=>$request->user_id,            
+        //                 'kelas_id'=>$request->kelas_id,
+        //                 'mapel_id'=>$request->mapel_id,
+        //                 'video_link'=>$request->video_link,
+        //                 'video_name'=>$request->video_name,                    
+        //                 ]);
+        //             $kursus->video()->attach($video);
+        //             $notif = array(
+        //                 'pesan-sukses' => 'video kursus baru berhasil ditambahkan pada kursus ini',                
+        //             );
+        //             return redirect()->back()->with($notif);
+        //         }else{
+        //             $notif = array(
+        //                 'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
+        //             );
+        //             return redirect()->back()->with($notif);
+        //         }
+                
+        //     }else{
+        //         $notif = array('pesan-peringatan' => 'video dengan sumber "link" serupa sudah pernah dibuat. Anda bisa menyalinnya dihalaman kursus anda');
+        //         return redirect()->back()->with($notif);
+        //     }                                                                  
+        // }
     }
 
     public function storecopy(Request $request)

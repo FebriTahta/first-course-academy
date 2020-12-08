@@ -242,7 +242,6 @@
                                 <tr>
                                     <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp;{{ $kuis_item->pertanyaan->count() }} soal &nbsp;&nbsp; <a href="{{ route('detailsSoal', $kuis_item->id) }}"> {{ $kuis_item->kuis_name }}</a></td>
                                     <td class="border-bottom"></td>                                    
-                                    
                                         @if ($data_kursus->user_id !== $kuis_item->user_id)
                                             @if (auth()->user()->role === 'admin')
                                             <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
@@ -252,7 +251,6 @@
                                         @else
                                         <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                         @endif                                    
-                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -623,7 +621,7 @@
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">VIDEOKU</p>                        
                         @foreach ($list_data_video_kursus as $item_v)                        
-                        @if ($item_v->user_id === auth()->user()->id)
+                        @if ($item_v->user_id === $data_kursus->user_id)
                             <div class="form-group">
                                 <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
                                 <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">

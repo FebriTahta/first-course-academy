@@ -8,7 +8,7 @@
             <div class="content-header-section sidebar-mini-visible-b">
                 <!-- Logo -->
                 <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
-                    <span class="text-dual-primary-dark">c</span><span class="text-primary">b</span>
+                    <span class="text-dual-primary-dark">c</span><span class="text-primary">a</span>
                 </span>
                 <!-- END Logo -->
             </div>
@@ -27,7 +27,7 @@
                 <div class="content-header-item">
                     <a class="link-effect font-w700" href="/">
                         <i class="si si-fire text-primary"></i>
-                        <span class="font-size-xl text-dual-primary-dark">code</span><span class="font-size-xl text-primary">base</span>
+                        <span class="font-size-xl text-dual-primary-dark">course</span><span class="font-size-xl text-primary">academy</span>
                     </a>
                 </div>
                 <!-- END Logo -->
