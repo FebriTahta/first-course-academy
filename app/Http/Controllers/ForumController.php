@@ -6,6 +6,7 @@ use App\Kelas;
 use App\Forum;
 use Auth;
 use App\User;
+use App\Kursus;
 use App\Komentar;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -18,8 +19,8 @@ class ForumController extends Controller
         $user       = User::find($id);
         $data_kelas = Kelas::all();
         $data_mapel = Mapel::all();
-        $data_forum = Forum::all();
-        return view('forum.index',compact('data_kelas','data_mapel','user','data_forum'));
+        $data_kursus = Kursus::all();
+        return view('forum.index',compact('data_kelas','data_mapel','user','data_kursus'));
     }
     
     public function daftarpertanyaan($slug_k,$slug_m)

@@ -74,7 +74,7 @@
                                         </tr>
                                 @endforeach
                             @elseif(auth()->user()->role=='admin')
-                                @foreach ($data_forum as $item)
+                                @foreach ($data_kursus as $item)
                                 <tr>
                                     <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                                
                                         <td class="float-right">
