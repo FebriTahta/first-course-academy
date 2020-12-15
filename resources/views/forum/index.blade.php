@@ -17,7 +17,9 @@
     <div class="content">
         <div class="row">
             <div class="col-12"><h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Forum</small></h2></div>            
-            @auth                            
+            @auth
+            @if (auth()->user()->role=='pengunjung')                
+            @else
             <div class="col-xl-12">
                 <div class="block">
                     <div class="block-header block-header-default">
@@ -90,6 +92,7 @@
                     </div>                    
                 </div>
             </div>
+            @endif            
             @endauth
             <div class="col-xl-12">
                 <div class="block">
