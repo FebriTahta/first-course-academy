@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Forum extends Model
 {
     protected $fillable = [
-        'user_id','kelas_id','mapel_id','judul_pertanyaan','desc_pertanyaan','slug'
+        'user_id','kelas_id','mapel_id','judul_pertanyaan','desc_pertanyaan','slug','status',
     ];
 
     public function user()

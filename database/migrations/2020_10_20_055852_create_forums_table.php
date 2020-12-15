@@ -18,11 +18,14 @@ class CreateForumsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('mapel_id');
-            $table->longtext('judul_pertanyaan');
-            $table->longtext('desc_pertanyaan');
-            $table->longtext('slug');
+            $table->longText('judul_pertanyaan');
+            $table->longText('desc_pertanyaan');
+            $table->string('status');
+            $table->longText('slug');
             $table->timestamps();
         });
+
+        // Schema::drop('forums');
     }
 
     /**

@@ -23,6 +23,7 @@ Route::get('/detail-result-siswa/{id}/{user_id}','MyCourseController@detailresul
 //forum untuk semua user
 Route::get('/forum','ForumController@index')->name('forum');
 Route::get('/forum-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaan');
+Route::get('/forum-daftar-pertanyaan/premium/{slug_k}/{slug_m}','ForumController@daftarpertanyaanP');
 Route::get('/forum-detail-pertanyaan/{slug}','ForumController@detailpertanyaan')->name('forum-detail');
 Route::get('/download/{file}', 'BookController@getdownload')->name('download');
 Route::post('/post-komentar', 'KomentarController@postkomen')->name('post-komentar');
@@ -31,6 +32,7 @@ Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
 Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
 Route::post('/daftar','AkunController@daftar')->name('daftar');
 Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
+Route::post('/pertanyaanPremium','ForumController@storeP')->name('pertanyaanP');
 Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 
 Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){

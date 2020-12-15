@@ -17,33 +17,81 @@
     <div class="content">
         <div class="row">
             <div class="col-12"><h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Forum</small></h2></div>            
+            @auth                            
             <div class="col-xl-12">
                 <div class="block">
                     <div class="block-header block-header-default">
                     {{-- nafigasi block --}}
+                    <p>FORUM PREMIUM</p>
                     </div>
                     <div class="block-content border-bottom">
-                        <p class="text-center">DAFTAR FORUM</p>
+                        <p class=""></p>
                     </div>
                     <div class="block-content">
                         <table class="table table-borderless" id="daftar_forum">
                             <thead>
-                                <tr>
-                                    <th>_</th>
-                                    <th>MAPEL</th>
-                                    <th>KELAS</th>
+                                <tr>                                    
+                                    <th>FORUM</th>                                    
+                                    <th class="float-right">_</th>
+                                </tr>
+                            </thead>
+                            <tbody>                            
+                            {{-- @foreach ($data_mapel as $dm)
+                                @foreach ($dm->kelas as $dk)
+                                <tr>                                    
+                                    <td class="">{{ $dm->mapel_name }}</td>
+                                    <td>{{ $dk->kelas_name }}</td>
+                                    <td class="float-right">
+                                        <a href="/forum-daftar-pertanyaan/{{ $dk->slug }}/{{ $dm->slug }}" class="">start</a>
+                                    </td>                                    
+                                </tr>
+                                @endforeach
+                            @endforeach --}}
+                            @if (auth()->user()->role=='siswa')
+                                @foreach (auth()->user()->profile->kursus as $item)
+                                <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
+                                        <tr>
+                                            @if ($punya == null)
+                                                @else
+                                                <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                                
+                                                <td class="float-right">
+                                                    <a href="/forum-daftar-pertanyaan/premium/{{ $item->kelas->slug }}/{{ $item->mapel->slug }}" class="">start</a>
+                                                </td>
+                                            @endif                                            
+                                        </tr>
+                                @endforeach
+                            @elseif(auth()->user()->role=='instruktur')
+                            @endif
+                            </tbody>
+                        </table>                        
+                    </div>                    
+                </div>
+            </div>
+            @endauth
+            <div class="col-xl-12">
+                <div class="block">
+                    <div class="block-header block-header-default">
+                    {{-- nafigasi block --}}
+                    <p class="">FORUM REGULER</p>
+                    </div>
+                    <div class="block-content border-bottom">
+                        <p></p>
+                    </div>
+                    <div class="block-content">
+                        <table class="table table-borderless" id="daftar_forum">
+                            <thead>
+                                <tr>                                    
+                                    <th>FORUM</th>                                    
                                     <th class="float-right">_</th>
                                 </tr>
                             </thead>
                             <tbody>                            
                             @foreach ($data_mapel as $dm)
                                 @foreach ($dm->kelas as $dk)
-                                <tr>
-                                    <td class=""><i class="fa fa-group"></i></td>
-                                    <td class="">{{ $dm->mapel_name }}</td>
-                                    <td>{{ $dk->kelas_name }}</td>
+                                <tr>                                    
+                                    <td class="">{{ $dm->mapel_name }} {{ $dk->kelas_name }}</td>                                    
                                     <td class="float-right">
-                                        <a href="/forum-daftar-pertanyaan/{{ $dk->slug }}/{{ $dm->slug }}" type="button" class="btn btn-outline-primary">cek</a>
+                                        <a href="/forum-daftar-pertanyaan/{{ $dk->slug }}/{{ $dm->slug }}" class="">start</a>
                                     </td>                                    
                                 </tr>
                                 @endforeach

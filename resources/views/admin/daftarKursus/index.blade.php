@@ -73,7 +73,7 @@
                 
                 <div class="col-md-6 col-xl-4 js-appear-enabled animated fadeIn" data-category="{{ $item->kelas->kelas_name }}|{{ $item->mapel->mapel_name }}" style="display: none" data-toggle="appear">
                     <!-- Property -->
-                    <div class="block block-rounded">
+                    <div class="block block-rounded block-shadow">
                         <div class="block-content p-0 overflow-hidden">
                             <a class="img-link" href="{{ route('kursus', $item->slug) }}">
                                 <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
@@ -145,7 +145,7 @@
                                     @elseif(auth()->user()->role=='admin')
                                     <div class="block-content">
                                         <a href="#" data-toggle="modal" data-target="#modal-fromleft-remove" class="btn btn-outline-danger fa fa-trash text-danger" data-id="{{ $item->id }}"> HAPUS</a>
-                                        <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary fa fa-check"> PERGI</a>                                        
+                                        <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary fa fa-check"> START</a>                                        
                                     </div>
                                     @elseif(auth()->user()->role=='pengunjung')
                                     <div class="block-content text-center">

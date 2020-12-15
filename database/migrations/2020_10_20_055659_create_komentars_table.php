@@ -16,11 +16,14 @@ class CreateKomentarsTable extends Migration
         Schema::create('komentars', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('forum_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id');            
             $table->longText('komen');
             $table->boolean('status');
             $table->timestamps();
         });
+        // Schema::table('komentars', function (Blueprint $table){
+        //     $table->foreign('forum_id')->references('id')->on('forums')->onDelete('cascade');
+        // });
     }
 
     /**

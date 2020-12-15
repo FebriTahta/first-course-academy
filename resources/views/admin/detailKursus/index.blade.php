@@ -240,12 +240,13 @@
                             <tbody>
                                 @foreach ($data_kursus->kuis as $kuis_item)
                                 <tr>
-                                    <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp;{{ $kuis_item->pertanyaan->count() }} soal &nbsp;&nbsp; <a href="{{ route('detailsSoal', $kuis_item->id) }}"> {{ $kuis_item->kuis_name }}</a></td>
+                                    <td class="border-bottom" style="width: 30%"><i class="fa fa-fw fa-edit"></i>&nbsp;{{ $kuis_item->pertanyaan->count() }} soal &nbsp;&nbsp; <a href="{{ route('detailsSoal', $kuis_item->id) }}"> {{ $kuis_item->kuis_name }}</a></td>
                                     <td class="border-bottom"></td>                                    
                                         @if ($data_kursus->user_id !== $kuis_item->user_id)
                                             @if (auth()->user()->role === 'admin')
                                             <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                             @else
+                                            <td class="text-left border-bottom d-none d-sm-table-cell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By : {{ $kuis_item->user->name }}</td>                                           
                                             <td class="text-right border-bottom text-danger"><i></i>&nbsp; fixed</td>
                                             @endif                                            
                                         @else
@@ -571,7 +572,7 @@
             <div class="modal-content">
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">video yang sudah ada</h3>
+                        <h3 class="block-title">DAFTAR VIDEO YANG ADA</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="si si-close"></i>
@@ -580,17 +581,42 @@
                     </div>
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">pastikan konten sesuai dengan materi anda</p>                        
-                        @foreach ($list_data_video_kursus as $item_v)                        
+                        @if (auth()->user()->role==='admin')
+                            @foreach ($list_data_video_kursus as $items_v)
+                            <div class="form-group">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
+                                        <td><input type="checkbox" name="video_id[]" value="{{ $items_v->id }}"></td>
+                                        <td><label>{{ $items_v->video_name }}</label></td>
+                                        <td><label>{{ $items_v->user->name }}</label></td>
+                                        <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $items_v->video_link }}">tonton</a></td>
+                                    </tr>
+                                </table>                                
+                            </div>
+                            @endforeach
+                        @else
+                            @foreach ($list_data_video_kursus as $item_v)
                             @if ($item_v->user_id !== auth()->user()->id)
                                 <div class="form-group">
-                                    <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                    <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
-                                    <label>{{ $item_v->video_name }}</label>
-                                    <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
+                                            <td><input type="checkbox" name="video_id[]" value="{{ $item_v->id }}"></td>
+                                            <td><label>{{ $item_v->video_name }}</label></td>
+                                            <td><label>{{ $item_v->user->name }}</label></td>
+                                            <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a></td>
+                                        </tr>
+                                    </table>
                                 </div>
+                            
                                 @else
+                                <div class="form-group text-center">
+                                    <p class="text-danger">BELUM ADA VIDEO PADA KATEGORI KURSUS INI</p>
+                                </div>
                             @endif
-                        @endforeach
+                            @endforeach
+                        @endif                        
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -611,7 +637,7 @@
             <div class="modal-content">
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">video yang sudah ada</h3>
+                        <h3 class="block-title">DAFTAR VIDEO SAYA</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="si si-close"></i>
@@ -629,6 +655,9 @@
                                 <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
                             </div>    
                             @else
+                            <div class="form-group text-center">
+                                <p class="text-danger">ANDA BELUM MEMBUAT VIDEO</p>
+                            </div>
                         @endif
                         @endforeach                        
                     </div>
@@ -739,7 +768,7 @@
             <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('salinKuis') }}" method="POST" enctype="multipart/form-data">@csrf 
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">salin kuis</h3>
+                        <h3 class="block-title">SALIN KUIS</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="si si-close"></i>
@@ -767,7 +796,7 @@
                                             </td>
                                             <td>
                                                 <label>{{ $item_kuis->kuis_name }}</label> 
-                                            </td>
+                                            </td>                                            
                                             <td>
                                                 <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
                                             </td>
@@ -776,7 +805,9 @@
                                             </td>                                                
                                         </div>
                                         @else
-                                        
+                                        <div class="form-group text-center">
+                                            <p class="text-danger">BELUM ADA KUIS LAIN PADA KATEGORI INI</p>
+                                        </div>
                                         @endif
                                         </tr>
                                         @endforeach

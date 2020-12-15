@@ -20,6 +20,9 @@ class CreateAnswersTable extends Migration
             $table->boolean('is_correct');
             $table->timestamps();
         });
+        Schema::table('answers', function (Blueprint $table){
+            $table->foreign('pertanyaan_id')->references('id')->on('pertanyaans')->onDelete('cascade');
+        });
     }
 
     /**
