@@ -61,7 +61,7 @@
                                         </tr>
                                 @endforeach
                             @elseif(auth()->user()->role=='instruktur')
-                                @foreach (auth()->user()->profile->kursus as $item)
+                                @foreach (auth()->user()->kursus as $item)
                                 <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
                                         <tr>
                                             @if ($punya == null)
@@ -74,7 +74,7 @@
                                         </tr>
                                 @endforeach
                             @elseif(auth()->user()->role=='admin')
-                                @foreach (auth()->user()->profile->kursus as $item)
+                                @foreach ($data_forum as $item)
                                 <tr>
                                     <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                                
                                         <td class="float-right">

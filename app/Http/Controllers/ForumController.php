@@ -18,7 +18,8 @@ class ForumController extends Controller
         $user       = User::find($id);
         $data_kelas = Kelas::all();
         $data_mapel = Mapel::all();
-        return view('forum.index',compact('data_kelas','data_mapel','user'));
+        $data_forum = Forum::all();
+        return view('forum.index',compact('data_kelas','data_mapel','user','data_forum'));
     }
     
     public function daftarpertanyaan($slug_k,$slug_m)
