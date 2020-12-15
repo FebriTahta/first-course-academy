@@ -133,7 +133,7 @@
                                             <td class=""><p>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} </p></td>
                                             @if ($item->status === 'aktif')
                                             <td class="float-right">
-                                                <a href="/my-course/{{ $item->slug }}" type="button" class="btn btn-outline-primary">pergi</a>
+                                                <a href="/my-course/{{ $item->slug }}" type="button" class="btn btn-outline-primary">start</a>
                                             </td>
                                             @else
                                             <td class="float-right">

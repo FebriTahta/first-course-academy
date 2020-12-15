@@ -61,6 +61,27 @@
                                         </tr>
                                 @endforeach
                             @elseif(auth()->user()->role=='instruktur')
+                                @foreach (auth()->user()->profile->kursus as $item)
+                                <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
+                                        <tr>
+                                            @if ($punya == null)
+                                                @else
+                                                <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                                
+                                                <td class="float-right">
+                                                    <a href="/forum-daftar-pertanyaan/premium/{{ $item->kelas->slug }}/{{ $item->mapel->slug }}" class="">start</a>
+                                                </td>
+                                            @endif                                            
+                                        </tr>
+                                @endforeach
+                            @elseif(auth()->user()->role=='admin')
+                                @foreach (auth()->user()->profile->kursus as $item)
+                                <tr>
+                                    <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                                
+                                        <td class="float-right">
+                                            <a href="/forum-daftar-pertanyaan/premium/{{ $item->kelas->slug }}/{{ $item->mapel->slug }}" class="">start</a>
+                                    </td>                                                                                                                                        
+                                </tr>
+                                @endforeach
                             @endif
                             </tbody>
                         </table>                        
