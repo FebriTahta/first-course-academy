@@ -74,13 +74,15 @@
                                         </tr>
                                 @endforeach
                             @elseif(auth()->user()->role=='admin')
-                                @foreach ($data_kursus as $item)
-                                <tr>
-                                    <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                                
-                                        <td class="float-right">
-                                            <a href="/forum-daftar-pertanyaan/premium/{{ $item->kelas->slug }}/{{ $item->mapel->slug }}" class="">start</a>
-                                    </td>                                                                                                                                        
-                                </tr>
+                                @foreach ($data_mapel as $item_m)
+                                    @foreach ($item_m->kelas as $item_k)
+                                    <tr>
+                                        <td>{{ $item_m->mapel_name }} {{ $item_k->kelas_name }}</td>                                                
+                                            <td class="float-right">
+                                                <a href="/forum-daftar-pertanyaan/premium/{{ $item_k->slug }}/{{ $item_m->slug }}" class="">start</a>
+                                        </td>                                                                                                                                        
+                                    </tr>
+                                    @endforeach                                
                                 @endforeach
                             @endif
                             </tbody>
