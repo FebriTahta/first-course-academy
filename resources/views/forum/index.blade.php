@@ -62,7 +62,7 @@
                                 @endforeach
                             @elseif(auth()->user()->role=='instruktur')
                                 @foreach (auth()->user()->kursus as $item)
-                                <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
+                                <?php $punya = App\Kursus::where('user_id', auth()->user()->id)->first()?>
                                         <tr>
                                             @if ($punya == null)
                                                 @else
