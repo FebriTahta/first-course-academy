@@ -417,20 +417,19 @@
                                     </div>
                                     @endif                                    
                                 @endforeach --}}
-                                    {{-- HASIL COMPARE --}}
+                                    {{--TANPA MENGGUNAKAN HASIL COMPARE RESULT--}}
                                    <div class="form-group">
                                        <table class="table table-borderless">
-                                           @foreach ($result as $res)
-                                           <?php $siswas = App\Profile::find($res); $siswa = $siswas->user->name?>
-                                                @if ($siswas->user->role=='siswa' && $siswas->user->stat=='1')                                                                                                    
+                                           @foreach ($filtersiswa as $res)
+                                                @if ($res->user->role=='siswa' && $res->user->stat=='1')                                                                            
                                                     <tr>
-                                                        <td class="text-left" style="width: 10%"> <input type="checkbox" name="profile_id[]" value="{{ $res }}"></td>
-                                                        <td class=""><a href="#">{{ $siswa }}</a>
+                                                        <td class="text-left" style="width: 10%"> <input type="checkbox" name="profile_id[]" value="{{ $res->id }}"></td>
+                                                        <td class=""><a href="{{ route('profile', $res->user->id) }}">{{ $res->user->name }}</a>
                                                             <input type="hidden" class="form-control" id="kursus_id" name="kursus_id[]"
                                                             value="{{ $data_kursus->id }}" required>
                                                         </td>
                                                     </tr>
-                                               @endif
+                                                @endif
                                            @endforeach
                                        </table>
                                    </div>
