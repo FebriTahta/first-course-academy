@@ -23,7 +23,9 @@
                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('klik disini untuk verifikasi') }}</button>.
                     </form>
                 </div>
-                <div class="block-content"></div>
+                <div class="block-content">                    
+                    <a href="{{ 'logout' }}">{{ __('Logout ?') }}</a>
+                </div>
             </div>
         </div>
     </div>
