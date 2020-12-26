@@ -104,12 +104,12 @@
                                 <th>aksi</th>
                             </tr>
                         </thead>
-                        <tbody>                            
+                        <tbody><?php $num=1?>                    
                             @foreach ($data_user as $key => $item)
                                 @if ($item->email_verified_at ===null)
                                 @else
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $num }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->role }}</td>
                                     <td>
@@ -137,7 +137,8 @@
                                       @endif                                                                              
                                     </td>
                                 </tr>
-                                @endif                                
+                                @endif
+                                <?php $num++?>                                
                             @endforeach                                    
                         </tbody>                        
                     </table>
