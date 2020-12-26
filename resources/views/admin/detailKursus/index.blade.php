@@ -647,18 +647,18 @@
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">VIDEOKU</p>                        
                         @foreach ($list_data_video_kursus as $item_v)                        
-                        @if ($item_v->user_id === $data_kursus->user_id)
-                            <div class="form-group">
-                                <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
-                                <label>{{ $item_v->video_name }}</label>
-                                <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
-                            </div>    
-                            @else
-                            <div class="form-group text-center">
-                                <p class="text-danger">ANDA BELUM MEMBUAT VIDEO</p>
-                            </div>
-                        @endif
+                            @if ($item_v->user_id === $data_kursus->user_id)
+                                <div class="form-group">
+                                    <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                                    <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
+                                    <label>{{ $item_v->video_name }}</label>
+                                    <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
+                                </div>    
+                                @else
+                                {{-- <div class="form-group text-center">
+                                    <p class="text-danger">ANDA BELUM MEMBUAT VIDEO</p>
+                                </div> --}}
+                            @endif
                         @endforeach                        
                     </div>
                 </div>
