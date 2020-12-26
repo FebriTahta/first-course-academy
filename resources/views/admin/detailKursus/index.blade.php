@@ -580,11 +580,12 @@
                         </div>
                     </div>
                     <div class="block-content">
-                        <p class="text-center text-danger border-bottom">pastikan konten sesuai dengan materi anda</p>                        
+                        <p class="text-center text-danger border-bottom">pastikan konten sesuai dengan materi anda</p><br>                        
                         @if (auth()->user()->role==='admin')
-                            @foreach ($list_data_video_kursus as $items_v)
+                            
                             <div class="form-group">
                                 <table class="table table-borderless">
+                                    @foreach ($list_data_video_kursus as $items_v)
                                     <tr>
                                         <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
                                         <td><input type="checkbox" name="video_id[]" value="{{ $items_v->id }}"></td>
@@ -592,30 +593,33 @@
                                         <td><label>{{ $items_v->user->name }}</label></td>
                                         <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $items_v->video_link }}">tonton</a></td>
                                     </tr>
+                                    @endforeach
                                 </table>                                
                             </div>
-                            @endforeach
-                        @else
-                            @foreach ($list_data_video_kursus as $item_v)
-                            @if ($item_v->user_id !== auth()->user()->id)
-                                <div class="form-group">
-                                    <table class="table table-borderless">
-                                        <tr>
-                                            <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
-                                            <td><input type="checkbox" name="video_id[]" value="{{ $item_v->id }}"></td>
-                                            <td><label>{{ $item_v->video_name }}</label></td>
-                                            <td><label>{{ $item_v->user->name }}</label></td>
-                                            <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a></td>
-                                        </tr>
-                                    </table>
-                                </div>
                             
-                                @else
-                                <div class="form-group text-center">
-                                    <p class="text-danger">BELUM ADA VIDEO PADA KATEGORI KURSUS INI</p>
-                                </div>
-                            @endif
+                        @else
+                        <div class="form-group">
+                            <table class="table table-borderless">
+                            @foreach ($list_data_video_kursus as $item_v)
+                                @if ($item_v->user_id !== auth()->user()->id)
+                                    
+                                            <tr>
+                                                <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
+                                                <td><input type="checkbox" name="video_id[]" value="{{ $item_v->id }}"></td>
+                                                <td><label>{{ $item_v->video_name }}</label></td>
+                                                <td><label>{{ $item_v->user->name }}</label></td>
+                                                <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a></td>
+                                            </tr>
+                                        
+                                
+                                    @else
+                                    <div class="form-group text-center">
+                                        <p class="text-danger">BELUM ADA VIDEO PADA KATEGORI KURSUS INI</p>
+                                    </div>
+                                @endif
                             @endforeach
+                            </table>
+                        </div>
                         @endif                        
                     </div>
                 </div>
@@ -805,9 +809,9 @@
                                             </td>                                                
                                         </div>
                                         @else
-                                        <div class="form-group text-center">
+                                        {{-- <div class="form-group text-center">
                                             <p class="text-danger">BELUM ADA KUIS LAIN PADA KATEGORI INI</p>
-                                        </div>
+                                        </div> --}}
                                         @endif
                                         </tr>
                                         @endforeach
