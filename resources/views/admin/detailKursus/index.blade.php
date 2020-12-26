@@ -408,7 +408,7 @@
                                 @if (count($data_siswa)==null)
                                     <p class="text-center text-danger">BELUM ADA SISWA YANG TERDAFTAR DALAM SISTEM</p>
                                 @else
-                                @foreach ($siswa_kursus as $siskur)                                
+                                {{-- @foreach ($siswa_kursus as $siskur)                                
                                     @if ($siskur->user->role=='siswa' && $siskur->user->stat=='1')
                                     <div class="form-group">
                                         <input type="checkbox" name="profile_id[]" value="{{ $siskur->id }}">&nbsp; &nbsp; &nbsp; &nbsp; {{ $siskur->user->name }}<br>
@@ -416,7 +416,24 @@
                                         value="{{ $data_kursus->id }}" required>                                        
                                     </div>
                                     @endif                                    
-                                @endforeach
+                                @endforeach --}}
+                                    {{-- HASIL COMPARE --}}
+                                   <div class="form-group">
+                                       <table class="table table-borderless">
+                                           @foreach ($result as $res)
+                                           <?php $siswas = App\Profile::find($res); $siswa = $siswas->user->name?>
+                                                @if ($siswas->user->role=='siswa' && $siswas->user->stat=='1')                                                                                                    
+                                                    <tr>
+                                                        <td class="text-left" style="width: 10%"> <input type="checkbox" name="profile_id[]" value="{{ $res }}"></td>
+                                                        <td class=""><a href="#">{{ $siswa }}</a>
+                                                            <input type="hidden" class="form-control" id="kursus_id" name="kursus_id[]"
+                                                            value="{{ $data_kursus->id }}" required>
+                                                        </td>
+                                                    </tr>
+                                               @endif
+                                           @endforeach
+                                       </table>
+                                   </div>
                                 @endif                                                                
                             </div>
                         </div>
@@ -783,7 +800,7 @@
                     <div class="block-content">                            
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="hidden" id="id" name="id">                                
+                                <input type="hidden" id="id" name="id">                             
                             </div>
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
