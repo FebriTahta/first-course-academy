@@ -80,6 +80,12 @@ class ProfileController extends Controller
         return view('semuainstruktur.index', compact('instruktur'));
     }
 
+    public function detailinstruktur($id)
+    {
+        $instruktur = User::find($id);
+        return view('instruktur.detail', compact('instruktur'));
+    }
+
     public function landing()
     {        
         return view('client.mykuis.index2');

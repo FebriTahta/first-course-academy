@@ -36,6 +36,7 @@ Route::post('/post-komentar', 'KomentarController@postkomen')->name('post-koment
 Route::get('/berita','NewsController@display')->name('berita');
 Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
 Route::get('/semua-instruktur','ProfileController@allinstruktur')->name('allinstruktur');
+Route::get('/instruktur-dinfo/{id}','ProfileController@detailinstruktur')->name('detailInstruktur');
 Route::get('/news-detail/{id}','NewsController@index2')->name('newsDetail');
 
 Route::post('/daftar','AkunController@daftar')->name('daftar');
@@ -122,7 +123,7 @@ Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
             
 });
 
-Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur']], function(){
+Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur,admin']], function(){
         
     Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
     //video
@@ -148,7 +149,7 @@ Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur']], f
     Route::post('/remove-artikel','ArtikelController@remove')->name('removeArtikel');
     //book
     Route::post('/add-book','BookController@store')->name('addBook');
-
+    //kuis
     Route::post('/submit-kuis','MyCourseController@submitkuis')->name('submit-kuis');        
     Route::get('/akun','AkunController@index')->name('akun');
     Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');

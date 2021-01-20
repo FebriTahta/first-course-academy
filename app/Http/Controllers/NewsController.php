@@ -17,8 +17,9 @@ class NewsController extends Controller
 
     public function index2($id)
     {
-        $news   = News::find($id)->first();
-        return view('news.index2', compact('news'));
+        $news       = News::find($id);
+        $allnews    = News::orderBy('id','DESC')->get();
+        return view('news.index2', compact('news','allnews'));
     }
 
     public function display()

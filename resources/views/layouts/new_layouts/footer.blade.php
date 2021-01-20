@@ -1,5 +1,5 @@
 <!-- footer-28 block -->
-<section class="app-footer">
+<section class="app-footer mt-100">
   <footer class="footer-28 py-5">
     <div class="footer-bg-layer">
       <div class="container py-lg-3">
@@ -39,6 +39,7 @@
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }
+    
   </script>
   <!-- /move top -->
   

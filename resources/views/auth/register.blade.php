@@ -1,11 +1,11 @@
 {{-- @extends('layouts.app') --}}
-@extends('layouts.client_layouts.master')
+@extends('layouts.new_layouts.master')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 mt-150">
-            <div class="block block-shadow block-rounded">
-                <div class="block-header block-header-default">{{ __('Register') }}</div>
+        <div class="col-md-8 mt-150 bg-clr-white" style="margin-bottom: 100px; margin-top: 50px">
+            <div class="block block-shadow block-rounded" style="padding: 10%">
+                <div class="block-header block-header-default text-uppercase text-bold">{{ __('Register') }}</div>
                 @if (Session::has('message'))
                 <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
                 @endif

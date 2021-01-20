@@ -75,7 +75,7 @@ Author URL: http://w3layouts.com
 							More <span class="fa fa-angle-down"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item @@fa__active" href="fashion.html">News</a>
+							<a class="dropdown-item @@fa__active" onclick="news()">News</a>
 							<a class="dropdown-item @@b__active" href="beauty.html">Daftar Forum</a>
 							<a class="dropdown-item @@fa__active" href="{{ route('allinstruktur') }}">Daftar Instruktur</a>
 							<a class="dropdown-item @@fa__active" href="{{ route('allkursus') }}">Daftar Kursus</a>

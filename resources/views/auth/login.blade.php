@@ -1,11 +1,11 @@
-@extends('layouts.client_layouts.master')
+@extends('layouts.new_layouts.master')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center mt-150">
-        <div class="col-md-8">
-            <div class="block block-shadow block-rounded">
-                <div class="block-header block-header-default">{{ __('Login') }}</div>
+    <div class="row justify-content-center mt-150 ">
+        <div class="col-md-8  bg-clr-white" style="margin-top: 50px;  margin-bottom: 150px">
+            <div class="block block-shadow block-rounded" style="padding: 10%">
+                <div class="block-header block-header-default text-uppercase text-bold">{{ __('Login') }}</div>
 
                 <div class="block-content">
                     <form method="POST" action="{{ route('login') }}">

@@ -55,7 +55,7 @@
                     <div class="col-lg-4 col-md-6 item">
                         <div class="card">
                             <div class="card-header p-0 position-relative">
-                                <a href="#blog-single.html">
+                                <a href="{{ route('myCourse',$item->slug) }}">
                                     <img class="card-img-bottom d-block radius-image-full" style="max-height: 250px" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}"
                                         alt="Card image cap">
                                 </a>
@@ -115,19 +115,12 @@
                         <div class="bg-clr-white hover-box" style="max-height: 150px; margin-bottom: 10px">
                             <div class="row">
                                 <div class="col-sm-1"></div>
-                                {{-- <div class="col-sm-5 position-relative" >
-                                    <a href="#blog-single.html" class="image-mobile" >
-                                        <img class="card-img-bottom d-block radius-image-full" style="max-height: 150px; max-width: 150px" src="{{ asset('assets/assets/images/beauty1.jpg') }}" alt="Card image cap">
-                                    </a>
-                                </div> --}}
                                 <div class="col-sm-7 card-body blog-details align-self" >
-                                    {{-- <a href="#blog-single.html" class="blog-desc">{{ $item->name }}
-                                    </a> --}}
                                     <div class="author align-items-center">
                                         <img @if($item->profile->photo===null) src="{{ asset('assets/assets/images/a1.jpg') }}" @else src="{{ asset('photo/'.$item->profile->photo) }}" @endif alt="" class="img-fluid rounded-circle">
                                         <ul class="blog-meta">
                                             <li>
-                                                <a href="author.html">{{ $item->name }}</a> 
+                                                <a href="{{ route('detailInstruktur',$item->id) }}">{{ $item->name }}</a> 
                                             </li>
                                             <li class="meta-item blog-lesson">
                                                 <span class="meta-value"> @if($item->profile->alumni==null)@else{{ $item->profile->alumni }} @endif </span>
@@ -142,20 +135,20 @@
             </div>
         </div>
     </div>
-    <div class="w3l-homeblock2 w3l-homeblock6 py-5">
+    <div class="w3l-homeblock2 w3l-homeblock6 py-5" >
         <div class="container-fluid px-sm-5 py-lg-5 py-md-4">
             <!-- block -->
             @if (count($recent_news)!==0)
             <h3 class="section-title-left mb-4"> NEWS </h3>
             @endif
-            <div class="row">
+            <div class="row" >
                 @foreach ($recent_news as $item)
-                <div class="col-lg-6">
-                    <div class="bg-clr-white hover-box" style="min-height: 310px">
+                <div class="col-lg-6 news" id="news">
+                    <div class="bg-clr-white hover-box" style="min-height: 280px">
                         <div class="row">
-                            <div class="col-sm-6 position-relative" style="min-height: 310px">
+                            <div class="col-sm-6 position-relative" style="min-height: 280px">
                                 <a href="{{ route('newsDetail',$item->id) }}" >
-                                    <img class="card-img-bottom d-block radius-image-full" style="min-height: 310px" src="{{ asset('news_picture/'.$item->news_pict) }}" alt="Card image cap">
+                                    <img class="card-img-bottom d-block radius-image-full" style="min-height: 280px" src="{{ asset('news_picture/'.$item->news_pict) }}" alt="Card image cap">
                                 </a>
                             </div>
                             <div class="col-sm-6 card-body blog-details align-self">
@@ -178,8 +171,18 @@
                     </div>
                 </div>
                 @endforeach
-                
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        // news
+    function news()
+    {
+        var skrollke = document.getElementById("news");
+        skrollke.scrollIntoView();
+    }
+    </script>
 @endsection
