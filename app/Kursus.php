@@ -30,6 +30,11 @@ class Kursus extends Model
         return $this->belongsTo(Mapel::class);
     }
 
+    public function artikel()
+    {
+        return $this->belongsToMany(Artikel::class)->withTimestamps();
+    }
+
     public function video()
     {
         return $this->belongsToMany(Video::class)->withTimestamps();

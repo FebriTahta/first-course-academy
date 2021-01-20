@@ -15,7 +15,8 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');            
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('kuis_id');
             $table->unsignedBigInteger('pertanyaan_id');
             $table->unsignedBigInteger('answer_id');

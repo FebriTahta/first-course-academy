@@ -8,6 +8,8 @@ use App\Kursus;
 use App\User;
 Use App\Kelas;
 Use App\Mapel;
+use EmbedServiceProvider;
+use Cohensive\Embed\Facades\Embed;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -53,58 +55,7 @@ class VideoController extends Controller
                 );
                 return redirect()->back()->with($notif);
             }
-        }
-        // if($kursus_id === null){
-        //      # code...
-        //      if ($video_link === null) {
-        //         # code...
-        //         // $video->updateOrCreate();
-        //         $video              = Video::updateOrCreate(['id' => $video_id],
-        //                 [
-        //                 'user_id'=>$request->user_id,            
-        //                 'kelas_id'=>$request->kelas_id,
-        //                 'mapel_id'=>$request->mapel_id,
-        //                 'video_link'=>$request->video_link,
-        //                 'video_name'=>$request->video_name,                    
-        //                 ]);
-        //         $notif = array('pesan-sukses' => 'video kursus baru berhasil ditambahkan');
-        //         return redirect()->back()->with($notif);
-        //     }else{
-        //         $notif = array('pesan-peringatan' => 'video dengan sumber "link" serupa sudah pernah dibuat. Anda bisa menyalinnya dihalaman kursus anda');
-        //         return redirect()->back()->with($notif);
-        //     }                                                       
-        // }else{
-        //     if ($video_link === null) {
-        //         # code...
-        //         //cek data video tersebut sudah ada apa belum, kalo sudah hanya update, kalo belum add lagi ke kursus
-        //         if ($data_video   ===     null) {
-        //             # code...
-        //             // $video->updateOrCreate();
-        //             $video              = Video::updateOrCreate(['id' => $video_id],
-        //                 [
-        //                 'user_id'=>$request->user_id,            
-        //                 'kelas_id'=>$request->kelas_id,
-        //                 'mapel_id'=>$request->mapel_id,
-        //                 'video_link'=>$request->video_link,
-        //                 'video_name'=>$request->video_name,                    
-        //                 ]);
-        //             $kursus->video()->attach($video);
-        //             $notif = array(
-        //                 'pesan-sukses' => 'video kursus baru berhasil ditambahkan pada kursus ini',                
-        //             );
-        //             return redirect()->back()->with($notif);
-        //         }else{
-        //             $notif = array(
-        //                 'pesan-sukses' => 'video kursus baru berhasil ditambahkan',                
-        //             );
-        //             return redirect()->back()->with($notif);
-        //         }
-                
-        //     }else{
-        //         $notif = array('pesan-peringatan' => 'video dengan sumber "link" serupa sudah pernah dibuat. Anda bisa menyalinnya dihalaman kursus anda');
-        //         return redirect()->back()->with($notif);
-        //     }                                                                  
-        // }
+        }        
     }
 
     public function storecopy(Request $request)
@@ -169,6 +120,18 @@ class VideoController extends Controller
         $mapels = Mapel::all();
         $kelass = Kelas::all();
         return view('admin/daftarKonten/video', compact('video','user','users','kelass','mapels','videos'));
+    }
+
+    public function myvideoinstruktur($slug)
+    {
+        $user   = Auth::id();
+        $users  = User::find($user);
+        $video  = Video::where('user_id', $user)->get();
+        $videos = Video::all();
+        $mapels = Mapel::all();
+        $kelass = Kelas::all();
+        $kursus = Kursus::where('slug',$slug)->first();
+        return view('client/konten/video', compact('video','user','users','kelass','mapels','videos','kursus'));
     }
 
 }

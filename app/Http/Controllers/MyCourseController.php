@@ -11,6 +11,10 @@ use App\Profile;
 use App\Video;
 use App\User;
 use Carbon\Carbon;
+use App\Artikel;
+use App\kursus_video;
+use App\kuis_kursus;
+use App\artikel_kursus;
 use Auth;
 use App\Mail\PengajuanResetKuis;
 use App\Mail\AccResetKuis;
@@ -21,14 +25,21 @@ use Illuminate\Http\Request;
 class MyCourseController extends Controller
 {
     public function courseform($slug)
-    {
-        $data_kursus    = Kursus::where('slug',$slug)->first();        
-        $data_kursus_id = $data_kursus->id;
-        
-        $data_vid       = $data_kursus->user_id;
-        $vid            = Video::where('user_id', $data_vid)->first();
-                
-        return view('client.mycourse.index', compact('data_kursus','vid'));                
+    {        
+        $data_kursus        = Kursus::where('slug',$slug)->first();
+        $data_kursus_id     = $data_kursus->id;
+        $mapel_id           = $data_kursus->mapel->id;
+        $kelas_id           = $data_kursus->kelas->id;
+        //video
+        $video_masuk        = kursus_video::where('kursus_id', $data_kursus_id)->pluck('video_id')->toArray();
+        $filter_video       = Video::where('kelas_id', $kelas_id)->where('mapel_id', $mapel_id)->whereNotIn('id', $video_masuk)->get();
+        //latihansoal
+        $kuis_masuk         = kuis_kursus::where('kursus_id', $data_kursus_id)->pluck('kuis_id')->toArray();
+        $filter_kuis        = Kuis::where('kelas_id', $kelas_id)->where('mapel_id', $mapel_id)->whereNotIn('id', $kuis_masuk)->get();
+        //artikel
+        $artikel_masuk      = artikel_kursus::where('kursus_id', $data_kursus_id)->pluck('artikel_id')->toArray();
+        $filter_artikel     = Artikel::where('kelas_id', $kelas_id)->where('mapel_id', $mapel_id)->whereNotIn('id', $artikel_masuk)->get();
+        return view('client.mycourse.index', compact('data_kursus','filter_video','filter_kuis','filter_artikel'));        
     }
 
     public function kuisform($id)
@@ -51,12 +62,42 @@ class MyCourseController extends Controller
         if ($data_result->count() > 0) {
             # code...
             $nilai              = ($jumlah_soal - $salah) * (100/$jumlah_soal);
-            return view('client.mykuis.index', compact('data_reset','nilai','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
+            return view('client.mykuis.index2', compact('data_reset','nilai','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
         }else{            
-            return view('client.mykuis.index', compact('data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
+            return view('client.mykuis.index2', compact('data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
         }
         
     }
+
+    public function kuisform2($slug, $slug2)
+    {
+        // slug 1 untuk kuis dan slug 2 untuk kursus
+        $user_id            = Auth::id();        
+        $data_kuis          = Kuis::where('slug',$slug)->first();        
+        $data_kuis_id       = $data_kuis->id;
+
+        $data_kursus        = Kursus::where('slug',$slug2)->first();
+        // $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->inRandomOrder()->get();
+        $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->get();
+        $data_result        = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->get();        
+        $data_pertanyaan_R  = Pertanyaan::where('kuis_id', $data_kuis_id)->get();
+        $profile            = Profile::where('user_id',$user_id)->first();
+        $profile_id         = $profile->id;
+        
+        $data_reset         = reset::where('kuis_id',$data_kuis_id)->where('profile_id', $profile_id)->get();
+
+        $jumlah_soal        = $data_pertanyaan->count();
+        $salah              = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->where('myresult','0')->count();
+        $benar              = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->where('myresult','1')->count();
+        if ($data_result->count() > 0) {
+            
+            # code...
+            $nilai              = ($jumlah_soal - $salah) * (100/$jumlah_soal);
+            return view('client.mykuis.index2', compact('data_kursus','data_reset','nilai','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
+        }else{            
+            return view('client.mykuis.index2', compact('data_kursus','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
+        }
+    }    
 
     public function submitkuis(Request $request)
     {
@@ -72,7 +113,8 @@ class MyCourseController extends Controller
                 $result++;
             }
             Result::create([
-                'user_id'       => Auth::id(),                
+                'user_id'       => $request->user_id,
+                'profile_id'    => Auth::id(),
                 'kuis_id'       => $request->kuis_id,
                 'pertanyaan_id' => $pertanyaan,
                 'answer_id'     => $request->input('answers.'.$pertanyaan),                

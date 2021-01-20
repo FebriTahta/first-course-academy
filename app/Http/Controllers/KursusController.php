@@ -78,17 +78,20 @@ class KursusController extends Controller
         $siswa_kursus       =   Profile::all();
         $total_user         =   Profile::all()->count();        
         $data_kuis          =   Kuis::where('kelas_id', $data_id_kelas)->where('mapel_id', $data_id_mapel)->get();                
-        $data_book          =   Book::where('kelas_id', $data_id_kelas)->where('mapel_id', $data_id_mapel)->get();        
+        // $data_book          =   Book::where('kelas_id', $data_id_kelas)->where('mapel_id', $data_id_mapel)->get();
         $total_video        =   Video::where('kelas_id',$data_id_kelas)->where('mapel_id',$data_id_mapel)->pluck('video_name')->count();                
         $list_data_video_kursus =   Video::where('kelas_id',$data_id_kelas)->where('mapel_id',$data_id_mapel)->get();                            
         
         $data_instruktur        = $data_kursus->user_id;
         $data_instruktur_kursus = User::find($data_instruktur);
         
-        //compare array
-        $kursus_video           = kursus_video::where('kursus_id', $data)->pluck('video_id')->toArray();
-        $kursus_video_all       = Video::where('kelas_id',$data_id_kelas)->where('mapel_id',$data_id_mapel)->pluck('id')->toArray();
-        $data_siswa             = User::where('role','siswa')->where('stat','1')->get();
+        //tes compare array dari video
+        $kursus_video           =   kursus_video::where('kursus_id', $data)->pluck('video_id')->toArray();
+        $kursus_video_all       =   Video::where('kelas_id',$data_id_kelas)->where('mapel_id',$data_id_mapel)->pluck('id')->toArray();
+        //lebih ringkas biar tidak memakai query di blade
+        $filtervideo            =   Video::where('kelas_id',$data_id_kelas)->where('mapel_id',$data_id_mapel)->whereNotIn('id', $kursus_video)->get();
+
+        $data_siswa             =   User::where('role','siswa')->where('stat','1')->get();
         //tes compare array dari siswa
         $siswa_                 =   Profile::all()->pluck('id')->toArray();
         $siswa_yg_sudah_masuk   =   kursus_profile::where('kursus_id', $data)->pluck('profile_id')->toArray();
@@ -96,11 +99,11 @@ class KursusController extends Controller
         //lebih ringkas biar tidak memakai query di blade
         $filtersiswa            =   Profile::whereNotIn('id', $siswa_yg_sudah_masuk)->get();
 
-        return view('admin.detailKursus.index',compact('filtersiswa','result','data_siswa','kursus_video_all','kursus_video','data_kuis','siswa_kursus','total_user','data_kursus_siswa','data_instruktur_kursus','data_book','data','data_kursus','total_video','list_data_video_kursus'));
+        return view('admin.detailKursus.index',compact('filtersiswa','filtervideo','result','data_siswa','kursus_video_all','kursus_video','data_kuis','siswa_kursus','total_user','data_kursus_siswa','data_instruktur_kursus','data','data_kursus','total_video','list_data_video_kursus'));
     }
 
     public function addsiswa(Request $request)
-    {                         
+    {
         foreach($request->profile_id as $item=>$value){
             $datas=array(                
                 'kursus_id'=>$request->kursus_id[$item],
@@ -157,7 +160,7 @@ class KursusController extends Controller
     {
         $user       = Auth::id();
         $kursus     = Kursus::where('status','aktif')->get(); 
-        return view('semuaKursus.index',compact('kursus'));
+        return view('semuaKursus.index2',compact('kursus'));
     }
 
     public function allkursusadmin()

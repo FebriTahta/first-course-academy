@@ -58,13 +58,16 @@
                 <div class="block-content">
                     <form action="{{ route('postNews') }}" method="POST" enctype="multipart/form-data">@csrf
                         <div class="form-group">
+                            <input type="file" class="form-control" name="news_pict" required>
+                        </div>
+                        <div class="form-group">
                             <input type="hidden" id="id" name="id">
                             <input class="form-control" id="val-tittle" type="text" name="news_tittle" placeholder="judul berita" required>                            
                         </div>
+
                         <div class="form-group">                            
                             <textarea class="js-summernote" name="news_desc" id="val-desc" cols="30" rows="10" placeholder="deskripsi berita" required> Deskripsi Berita! <br>
-                                Jika anda mengunggah gambar Pastikan Gambar anda memiliki kualitas yang baik. Apabila gambar anda terlalu besar untuk dapat di tampilkan maka resize gambar anda ke 75% atau 50%.
-                                Jangan lupa untuk memberi "Jarak baris" antara gambar / tulisan dengan "enter". 
+                                
                             </textarea>
                         </div>
                         <div class="form-group">

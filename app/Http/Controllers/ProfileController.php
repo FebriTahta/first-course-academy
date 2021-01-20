@@ -31,7 +31,7 @@ class ProfileController extends Controller
                 $request->file('photo')->move('photo/',$request->file('photo')->getClientOriginalName());
                 $data_p->photo = $request->file('photo')->getClientOriginalName();
                 $data_p->save();
-            }          
+            }
         // $data_p->update($data);
 
         $notif = array(
@@ -72,5 +72,16 @@ class ProfileController extends Controller
                         
         }
                 
+    }
+
+    public function allinstruktur()
+    {
+        $instruktur     = User::where('role','instruktur')->where('stat','1')->get();
+        return view('semuainstruktur.index', compact('instruktur'));
+    }
+
+    public function landing()
+    {        
+        return view('client.mykuis.index2');
     }
 }

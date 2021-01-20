@@ -240,16 +240,17 @@
                             <tbody>
                                 @foreach ($data_kursus->kuis as $kuis_item)
                                 <tr>
-                                    <td class="border-bottom" style="width: 30%"><i class="fa fa-fw fa-edit"></i>&nbsp;{{ $kuis_item->pertanyaan->count() }} soal &nbsp;&nbsp; <a href="{{ route('detailsSoal', $kuis_item->id) }}"> {{ $kuis_item->kuis_name }}</a></td>
+                                    <td class="border-bottom" style="width: 35%"><i class="fa fa-fw fa-edit"></i>&nbsp;{{ $kuis_item->pertanyaan->count() }} soal &nbsp;&nbsp; <a href="{{ route('detailsSoal', $kuis_item->id) }}"> {{ $kuis_item->kuis_name }}</a></td>
                                     <td class="border-bottom"></td>                                    
                                         @if ($data_kursus->user_id !== $kuis_item->user_id)
                                             @if (auth()->user()->role === 'admin')
                                             <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                             @else
-                                            <td class="text-left border-bottom d-none d-sm-table-cell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By : {{ $kuis_item->user->name }}</td>                                           
+                                            <td class="text-left border-bottom d-none d-sm-table-cell"> By : {{ $kuis_item->user->name }}</td>
                                             <td class="text-right border-bottom text-danger"><i></i>&nbsp; fixed</td>
                                             @endif                                            
                                         @else
+                                        <td class="text-left border-bottom d-none d-sm-table-cell"> By : Me</td>
                                         <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                         @endif                                    
                                 </tr>
@@ -263,13 +264,13 @@
                     <div class="col-md-4 col-xl-12 mb-10" data-category="book" style="display: none">                        
                         <table class="table table-borderless">
                             <tbody>
-                                @foreach ($data_kursus->book as $book_item)                                                                    
+                                {{-- @foreach ($data_kursus->book as $book_item)                                                                    
                                 <tr>
                                     <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp; {{ $book_item->book_name }}</td>
                                     <td class="text-right border-bottom text-danger"><a href="#" class="text-danger" data-id="{{ $book_item->id }}" data-toggle="modal" data-target="#modal-fromright-removebuku"> hapus</a></td>
                                     <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('download', $book_item->book_file) }}">unduh</a></td>
                                 </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -601,7 +602,7 @@
                             
                             <div class="form-group">
                                 <table class="table table-borderless">
-                                    @foreach ($list_data_video_kursus as $items_v)
+                                    {{-- @foreach ($list_data_video_kursus as $items_v)
                                     <tr>
                                         <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
                                         <td><input type="checkbox" name="video_id[]" value="{{ $items_v->id }}"></td>
@@ -609,6 +610,15 @@
                                         <td><label>{{ $items_v->user->name }}</label></td>
                                         <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $items_v->video_link }}">tonton</a></td>
                                     </tr>
+                                    @endforeach --}}
+                                    @foreach ($filtervideo as $res)
+                                        <tr>
+                                            <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
+                                            <td><input type="checkbox" name="video_id[]" value="{{ $res->id }}"></td>
+                                            <td><label>{{ $res->video_name }}</label></td>
+                                            <td><label>{{ $res->user->name }}</label></td>
+                                            <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $res->video_link }}">tonton</a></td>
+                                        </tr>
                                     @endforeach
                                 </table>                                
                             </div>
@@ -616,22 +626,31 @@
                         @else
                         <div class="form-group">
                             <table class="table table-borderless">
-                            @foreach ($list_data_video_kursus as $item_v)
-                                @if ($item_v->user_id !== auth()->user()->id)
+                            @foreach ($list_data_video_kursus as $res)
+                                @if ($res->user_id !== auth()->user()->id)
                                     
-                                            <tr>
+                                            {{-- <tr>
                                                 <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
                                                 <td><input type="checkbox" name="video_id[]" value="{{ $item_v->id }}"></td>
                                                 <td><label>{{ $item_v->video_name }}</label></td>
                                                 <td><label>{{ $item_v->user->name }}</label></td>
                                                 <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a></td>
+                                            </tr> --}}
+                                    
+                                            
+                                            <tr>
+                                                <td class="text-left float-left"><input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}"></td>
+                                                <td><input type="checkbox" name="video_id[]" value="{{ $res->id }}"></td>
+                                                <td><label>{{ $res->video_name }}</label></td>
+                                                <td><label>{{ $res->user->name }}</label></td>
+                                                <td><a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $res->video_link }}">tonton</a></td>
                                             </tr>
                                         
                                 
-                                    @else
-                                    <div class="form-group text-center">
+                                @else
+                                    {{-- <div class="form-group text-center">
                                         <p class="text-danger">BELUM ADA VIDEO PADA KATEGORI KURSUS INI</p>
-                                    </div>
+                                    </div> --}}
                                 @endif
                             @endforeach
                             </table>
@@ -666,18 +685,18 @@
                     </div>
                     <div class="block-content">
                         <p class="text-center text-danger border-bottom">VIDEOKU</p>                        
-                        @foreach ($list_data_video_kursus as $item_v)                        
-                            @if ($item_v->user_id === $data_kursus->user_id)
+                        @foreach ($list_data_video_kursus as $res)                        
+                            @if ($res->user_id === $data_kursus->user_id)
                                 <div class="form-group">
                                     <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                    <input type="checkbox" name="video_id[]" value="{{ $item_v->id }}">
-                                    <label>{{ $item_v->video_name }}</label>
-                                    <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $item_v->video_link }}">tonton</a>
-                                </div>    
-                                @else
+                                    <input type="checkbox" name="video_id[]" value="{{ $res->id }}">
+                                    <label>{{ $res->video_name }}</label>
+                                    <a href="#" class="form-group float-right text-right view-video" data-dismiss="modal" aria-label="Close" id="modal-view-video" data-video_link="{{ $res->video_link }}">tonton</a>
+                                </div>
+                            
                                 {{-- <div class="form-group text-center">
                                     <p class="text-danger">ANDA BELUM MEMBUAT VIDEO</p>
-                                </div> --}}
+                                </div> --}}                            
                             @endif
                         @endforeach                        
                     </div>
@@ -807,27 +826,22 @@
                                     <table class="table table-borderless">
                                         @foreach ($data_kuis as $item_kuis)
                                         <tr>
-                                        @if ($item_kuis->user_id !== $data_kursus->user_id)
-                                        {{-- @if ($item_kuis->user_id !== auth()->user()->id) --}}
-                                        <div class="form-group">                                                                                                                                        
-                                            <td>
-                                                <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                                <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
-                                            </td>
-                                            <td>
-                                                <label>{{ $item_kuis->kuis_name }}</label> 
-                                            </td>                                            
-                                            <td>
-                                                <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
-                                            </td>
-                                            <td class="form-group float-right text-right">
-                                                <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="">detail</a>
-                                            </td>                                                
-                                        </div>
-                                        @else
-                                        {{-- <div class="form-group text-center">
-                                            <p class="text-danger">BELUM ADA KUIS LAIN PADA KATEGORI INI</p>
-                                        </div> --}}
+                                        @if ($item_kuis->user_id !== $data_kursus->user_id)                                        
+                                            <div class="form-group">                                                                                                             
+                                                <td>
+                                                    <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                                                    <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
+                                                </td>
+                                                <td>
+                                                    <label>{{ $item_kuis->kuis_name }}</label> 
+                                                </td>                                            
+                                                <td>
+                                                    <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
+                                                </td>
+                                                <td class="form-group float-right text-right">
+                                                    <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="">detail</a>
+                                                </td>
+                                            </div>
                                         @endif
                                         </tr>
                                         @endforeach
@@ -928,7 +942,7 @@
         </div>            
     </div>
 </div>
-<!--end modal hapus video-->
+<!--end modal hapus kuis-->
 
 <!--modal add file-->
 <div class="modal fade" id="modal-fromright_book" tabindex="-1" role="dialog" aria-labelledby="modal-fromright" aria-hidden="true">
@@ -1004,8 +1018,8 @@
                             </div>
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
-                                    <p class="text-center text-danger border-bottom">pastikan kuis sesuai dengan materi anda</p>                                    
-                                    @foreach ($data_book as $item_book)
+                                    <p class="text-center text-danger border-bottom">pastikan buku sesuai dengan materi anda</p>                                    
+                                    {{-- @foreach ($data_book as $item_book)
                                     @if ($item_book->user_id !== $data_kursus->user_id)
                                     <div class="form-group">
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
@@ -1015,7 +1029,7 @@
                                     </div>
                                     @else
                                     @endif                                    
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>
@@ -1053,7 +1067,7 @@
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
                                     <p class="text-center text-danger border-bottom">BUKU SAYA</p>                                    
-                                    @foreach ($data_book as $item_book)
+                                    {{-- @foreach ($data_book as $item_book)
                                     @if ($item_book->user_id === $data_kursus->user_id)
                                     <div class="form-group">
                                         <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
@@ -1063,7 +1077,7 @@
                                     </div>
                                     @else
                                     @endif                                    
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>

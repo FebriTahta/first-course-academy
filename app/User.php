@@ -9,6 +9,7 @@ use App\reset;
 use App\Forum;
 use App\Book;
 use App\News;
+use App\Artikel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -87,6 +88,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function news()
     {
         return $this->hasMany(News::class);
+    }
+
+    public function artikel()
+    {
+        return $this->hasMany(Artikel::class);
     }
     
 }

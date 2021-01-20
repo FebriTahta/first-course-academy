@@ -1,19 +1,16 @@
-@extends('layouts.client_layouts.master')
-
+@extends('layouts.new_layouts.master')
+@section('head')
+<link rel="stylesheet" id="css-main" href="{{ asset('assets/css/codebase.min.css') }}">
+<link rel="stylesheet" id="css-main" href="{{ asset('assets/assets/css/fab.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/summernote/summernote-bs4.css') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+@endsection
 @section('content')
-<!-- Hero -->
-<div class="bg-image bg-image-bottom" style="background-image: url({{ asset('assets/media/photos/photo34@2x.jpg') }});">
-    <div class="bg-primary-dark-op">
-        <div class="content content-top text-center overflow-hidden">
-            <h5 class="h4 font-w400 text-white-op invisible" data-toggle="appear" data-class="animated fadeInUp">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}</h5>
-        </div>
-    </div>
-</div>
-<!-- END Hero -->
-<div class="container">    
-    <div class="row">
-        <div class="col-xl-12">
-            <h2 class="content-heading"><a href="{{ route('home') }}"> DASHBOARD </a><small>| Kursus</small></h2>
+
+<div class="w3l-homeblock2 w3l-homeblock6 py-5">
+    <div class="container-fluid px-sm-5 py-lg-5 py-md-4">
+        <!-- block -->
             @if (Session::has('message'))
             <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
             @endif
@@ -23,185 +20,679 @@
             @if (Session::has('pesan-sukses'))
                 <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
             @endif
-        </div>
-        <div class="col-xl-8">
-            <!--video frame-->
-            <div class="block block-rounded">                
-                <div class="block-content text-center bg-secondary text-white">
-                    <p>putar video yang tersedia pada daftar video</p>
-                </div>                 
-                <iframe id="playvideo" src="" frameborder="0" allowfullscreen width="100%" height="380" position="absolute"></iframe>                            
-            </div>
-            <!--video frame-->
-
-            <!--konten-->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default">
-                    
-                </div>
-                <div class="block-content">
-                    <div class="js-filter" data-speed="400">
-                        <!--navbar konten-->
-                        <div class="p-10 bg-white">
-                            <div class="block-header border-bottom push">                            
-                                {{-- <div class="col-3 col-xl-3 nav nav-pills">
-                                    <div class="nav-item text-center" style="width: 100%">                        
-                                        <a class="nav-link active" href="#" data-category-link="info">
-                                        <i class="fa fa-fw fa-info-circle mr-5"></i> info</a>
-                                    </div>                    
-                                </div> --}}
-                                <div class="col-6 col-xl-6 nav nav-pills">
-                                    <div class="nav-item text-center" style="width: 100%">
-                                        <a class="nav-link" href="#" data-category-link="kuis">
-                                        <i class="fa fa-fw fa-edit mr-5"></i> kuis</a>
-                                    </div>                    
-                                </div>
-                                <div class="col-6 col-xl-6 nav nav-pills">
-                                    <div class="nav-item text-center" style="width: 100%">
-                                        <a class="nav-link" href="#" data-category-link="book">
-                                        <i class="fa fa-fw fa-book mr-5"></i> book</a>
-                                    </div>                    
-                                </div>                                                                               
-                            </div>                                              
-                        </div>                    
-                        <!--end navbar konten-->
-
-                        <!--info-->
-                        
-
-                        <!--kuis-->
-                        <div class="col-md-4 col-xl-12 mb-10" data-category="kuis">                        
-                            <table class="table table-borderless">                            
-                                <tbody>
-                                    @foreach ($data_kursus->kuis as $kuis_item)
-                                    <tr>
-                                        <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp; {{ $kuis_item->kuis_name }}</td>
-                                        <td class="border-bottom"> &nbsp; {{ $kuis_item->pertanyaan->count() }} soal</td>                                        
-                                        <?php $sudah_dikerjakan = App\Result::where('user_id', auth()->user()->id)->where('kuis_id', $kuis_item->id)->first()?>
-                                        
-                                        @if ($sudah_dikerjakan===null)
-                                        <td class="border-bottom text-right"><a href="/kuis-form/{{ $kuis_item->id }}"> start</a></td>
-                                        @else
-                                        <td class="border-bottom text-right"><a href="/kuis-form/{{ $kuis_item->id }}"> selesai </a></td>
-                                        @endif                                        
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+            <h3 class="section-title-left mb-4"> My Course</h3>
+        <div class="row">
+            <div class="col-lg-6 mb-50">
+                <div class="bg-clr-white">
+                    <div class="row">
+                        <div class="col-sm-6 position-relative">
+                            <a>
+                                <img class="card-img-bottom d-block radius-image-full" src="{{ asset('kursus_picture/'.$data_kursus->kursus_pict) }}" style="min-height: 263px" alt="Card image cap">
+                            </a>
                         </div>
-                        <!--kuis-->
-
-                        <!--buku-->
-                        <div class="col-md-4 col-xl-12 mb-10" data-category="book" style="display: none">                        
-                            <table class="table table-borderless">                            
-                                <tbody>
-                                    @foreach ($data_kursus->book as $book_item)
-                                    <tr>
-                                        <td class="border-bottom"><i class="fa fa-fw fa-edit"></i>&nbsp; {{ $book_item->book_name }}</td>  
-                                        <td class="border-bottom text-right"> <input type="hidden" name="book_name" value="{{ $book_item->book_name }}"> <a href="{{ route('download', $book_item->book_file) }}"> unduh </a></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--buku-->
-                    </div>                    
-                </div>
-            </div>
-            <!--konten-->
-        </div>
-
-        <div class="col-xl-4">            
-            <div class="block block-rounded">
-                <div class="block-header block-header-default text-center">
-                    <h3 class="block-title">
-                        <i class="fa fa-fw fa-info"></i>
-                        About
-                    </h3>
-                </div>
-                <div class="block-content">
-                    <div class="block-content text-center">
-                        <div class="push">
-                            @if ($data_kursus->user->profile->photo==null)
-                            <img class="img-avatar" src="{{ asset('assets/media/photos/photo34@2x.jpg') }}" alt="{{ $data_kursus->user->name }}">
-                            @else
-                            <img class="img-avatar" src="{{ asset('photo/'.$data_kursus->user->profile->photo) }}" alt="{{ $data_kursus->user->name }}">
-                            @endif                            
-                        </div>
-                        <label for="">{{ $data_kursus->user->name }}</label>
-                        <div class="font-size-sm text-muted text-center mb-20">
-                            (Instruktur)
+                        <div class="col-sm-6 card-body blog-details align-self">                            
+                            <span class="label-blue hover-box">
+                                
+                                    @if ($data_kursus->status=='aktif')
+                                        <form action="{{ route('nonaktifkan') }}" method="POST">@csrf
+                                            <input type="hidden" name="id" value="{{ $data_kursus->id }}">
+                                            <input type="hidden" name="status" value="nonaktif">
+                                            <button class="btn btn-sm text-uppercase text-primary" type="submit">{{ $data_kursus->status }}</button>
+                                        </form>                                        
+                                    @else
+                                        <form action="{{ route('aktifkan') }}" method="POST">@csrf
+                                            <input type="hidden" name="id" value="{{ $data_kursus->id }}">
+                                            <input type="hidden" name="status" value="aktif">
+                                            <button class="btn btn-sm text-uppercase text-danger" type="submit">{{ $data_kursus->status }}</button>
+                                        </form>
+                                    @endif                                                                 
+                            </span>
+                            <a class="blog-desc">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}
+                            </a>
+                            {{-- <p>Lorem ipsum dolor sit amet consectetur ipsum adipisicing elit. Quis
+                                vitae sit.</p> --}}
+                            <div class="author align-items-center mt-3">
+                                <img 
+                                    @if ($data_kursus->user->profile->photo==null)
+                                        src="{{ asset('assets/assets/images/a1.jpg') }}"
+                                    @else
+                                    src="{{ asset('photo/'.$data_kursus->user->profile->photo) }}"
+                                    @endif alt="" class="img-fluid rounded-circle">
+                                <ul class="blog-meta">
+                                    <li>
+                                        <a >{{ $data_kursus->user->name }}</a> 
+                                    </li>
+                                    <li class="meta-item blog-lesson">
+                                        <span class="meta-value"> {{ $data_kursus->user->role }} </span>. <span class="meta-value ml-2"><span class="fa fa-check"></span></span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <table class="table table-borderless table-striped">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <i class="fa fa-fw fa-tags mr-10"></i>
-                                    <a class="badge badge-primary" href="javascript:void(0)">{{ $data_kursus->kelas->kelas_name }}</a>
-                                    <a class="badge badge-primary" href="javascript:void(0)">{{ $data_kursus->mapel->mapel_name }}</a>                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="fa fa-heart mr-10 text-danger"></i> {{ $data_kursus->profile->count() }} Siswa
-                                </td>
-                            </tr>                            
-                            <tr>
-                                <td>
-                                    <i class="si si-control-play mr-10"></i> {{ $data_kursus->video->count() }} Video                              
-                                </td>                                
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="fa fa-edit mr-10"> </i> {{ $data_kursus->kuis->count() }} Kuis                              
-                                </td>                                
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="fa fa-book mr-10"> </i> 2 Buku                              
-                                </td>                                
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
-            
-            <div class="block block-rounded block-mode-pinned">
-                <div class="block-header block-header-default ">
-                    <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>
-                    <div class="block-options">                    
-                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
-                            <i class="si si-pin"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="block-content">
-                    <p class="text-center">DAFTAR VIDEO</p>
-                    <table class="table table-borderless border-top">
-                        <tbody>
-                            @foreach ($data_kursus->video as $video_item)
-                            <tr>
-                                <td><a type="button" class="si si-control-play view-video" data-video_link="{{ $video_item->video_link }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ $video_item->video_name }}</a></td>
-                            </tr>
-                            @endforeach                            
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-lg-6 trending mt-lg-0 mt-5 mb-20" style="margin-top: 15px">
+                <div class="topics">                    
+                    <a class="topics-list hover-box" onclick="videoscroll()">
+                        <div class="list1">
+                            <span class="fa fa-play"></span>
+                            <h4><u>{{ $data_kursus->video->count() }}</u> Video Kursus</h4>
+                        </div>
+                    </a>
+                    <a class="topics-list mt-3 hover-box" onclick="artikelscroll()">
+                        <div class="list1" >
+                            <span class="fa fa-book"></span>
+                            <h4><u>{{ $data_kursus->artikel->count() }}</u> Artikel & Buku Kursus</h4>
+                        </div>
+                    </a>
+                    <a  class="topics-list mt-3 hover-box" onclick="kuisscroll()">
+                        <div class="list1">
+                            {{-- <span class="fa fa-file-alt"></span> --}}
+                            <span class="fa fa-pencil"></span>
+                            <h4><u>{{ $data_kursus->kuis->count() }}</u> Latihan Soal</h4>
+                        </div>
+                    </a>
+                    <a  class="topics-list mt-3 hover-box">
+                        <div class="list1">
+                            <span class="fa fa-pie-chart"></span>
+                            <h4><u>{{ $data_kursus->profile->count() }}</u> Peserta Didik</h4>
+                        </div>
+                    </a>
+                </div>                            
             </div>
-            
+            <div class="col-lg-12 trending mt-lg-0 mt-5 py-lg-5" style="margin-top: 15px">
+                <div class="mt-4 left-right bg-clr-white p-3">
+                    <h5 class="section-title-left align-self pl-2 mb-sm-0 mb-3">Forum {{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }} </h5>
+                    <a class="btn btn-style btn-primary" href="#url">KUNJUNGI FORUM</a>
+                </div>   
+            </div>
         </div>
     </div>
 </div>
+
+<!--filter-->
+<div class="w3l-homeblock2 w3l-homeblock6 " id="daftarvideo">
+    <div class="container-fluid px-sm-5 py-lg-5 py-md-4 mb-200">
+        <div class="js-filter" data-speed="400">
+            <!--filter-->
+            <div class="p-10 bg-white">
+                <div class="block-header border-bottom push">                            
+                    <div class="col-3 col-xl-3 nav nav-pills">
+                        <div class="nav-item text-center" style="width: 100%">                        
+                            <a class="nav-link active" href="#" data-category-link="videos">
+                            <i class="fa fa-fw fa-info-circle mr-5"></i>video</a>
+                        </div>                    
+                    </div>
+                    <div class="col-3 col-xl-3 nav nav-pills">
+                        <div class="nav-item text-center" style="width: 100%">
+                            <a class="nav-link" href="#" data-category-link="latihansoal">
+                            <i class="fa fa-fw fa-edit mr-5"></i>kuis</a>
+                        </div>                    
+                    </div>
+                    <div class="col-3 col-xl-3 nav nav-pills">
+                        <div class="nav-item text-center" style="width: 100%">
+                            <a class="nav-link" href="#" data-category-link="artikel">
+                            <i class="fa fa-fw fa-book mr-5"></i>book</a>
+                        </div>                    
+                    </div>                                                                               
+                </div>                                              
+            </div>
+            <!--video-->
+            <div class="" data-category="videos">
+                @if (auth()->user()->role=='instruktur')
+                <h5 class="mb-4" style="margin-top: 20px"> <span class="fa fa-plus label-blue btn hover-box" data-toggle="modal" data-target="#addvideo"></span></h5>    
+                @else
+                    <h5 class="mb-4" style="margin-top: 20px"> <span class="label-blue text-uppercase"> video</span></h5>
+                @endif        
+                    <hr>        
+                <div class="row">
+                    @if (count($data_kursus->video)==null)
+                        <div class="col-12 col-xl-12 text-center" style="max-height: 100px">
+                            <p class="text-danger">Belum Ada Video Kursus Yang Tersedia</p>
+                        </div>
+                    @else
+                        @foreach ($data_kursus->video as $key=>$item)
+                            <div class="col-12 col-xl-4 ribbon ribbon-top ribbon-left ribbon-modern ribbon-danger" style="max-height: 100px" >
+                                @if (auth()->user()->role=='instruktur')
+                                    <a class="ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromleft-remove-video" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
+                                        <i class="fa fa-trash"> {{ $key+1 }}</i>
+                                    </a>
+                                @endif
+                                <a class="block block-rounded block-link-pop text-right bg-primary  video-btn view-video" data-toggle="modal" data-video_link="{{ $item->video_link }}" data-target="#myModal" type="button">
+                                    <div class="block-content block-content-full clearfix border-black-op-b border-3x">
+                                        <div class="float-left mt-10 d-sm-block">
+                                            <i class="fa fa-play fa-3x text-white"></i>
+                                        </div>
+                                        <div class="font-size-sm font-w600 text-white-op text-uppercase">{{ $item->video_name }}</div>                        
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    @endif                        
+                </div>
+            </div>
+            <!--latihan soal-->
+            <div class="" data-category="latihansoal" style="display: none">
+                @if (auth()->user()->role=='instruktur')
+                <h5 class="mb-4" style="margin-top: 20px"> <span class="fa fa-plus label-blue btn hover-box" data-toggle="modal" data-target="#addkuiss"></span></h5>    
+                @else
+                    <h5 class="mb-4" style="margin-top: 20px"> <span class="label-blue text-uppercase"> latihan soal</span></h5>
+                @endif
+                <hr>
+                <div class="col-12">
+                    @if (count($data_kursus->kuis)==null)
+                        <div class="col-12 col-xl-12 text-center" style="max-height: 100px">
+                            <p class="text-danger">Belum Ada Latihan SOal Yang Tersedia</p>
+                        </div>
+                    @else
+                        <div class="bg-clr-white">
+                            <table class="table table-borderless table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%">#</th>
+                                        <th style="width: 42%">Kuis</th>
+                                        @if (auth()->user()->role=='siswa')
+                                            <th class="text-center float-right">Status </th>
+                                        @endif                                
+                                        {{-- <th class="float-right"></th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data_kursus->kuis as $key=>$item)
+                                    <tr>
+                                        <td style="width: 5%">{{ $key+1 }}</td>
+                                        <td style="width: 42%">
+                                            @if (auth()->user()->role=='instruktur')
+                                                <a href="/detail-latihan-soal/{{ $item->slug }}/{{ $data_kursus->slug }}">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a>
+                                            @else
+                                                @if ($item->pertanyaan->count()!==0)
+                                                    <a href="/kuis-form-latihan-soal/{{ $item->slug }}/{{ $data_kursus->slug }}" class="text-primary">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a>
+                                                @else
+                                                    <a href="#{{ $item->kuis_name }}" class="text-danger">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a>
+                                                @endif
+                                            @endif                                    
+                                        </td>
+                                        @if (auth()->user()->role=='siswa')
+                                            <td class="text-center " style="width: 15%">
+                                                <?php $sudah_dikerjakan = App\Result::where('profile_id', auth()->user()->id)->where('kuis_id', $item->id)->first()?>
+                                                @if ($sudah_dikerjakan==null)
+                                                    <p class="badge badge-danger text-uppercase float-right">belum</p>&nbsp;&nbsp;&nbsp;
+                                                @else
+                                                    <p class="badge badge-success text-uppercase float-right">selesai</p>&nbsp;&nbsp;&nbsp;
+                                                @endif
+                                            </td>
+                                        @endif
+        
+                                        @if (auth()->user()->role=='instruktur')
+                                            @if (auth()->user()->id !== $item->user_id)
+                                                <td class="float-right">
+                                                    <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
+                                                </td>    
+                                            @else
+                                                <td class="float-right">
+                                                    <a href="/buat-soal/{{ $item->id }}/{{ $item->slug }}"><i class="fa fa-plus"></i> soal</a>
+                                                    <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
+                                                </td>
+                                            @endif                                 
+                                        @else                                
+                                        
+                                        @endif
+                                    </tr>
+                                    @endforeach                    
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif                        
+                </div>
+            </div>
+            <!--artikel-->
+            <div class="" data-category="artikel" style="display: none">
+                @if (auth()->user()->role=='instruktur')
+                    <h5 class="mb-4" style="margin-top: 20px"> <span class="fa fa-plus label-blue btn hover-box" data-toggle="modal" data-target="#addartikels"></span></h5>    
+                @else
+                    <h5 class="mb-4" style="margin-top: 20px"> <span class="label-blue text-uppercase"> artikel</span></h5>
+                @endif
+                    <hr>        
+                <div class="row">
+                    @if (count($data_kursus->artikel)==null)
+                        <div class="col-12 col-xl-12 text-center" style="max-height: 100px">
+                            <p class="text-danger">Belum Ada Artikel & Buku Yang Tersedia</p>                            
+                        </div>
+                    @else
+                        @foreach ($data_kursus->artikel as $key=>$item)
+                            <div class="col-12 col-xl-6 text-left ribbon ribbon-bottom ribbon-right ribbon-modern ribbon-danger">
+                                @if (auth()->user()->role=='instruktur')
+                                    <a class="ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromleft-remove-artikel" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
+                                        <i class="fa fa-trash"> 1</i>
+                                    </a>
+                                @endif
+                                <a class="block block-rounded block-link-shadow" href="/artikel/{{ $item->id }}/{{ $item->slug }}" style="min-height: 80px">
+                                    <div class="block-content block-content-full">
+                                        <p class="font-size-sm text-muted float-sm-right mb-5"><em></em></p>
+                                        <h4 class="font-size-default text-primary mb-0">
+                                            <i class="fa fa-newspaper-o text-muted mr-5"></i> {{ $item->artikel_title }}
+                                        </h4>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach 
+                    @endif                       
+                </div>
+            </div>
+        </div>
+        <!-- block -->
+    </div>        
+</div>
+<!--floating button-->
+<div class="fab-container">
+    <div class="fab fab-icon-holder">
+        <i class="fa fa-question"></i>
+    </div>
+    <ul class="fab-options">
+        @if (auth()->user()->role=='instruktur')
+        <li>
+            <span class="fab-label">Manage Video Kursus</span>
+            <a class="fab-icon-holder" href="{{ route('myvidInstruktur',$data_kursus->slug) }}">                
+                <i class="fa fa-plus"> <i class="fa fa-play"></i></i>
+            </a>
+        </li>
+        <li>
+            <span class="fab-label">Manage Artikel</span>
+            <a class="fab-icon-holder" href="{{ route('myArtikel',$data_kursus->slug) }}">
+                <i class="fas fa fa-plus"> <i class="fas fa fa-book"></i></i>
+            </a>
+        </li>        
+        <li>
+            <span class="fab-label">Manage Latihan Soal</span>
+            <a class="fab-icon-holder" href="{{ route('mykuisInstruktur',$data_kursus->slug) }}">                
+                <i class="fa fa-plus"> <i class="fa fa-pencil"></i></i>
+            </a>
+        </li>
+        @else
+        <li>
+            <span class="fab-label">Video Kursus</span>
+            <div class="fab-icon-holder" onclick="videoscroll()">
+                <i class="fas fa-video"></i>
+            </div>
+        </li>
+        <li>
+            <span class="fab-label">Artikel</span>
+            <div class="fab-icon-holder" onclick="artikelscroll()">
+                <i class="fas fa fa-book"></i>
+            </div>
+        </li>        
+        <li>
+            <span class="fab-label">Latihan Soal</span>
+            <div class="fab-icon-holder" onclick="kuisscroll()">
+                <i class="fa fa-file-alt"></i>
+            </div>
+        </li>
+        @endif                
+    </ul>
+</div>
+
+<!--modal play video--> 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title"></h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <iframe id="playvideo" src="" frameborder="0" allowfullscreen width="100%" height="380" position="relative"></iframe>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+<!--end modal play video-->
+
+<!--modal add video--> 
+<div class="modal fade" id="addvideo" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title">DAFTAR VIDEO</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('storecopy') }}" method="post"> @csrf
+                        <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                        <table class="table table-striped" id="addvideos">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>video</th>
+                                    <th>owner</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($filter_video as $key=> $item)
+                                <tr>
+                                    <td style="width: 5%">{{ $key+1 }}</td>
+                                    <td><a href="#" class="text-primary view-video" data-dismiss="modal" data-toggle="modal" data-video_link="{{ $item->video_link }}" data-target="#myModal">{{ $item->video_name }}</a></td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        <label class="css-control css-control-info css-checkbox">
+                                            <input type="checkbox" class="css-control-input" name="video_id[]" value="{{ $item->id }}">
+                                            <span class="css-control-indicator"></span>
+                                        </label> 
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-primary" type="submit">sumbit</button>
+                    </form>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+<!--end modal add video-->
+
+<!--modal hapus video-->
+<div class="modal fade" id="modal-fromleft-remove-video" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeVid') }}" method="POST" enctype="multipart/form-data">@csrf                    
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">REMOVE VIDEO</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                                <p class="text-uppercase">video tersebut akan dihapus dari kursus anda</p>
+                                <input type="hidden" id="kursus_id" name="kursus_id">
+                                <input type="hidden" id="id" name="id">
+                            </div>                                                      
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <button class="btn btn-danger" type="submit">YES</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal hapus video-->
+
+<!--modal add kuis--> 
+<div class="modal fade" id="addkuiss" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title">DAFTAR KUIS</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('salinKuis') }}" method="post"> @csrf
+                        <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                        <table class="table table-striped" id="addkuis">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>kuis</th>
+                                    <th>owner</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($filter_kuis as $key=> $item)
+                                <tr>
+                                    <td style="width: 5%">{{ $key+1 }}</td>
+                                    <td><a href="#" class="text-primary view-video">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a></td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        <label class="css-control css-control-info css-checkbox">
+                                            <input type="checkbox" class="css-control-input" name="kuis_id[]" value="{{ $item->id }}">
+                                            <span class="css-control-indicator"></span>
+                                        </label> 
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-primary" type="submit">sumbit</button>
+                    </form>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+<!--end modal add kuis-->
+
+<!--modal hapus Kuis-->
+<div class="modal fade" id="hapuskuis" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeKuis') }}" method="POST" enctype="multipart/form-data">@csrf                    
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title text-uppercase">remove kuis</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="text-uppercase">kuis tersebut akan dihapus dari kursus anda</p>
+                                <input type="hidden" id="kursus_id" name="kursus_id">
+                                <input type="hidden" id="id" name="id">
+                            </div>                                                      
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <button class="btn btn-danger" type="submit">remove</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal hapus kuis-->
+
+<!--modal add artikel--> 
+<div class="modal fade" id="addartikels" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title">DAFTAR ARTIKEL</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('salinArtikel') }}" method="post"> @csrf
+                        <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                        <table class="table table-striped" id="addartikel">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>artikel</th>
+                                    <th>owner</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($filter_artikel as $key=> $item)
+                                <tr>
+                                    <td style="width: 5%">{{ $key+1 }}</td>
+                                    <td><a href="/artikel/{{ $item->id }}/{{ $item->slug }}" class="text-primary">{{ $item->artikel_title }}</a></td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        <label class="css-control css-control-info css-checkbox">
+                                            <input type="checkbox" class="css-control-input" name="artikel_id[]" value="{{ $item->id }}">
+                                            <span class="css-control-indicator"></span>
+                                        </label> 
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-primary" type="submit">sumbit</button>
+                    </form>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+<!--end modal add artikel-->
+
+<!--modal hapus Kuis-->
+<div class="modal fade" id="modal-fromleft-remove-artikel" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeArtikel') }}" method="POST" enctype="multipart/form-data">@csrf                    
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title text-uppercase">remove artikel</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="text-uppercase">Artikel tersebut akan dihapus dari kursus anda</p>
+                                <input type="hidden" id="kursus_id" name="kursus_id">
+                                <input type="hidden" id="id" name="id">
+                            </div>                                                      
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <button class="btn btn-danger" type="submit">remove</button>
+                        </div>
+                    </div>                                                               
+                </div>                        
+            </form>                   
+        </div>            
+    </div>
+</div>
+<!--end modal hapus kuis-->
+
+
 @endsection
 
 @section('script')
-<script>        
+<script>    
+    var table;
+    $(document).ready(function(){    
+        table= $('#addvideos').DataTable({});        
+    });
+    var table2;
+    $(document).ready(function(){    
+        table2= $('#addkuis').DataTable({});        
+    });
+    var table3;
+    $(document).ready(function(){    
+        table3= $('#addartikel').DataTable({});        
+    });
+</script>
+
+<script>
+    function videoscroll()
+    {
+        var skrollke = document.getElementById("daftarvideo");
+        skrollke.scrollIntoView();
+    }
+    function artikelscroll()
+    {
+        var skrollke = document.getElementById("daftarartikel");
+        skrollke.scrollIntoView();
+    }
+    function kuisscroll()
+    {
+        var skrollke = document.getElementById("daftarakuis");
+        skrollke.scrollIntoView();
+    }        
+</script>
+
+<script>
+    var data = $("#playvideo").attr('src');
+    //open modal and play video
+    $(document).on('click','.view-video',function(){
+        console.log($(this).attr('data-video_link'));
+        $('#myModal').modal();
+        $("#playvideo").attr('src', $(this).attr('data-video_link'));                  
+        // $('.block-title').text('Menonton');
+    })      
+    //close modal and stop play video
+    $("#myModal").on('hide.bs.modal', function(){
+            $("#playvideo").attr('src', '');
+        });            
+</script>
+<script>
+    $('#modal-fromleft-remove-video').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var kursus_id = button.data('kursus_id')
+        var modal = $(this)        
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #kursus_id').val(kursus_id);
+    })
+</script>
+<script>
+    $('#hapuskuis').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var kursus_id = button.data('kursus_id')
+        var modal = $(this)        
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #kursus_id').val(kursus_id);
+    })
+</script>
+<script>
+    $('#modal-fromleft-remove-artikel').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var kursus_id = button.data('kursus_id')
+        var modal = $(this)        
+        modal.find('.block-content #id').val(id);
+        modal.find('.block-content #kursus_id').val(kursus_id);
+    })
+</script>
+{{-- video in 1 iframe note in modal (tidak dipakai sudah direvisi dengan yang bawah) --}}
+{{-- <script>        
     var data = $("#playvideo").attr('src');
     // play video
     $(document).on('click','.view-video',function(){
         console.log($(this).attr('data-video_link'));            
         $("#playvideo").attr('src', $(this).attr('data-video_link'));
-    });                                                                  
-</script>
+    });                                                           
+</script> --}}
 @endsection

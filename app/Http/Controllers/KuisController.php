@@ -12,6 +12,19 @@ use Illuminate\Http\Request;
 
 class KuisController extends Controller
 {
+    public function mykuisinstruktur($slug)
+    {
+        $user   = Auth::id();
+        $users  = User::find($user);
+        $kuis   = Kuis::where('user_id', $user)->get();
+        $kuiss  = Kuis::all();
+        $mapels = Mapel::all();
+        $kelass = Kelas::all();
+        $kursus = Kursus::where('slug',$slug)->first();
+        $instruktur = User::where('role', 'instruktur')->get();
+        return view('client/konten/kuis', compact('kursus','kuis','user','users','kelass','mapels','kuiss','instruktur'));
+    }
+
     public function store(Request $request)
     {
         $kursus_id      = $request->kursus_id;        
@@ -24,7 +37,7 @@ class KuisController extends Controller
                 'mapel_id'  =>  $request->mapel_id,
                 'kuis_name' =>  $request->kuis_name,
                 'kuis_desc' =>  $request->kuis_desc,
-                'slug'=>Str::slug($request->slug)
+                'slug'=>Str::slug($request->kuis_name)
             ]);
             $data_kuis      = Kuis::find($kuis_id);
             //cek jika sudah ada sebelumnya maka hanya update, jika belum add ke kursus

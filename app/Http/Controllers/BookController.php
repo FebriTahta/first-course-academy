@@ -19,6 +19,8 @@ class BookController extends Controller
         //model book
         $data   =   new Book;
         //book file move to storage untuk download
+        $artikel_id = $request->artikel_id;        
+        $slug   = $request->book_name.$artikel_id.$request->user_id;
         if($request -> hasFile('book_file'))
         {            
             $book_file       = $request->file('book_file');
@@ -29,10 +31,9 @@ class BookController extends Controller
         }
         //data book
         $data->book_name    = $request->book_name;
-        $data->user_id      = $request->user_id;
-        $data->kelas_id     = $request->kelas_id;
-        $data->mapel_id     = $request->mapel_id;        
-        $data->slug         = Str::slug($request->book_name);
+        $data->artikel_id   = $artikel_id;
+        $data->user_id      = $request->user_id;      
+        $data->slug         = Str::slug($slug);
         //save book
         $data->save();
         //insert to pivot

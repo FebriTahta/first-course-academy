@@ -35,7 +35,7 @@ class AdminDashboardController extends Controller
         $id = Auth::id();
         $kursus_user    = Kursus::where('user_id', $id)->with('profile')->get();
         
-        return view('admin.dashboard.index',compact('pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'));                                      
+        return view('admin.dashboard.index',compact('pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'));
     }
     
 }

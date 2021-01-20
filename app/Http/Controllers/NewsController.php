@@ -15,6 +15,12 @@ class NewsController extends Controller
         return view('admin.news.index', compact('news'));
     }
 
+    public function index2($id)
+    {
+        $news   = News::find($id)->first();
+        return view('news.index2', compact('news'));
+    }
+
     public function display()
     {
         $news   = News::orderBy('id', 'DESC')->paginate(1);
@@ -34,9 +40,16 @@ class NewsController extends Controller
         $id         = $request->id;
         $post       = News::updateOrCreate(['id'=> $id], [
             'user_id'       => $user_id,
+            'news_pict'     => $request->news_pict,
             'news_tittle'   => $request->news_tittle,
             'news_desc'     => $request->news_desc
         ]);
+        if($request -> hasFile('news_pict'))
+            {
+                $request->file('news_pict')->move('news_picture/',$request->file('news_pict')->getClientOriginalName());
+                $post->news_pict = $request->file('news_pict')->getClientOriginalName();
+                $post->save();
+            }
         $notif = array(
             'pesan-sukses' => 'News baru saja diterbitkan',                
         );
@@ -64,9 +77,16 @@ class NewsController extends Controller
         $id         = $request->id;
         $post       = News::updateOrCreate(['id'=> $id], [
             'user_id'       => $user_id,
+            'news_pict'     => $request->news_pict,
             'news_tittle'   => $request->news_tittle,
             'news_desc'     => $request->news_desc
         ]);
+        if($request -> hasFile('news_pict'))
+            {
+                $request->file('news_pict')->move('news_picture/',$request->file('news_pict')->getClientOriginalName());
+                $post->news_pict = $request->file('news_pict')->getClientOriginalName();
+                $post->save();
+            }
         $notif = array(
             'pesan-sukses' => 'News telah disunting',                
         );

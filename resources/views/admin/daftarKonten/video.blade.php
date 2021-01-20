@@ -51,7 +51,7 @@
                             <tbody>
                                 @foreach ($videos as $video_item)
                                 <tr>
-                                    <td><a type="button" class="si si-control-play view-video" data-video_link="{{ $video_item->video_link }}">&nbsp;&nbsp;&nbsp;&nbsp; {{ $video_item->video_name }}</a></td>                                    
+                                    <td><a type="button" class="si si-control-play view-video" data-video_link="{{ $video_item->video_link }}">&nbsp;&nbsp;&nbsp;&nbsp; {{ $video_item->video_name }}</a></td> 
                                     <td>{{ $video_item->mapel->mapel_name }} {{ $video_item->kelas->kelas_name }}</td>
                                     <td 
                                         @if ($video_item->user->role=='admin')

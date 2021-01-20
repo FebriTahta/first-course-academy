@@ -1,155 +1,333 @@
-@extends('layouts.client_layouts.master')
-
+@extends('layouts.new_layouts.master')
+@section('head')
+<link rel="stylesheet" id="css-main" href="{{ asset('assets/css/codebase.min.css') }}">
+@endsection
 @section('content')
-<!-- Hero -->
-<div class="bg-image bg-image-bottom" style="background-image: url({{ asset('assets/media/photos/photo34@2x.jpg') }});">
-    <div class="bg-primary-dark-op">
-        <div class="content content-top text-center overflow-hidden">
-            <h5 class="h4 font-w400 text-white-op invisible" data-toggle="appear" data-class="animated fadeInUp">Kursus Saya</h5>
-        </div>
-    </div>
-</div>
-<!-- END Hero -->
-
     <div class="content">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="content-heading"><a href="/">Home | </a>Halaman Utama</h2>
-            </div>
-            <div class="col-xl-4">
-                <div class="block block-mode-hidden">
-                    <div class="block-header block-header-default">
-                    {{-- nafigasi block --}}
-                    </div>
-                    <div class="block-conten border-bottom">                        
-                        <div class="col-xl-12">
-                            <a class="block block-link-shadow" href="javascript:void(0)">
-                                <div class="block-content block-content-full clearfix">
-                                    <div class="text-right float-right mt-10">
-                                        <div class="font-w600 mb-5">{{ auth()->user()->name }}</div>
-                                        <div class="font-size-sm text-muted">{{ auth()->user()->email }}</div>
-                                        <span class="badge badge-primary">{{ auth()->user()->role }}</span>
-                                    </div>
-                                    <div class="float-left">
-                                        @if (auth()->user()->profile->photo==null)
-                                        <img class="img-avatar" src="{{ asset('assets/media/avatars/avatar14.jpg') }}" alt="">
-                                        @else
-                                        <img class="img-avatar" src="{{ asset('photo/'.auth()->user()->profile->photo) }}" alt="">
-                                        @endif                                        
-                                    </div>
-                                </div>                                                                                                    
+        <section class="w3l-homeblock1 py-sm-5 py-4" style="min-height: 800px">
+            <div class="row row-deck">
+                <div class="col-md-4">
+                    <div class="block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">
+                                <i class="fa fa-user fa-fw mr-5 text-muted"></i> Account
+                            </h3>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <label class="mb">
+                                <strong>Hari ini:</strong> <p id="waktu"></p>
+                                
+                            </label>
+                            <p class="float-right" id="jam">
+                                <strong>:</strong> 
+                            </p>                        
+                            <p>
+                                <strong>Name:</strong> {{ auth()->user()->name }}
+                            </p>
+                            <button type="button" onclick="scrollfu2()" class="btn btn-sm btn-primary mr-5">
+                                Biodata
+                            </button>
+                            <a class="btn btn-sm btn-danger float-right" href="{{ route('password.request') }}">
+                                {{ __('Forgot / Reset Your Password?') }}
                             </a>
                         </div>
                     </div>
-                    
-                    <div class="block-header block-header-default ">
-                        <h3 class="block-title">DATA DIRI</h3>
-                        <div class="block-options">
-                            <!-- To toggle block's content, just add the following properties to your button: data-toggle="block-option" data-action="content_toggle" -->
-                            <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                </div>
+                <div class="col-md-4">
+                    <div class="block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">
+                                <i class="fa fa-money fa-fw mr-5 text-muted"></i> Anggota @if (count(auth()->user()->kursus)==0)
+                                    Reguler ({{ auth()->user()->role }})
+                                @else
+                                    Premium ({{ auth()->user()->role }})
+                                @endif
+                            </h3>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <p class="mb-5">
+                                Bergabung Pada :  <strong class="float-right">{{ auth()->user()->created_at }}</strong>
+                            </p>
+                            <p class="text-muted">
+                                @if (auth()->user()->role=='instruktur')
+                                    @if (count(auth()->user()->kursus)==0)
+                                        Anda belum memiliki kursus. Segera hubungi Admin untuk mendapatkan kursus
+                                    @else
+                                        Anda Mempunyai <strong>{{ count(auth()->user()->kursus) }} Kursus</strong>.<br>
+                                        <small>Silahkan periksa dan atur materi pada daftar kursus anda</small><br>
+                                        <button style="margin-top: 30px" class="btn btn-sm btn-success" onclick="scrollfu()">Daftar kursus anda</button>
+                                    @endif
+                                @else
+                                    @if (count(auth()->user()->profile->kursus)==0)
+                                        Anda belum memiliki kursus. Segera hubungi Admin untuk mendapatkan kursus dan akses materi bergengsi kami 
+                                    @else
+                                        Anda telah berlangganan <strong>{{ count(auth()->user()->profile->kursus) }} Kursus</strong>.<br>
+                                        <small>Terimakasih telah berlangganan kursus pada kami</small>
+                                        <button style="margin-top: 30px" class="btn btn-sm btn-success" onclick="scrollfu()">Daftar kursus anda</button>
+                                    @endif
+                                @endif                                
+                            </p>
                         </div>
                     </div>
-                    <div class="block-content">
-                        <form class="border-bottom" action="{{ route('storeProfile') }}" method="POST" enctype="multipart/form-data">@csrf
-                            <div class="form-group">
-                                <div class="form-material mb-10">
-                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                    <input type="text" class="form-control" id="val-alamat" name="alamat" placeholder="Alamat sekarang" value="{{ auth()->user()->profile->alamat }}" required>
-                                    <label for="val-alamat">Alamat</label>
-                                </div>
-                                <div class="form-material mb-10">
-                                    <input type="number" class="form-control" id="val-telp" name="telp" placeholder="Nomor Telepon" value="{{ auth()->user()->profile->telp }}" required>
-                                    <label for="val-telp">No.Telp</label>
-                                </div>
-                                <div class="form-material mb-10">
-                                    <select class="js-select2 form-control js-select2-enabled select2-hidden-accessible" id="val-gender" name="gender" style="width: 100%;" data-placeholder="Choose one.." data-select2-id="val-gender" tabindex="-1" aria-hidden="true" required>
-                                        <option data-select2-id="5">{{ auth()->user()->profile->gender }}</option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
-                                        <option value="Laki-laki">Laki-laki</option>
-                                        <option value="Perempuan">Perempuan</option>
-                                        <option value="Yang lain">Yang Lain</option>
-                                    </select>
-                                    <label for="val-select2">Gender</label>
-                                </div>
-                                <div class="form-material mb-10">
-                                    <input type="text" class="form-control" id="val-alumni" name="alumni" placeholder="Alumni / Sekolah" value="{{ auth()->user()->profile->alumni }}" required>
-                                    <label for="val-alumni">Sekolah</label>
-                                </div>
-                                <div class="form-material mb-10">
-                                    <input type="file" class="form-control" id="val-photo" name="photo" accept=".jpg,.jpeg,.png">
-                                    <label for="val-photo">Photo</label>
-                                </div>
-                            </div>
-                            <div class="form-group text-right">
-                                <button type="submit" class="btn btn-outline-primary">update</button>
-                            </div>
-                        </form>                        
-                    </div>
-                    <div class="block block-content bg-transparent">
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                            {{ __('Forgot / Reset Your Password?') }}
-                        </a>
-                    </div>                    
-                </div>                            
-            </div>
-            <div class="col-xl-8">
-                
-                <div class="block">
-                    <div class="block-header block-header-default">
-                    {{-- nafigasi block --}}
-                    </div>                    
-                    <div class="block-content border-bottom">
-                        <p class="text-center"></p>
-                    </div>
-                    <div class="block-content">
-                        @if (auth()->user()->role=='pengunjung')
-                            <div class="block-content text-center">
-                                <p>ANDA HANYA DAPAT BERPARTISIPASI DALAM FORUM</p>
-                                <p>kontak admin untuk mendapatkan kursus &nbsp; <i class="fa fa-phone"> 081-329-146-514</i></p>
-                            </div>
-                        @else
-                            @if (count(auth()->user()->profile->kursus) == 0)
-                                @if (auth()->user()->stat == 1)
-                                    <div class="block-content text-center">
-                                        <p>TUNGGU SEBENTAR LAGI. KAMI SEDANG MENYIAPKAN KURSUS ANDA</p>
-                                    </div>
-                                @else
-                                <div class="block-content text-center">
-                                    <p>Mungkin anda adalah salah satu siswa kami. Namun saat ini status anda sedang tidak aktif</p>
-                                    <p>Untuk informasi lebih lanjut. Silahkan hubungi admin pada <i class="fa fa-phone"> 081-329-146-514</i></p>
-                                </div>
-                                @endif                                
+                </div>
+                <div class="col-md-4">
+                    <div class="block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">
+                                <i class="fa fa-info fa-fw mr-5 text-muted"></i> Fitur
+                            </h3>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <p>Fitur yang anda miliki</p>
+                            @if (count(auth()->user()->profile->kursus)==0)
+                            <ol>
+                                <li class="mr-5 fa fa-times"> Forum Premium (berlangganan kursus)</li>
+                                <li class="mr-5 fa fa-check"> Forum Reguler (semua pengguna)</li>
+                                <li class="mr-5 fa fa-times"> Akses ke kursus yang dipilih</li>
+                                <li class="mr-5 fa fa-times"> Video materi pada khusus</li>
+                                <li class="mr-5 fa fa-times"> Multiple Choice latihan soal</li>
+                                <li class="mr-5 fa fa-times"> Dokumen materi tertulis (downloadable)</li>
+                            </ol>
                             @else
-                                @if (auth()->user()->stat == 0)
-                                <div class="block-content text-center">
-                                    <p>Mungkin anda adalah salah satu siswa kami. Namun saat ini status anda sedang tidak aktif</p>
-                                    <p>Untuk informasi lebih lanjut. Silahkan hubungi admin pada <i class="fa fa-phone"> 081-329-146-514</i></p>
-                                </div>
-                                @else
-                                
-                                <table class="table table-borderless block-content">
-                                    @foreach (auth()->user()->profile->kursus as $item)                                        
-                                        <tr>
-                                            <td class="push"><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
-                                            <td class=""><p>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} </p></td>
-                                            @if ($item->status === 'aktif')
-                                            <td class="float-right">
-                                                <a href="/my-course/{{ $item->slug }}" type="button" class="btn btn-outline-primary">start</a>
-                                            </td>
-                                            @else
-                                            <td class="float-right">
-                                                <a href="#" class="btn btn-outline-warning">non aktif</a>    
-                                            </td>                             
-                                            @endif                                            
-                                        </tr>
-                                    @endforeach
-                                </table>
-                                <div class="block-content"></div>
-                                @endif                          
-                            @endif                                                                             
-                        @endif
+                            <ol>
+                                <li class="mr-5 fa fa-check"> Forum Premium (berlangganan kursus)</li>
+                                <li class="mr-5 fa fa-check"> Forum Reguler (semua pengguna)</li>
+                                <li class="mr-5 fa fa-check"> Akses ke kursus yang dipilih</li>
+                                <li class="mr-5 fa fa-check"> Video materi pada kursus</li>
+                                <li class="mr-5 fa fa-check"> Multiple Choice latihan soal</li>
+                                <li class="mr-5 fa fa-check"> Dokumen materi tertulis (downloadable)</li>
+                            </ol>
+                            @endif                                                        
+                        </div>
                     </div>
-                </div>                
+                </div>
+            </div>                        
+
+            <div class="block">
+                <div class="block-header block-header-default " id="daftarkursus">
+                    <h3 class="block-title">Daftar Kursus</h3>
+                </div>
+                @if (auth()->user()->role=='instruktur')
+                    @if (count(auth()->user()->kursus)==0)
+                        <div class="block-content text-center">
+                            <p class="text-danger">ADMIN SEDANG MEMPERSIAPKAN KURSUS ANDA</p>
+                            <p><i class="fa fa-phone"></i> 081-329-146-514</p>
+                        </div>
+                    @else
+                        <div class="block-content">
+                            <p>Anda memiliki total ({{ count(auth()->user()->kursus) }} kursus )</p>
+                            <table class="table table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 10%;"><i class="fa fa-university"></i></th>
+                                        <th>Kursus</th>
+                                        <th class="d-none d-sm-table-cell" style="width: 20%">Instruktur</th>
+                                        <th class="d-none d-sm-table-cell" style="width: 20%">Siswa</th>
+                                        <th class="d-none d-md-table-cell text-center" style="width: 15%;">Status</th>
+                                        <th class="text-center" style="width: 100px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (auth()->user()->kursus as $item)
+                                    <tr>
+                                        <td class="text-center">
+                                            <img class="img-avatar img-avatar48" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="">
+                                        </td>
+                                        <td class="font-w800">{{ $item->mapel->mapel_name }} | {{ $item->kelas->kelas_name }}</td>
+                                        <td class="d-none d-sm-table-cell">
+                                            <img class="img-avatar img-avatar48" @if ($item->user->profile->photo==null)
+                                                src="{{ asset('assets/assets/images/a1.jpg') }}"
+                                            @else
+                                                src="{{ asset('photo/'.$item->user->profile->photo) }}"
+                                            @endif 
+                                            alt="instruktur_photo">
+                                            {{ $item->user->name }} 
+                                        </td>
+                                        <td class="d-none d-md-table-cell">
+                                            <p><u>{{ count($item->profile) }} siswa</u></p>
+                                        </td>
+                                        <td class="d-none d-md-table-cell text-center">
+                                            <p class="badge @if($item->status=='aktif') badge-primary @else badge-danger @endif">{{ $item->status }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                @if ($item->status == 'nonaktif')
+                                                    <a href="{{ route('myCourse',$item->slug) }}" type="button" class="button btn btn-sm btn-danger uppercase"> Non Aktif </a>
+                                                @else
+                                                    <a href="{{ route('myCourse',$item->slug) }}" type="button" class="button btn btn-sm btn-success uppercase"> Start </a>
+                                                @endif                                        
+                                            </div>
+                                        </td>
+                                    </tr>  
+                                    @endforeach                                                      
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                @else
+                    @if (count(auth()->user()->profile->kursus)==0)
+                        <div class="block-content text-center">
+                            <p class="text-danger">ADMIN SEDANG MEMPERSIAPKAN KURSUS ANDA</p>
+                            <p><i class="fa fa-phone"></i> 081-329-146-514</p>
+                        </div>
+                    @else
+                        <div class="block-content">
+                            <p>Anda memiliki total ({{ count(auth()->user()->profile->kursus) }} kursus )</p>
+                            <table class="table table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 100px;"><i class="fa fa-university"></i></th>
+                                        <th>Kursus</th>
+                                        <th class="d-none d-sm-table-cell" style="width: 30%;">Instruktur</th>
+                                        <th class="d-none d-md-table-cell text-center" style="width: 15%;">Status</th>
+                                        <th class="text-center" style="width: 100px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (auth()->user()->profile->kursus as $item)
+                                    <tr>
+                                        <td class="text-center">
+                                            <img class="img-avatar img-avatar48" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="">
+                                        </td>
+                                        <td class="font-w800">{{ $item->mapel->mapel_name }} | {{ $item->kelas->kelas_name }}</td>
+                                        <td class="d-none d-sm-table-cell">
+                                            <img class="img-avatar img-avatar48" @if ($item->user->profile->photo==null)
+                                                src="{{ asset('assets/assets/images/a1.jpg') }}"
+                                            @else
+                                                src="{{ asset('photo/'.$item->user->profile->photo) }}"
+                                            @endif 
+                                            alt="instruktur_photo">
+                                            {{ $item->user->name }}                                
+                                        </td>
+                                        <td class="d-none d-md-table-cell text-center">
+                                            <p class="badge badge-primary">{{ $item->status }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                @if ($item->status == 'nonaktif')
+                                                    <a href="#closed" type="button" class="button btn btn-danger uppercase"> Closed </a>
+                                                @else
+                                                    <a href="{{ route('myCourse',$item->slug) }}" type="button" class="button btn btn-success uppercase"> Start </a>
+                                                @endif                                        
+                                            </div>
+                                        </td>
+                                    </tr>  
+                                    @endforeach                                                      
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                @endif
             </div>
-        </div>
+
+            
+                <div class="container py-lg-5 py-md-4" id="profile">
+                    <div class="block " >
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">
+                                <i class="fa fa-pencil fa-fw mr-5 text-muted"></i> Profile
+                            </h3>
+                        </div>
+                        <div class="block-content" >
+                            <div class="row items-push">
+                                <div class="col-lg-3">
+                                    <p class="text-muted">
+                                        Your account’s vital info. Isi sesuai dengan data diri anda
+                                    </p>
+                                </div>
+                                <div class="col-lg-7 offset-lg-1">
+                                    <form action="{{ route('storeProfile') }}" method="post" enctype="multipart/form-data"> @csrf
+                                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                        <div class="form-group">
+                                            <label for="hosting-settings-profile-alamat">Alamat</label>
+                                            <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control" placeholder="Jl Simo Jawar III / Rt 02. Rw 01. no. 104 Surabaya">{{ auth()->user()->profile->alamat }}</textarea>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label for="phone">Nomor Telephone</label>
+                                            <input type="tel" class="form-control" id="phone" name="telp" placeholder="081-329-146-514" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}-[0-9]{3}" value="{{ auth()->user()->profile->telp }}" required>
+                                            <small>Format: 081-329-146-514</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                @if (auth()->user()->role=='instruktur')
+                                                    Alumni Perguruan Tinggi / Universitas
+                                                @else
+                                                    Asal Sekolah
+                                                @endif 
+                                            </label>
+                                            <input type="text" name="alumni" class="form-control" placeholder="SMPN 4 Surabaya" value="{{ auth()->user()->profile->alumni }} "  required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <select name="gender" id="gender" class="form-control" required>
+                                                <option value="">Pilih salah satu</option>
+                                                <option value="Laki-Laki">Laki-Laki</option>
+                                                <option value="Laki-Laki">Perempuan</option>                                                
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="photo">Photo</label><br>
+                                            <input type="file" name="photo">
+                                        </div>
+                                        <div class="form-group float-right">
+                                            <button type="submit" class="btn btn-primary">Update</button>                                        
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+        </section>                                        
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function scrollfu()
+        {
+            var skrollke = document.getElementById("daftarkursus");
+            skrollke.scrollIntoView();
+        }        
+    </script>
+    <script>
+        function scrollfu2()
+        {
+            var skrollke = document.getElementById("profile");
+            skrollke.scrollIntoView();
+        }
+    </script>
+    <script type="text/javascript">
+        var months  =['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+        var theDays =['Minggu','Senen','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+        var date    = new Date();
+        var day     = date.getDate();
+        var month   = date.getMonth();
+        var thisDay = date.getDay(),
+            thisDay = theDays[thisDay];
+        var yy      = date.getYear();
+        var year    = (yy<1000) ? yy + 1900: yy;
+        document.write(thisDay+',' + day + '' + months[month] + '' + year);
+        document.getElementById("waktu").innerHTML=(thisDay+', ' + day + '' + months[month] + '' + year);
+    </script>
+    <script>
+        function showtime()
+        {            
+            var today       = new Date();
+            var curr_hour   = today.getHours();
+            var curr_minute = today.getMinutes();
+            var curr_second = today.getSeconds();            
+            curr_hour       = checkTime(curr_hour);
+            curr_minute     = checkTime(curr_minute);
+            curr_second     = checkTime(curr_second);
+            document.getElementById("jam").innerHTML=curr_hour+ ":" + curr_minute + ":" + curr_second ;                        
+        }
+        function checkTime(i){            
+            if(i == 60){
+                i = 60;
+            }
+            return i;        
+        }
+        setInterval(showtime, 500);
+    </script>
 @endsection

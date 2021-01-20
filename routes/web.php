@@ -10,9 +10,15 @@
 |
 */
 
-Route::get('/', function () {    
-    return view('landing.index');
+Route::get('/', function () {
+    $recent_course          = App\Kursus::inRandomOrder()->limit(3)->get();
+    $recent_news            = App\News::orderBy('id','DESC')->limit(2)->get();
+    $recent_instruktur      = App\User::inRandomOrder()->where('role','instruktur')->where('stat','1')->limit(3)->get();
+    return view('landing.index2', compact('recent_course','recent_news','recent_instruktur'));
 });
+//testing new layouts
+route::post('/get_search','HomeController@searching')->name('search');
+
 Auth::routes(['verify'=>true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout','HomeController@logout')->name('/logout');
@@ -29,7 +35,9 @@ Route::get('/download/{file}', 'BookController@getdownload')->name('download');
 Route::post('/post-komentar', 'KomentarController@postkomen')->name('post-komentar');
 Route::get('/berita','NewsController@display')->name('berita');
 Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
-Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
+Route::get('/semua-instruktur','ProfileController@allinstruktur')->name('allinstruktur');
+Route::get('/news-detail/{id}','NewsController@index2')->name('newsDetail');
+
 Route::post('/daftar','AkunController@daftar')->name('daftar');
 Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
 Route::post('/pertanyaanPremium','ForumController@storeP')->name('pertanyaanP');
@@ -114,12 +122,35 @@ Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
             
 });
 
-Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung']], function(){
-    //new
-    Route::get('kursus-saya','KursusSayaController@index')->name('kursus-saya');
-    //old    
-    Route::post('/submit-kuis','MyCourseController@submitkuis')->name('submit-kuis');    
-    Route::get('/kuis-form/{id}','MyCourseController@kuisform');    
+Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur']], function(){
+        
+    Route::get('/my-course/{slug}','MyCourseController@courseform')->name('myCourse');
+    //video
+    Route::get('/my-video/instruktur/{slug}','VideoController@myvideoinstruktur')->name('myvidInstruktur');
+    //Kuis
+    Route::get('/latihan-soal/instruktur/{slug}','KuisController@mykuisinstruktur')->name('mykuisInstruktur');
+    Route::post('/tambah-latihan-soal','KuisController@store')->name('tambahkuis');
+    Route::post('/hapus-latihan-soal','KuisController@hapuskuispermanen')->name('hapuskuis');
+    Route::get('/kuis-form-latihan-soal/{slug}/{slug2}','MyCourseController@kuisform2')->name('kuisForm');
+    Route::get('/detail-latihan-soal/{slug}','SoalController@detailkuiss');//kuis instruktur yang belom dimasukan ke kursus
+    Route::get('/detail-latihan-soal/{slug}/{slug2}','SoalController@detailkuis')->name('detailKuis');//kuis instruktur yang sudah dimasukan ke kursus
+    //soal
+    Route::get('/buat-soal/{id}/{slug}','SoalController@createss')->name('buatSoals');
+    Route::get('/edit-latihan-soal/{id}','SoalController@edits')->name('editSoals');
+    Route::post('/update-latihan-soal/{id}','SoalController@updates')->name('updateSoals');
+    //artikel
+    Route::get('/artikel/instruktur/{slug}','ArtikelController@index')->name('myArtikel');
+    Route::get('/artikel-create-new-artikel/{slug}','ArtikelController@create')->name('createArtikel');
+    Route::post('/artikel/post','ArtikelController@store')->name('uploadArtikel');
+    Route::get('/artikel/edit/{slug}/{slug2}','ArtikelController@edit')->name('editArtikel');
+    Route::get('/artikel/{id}/{slug}','ArtikelController@detail')->name('artikels');
+    Route::post('/add-artikel-kursus','ArtikelController@salin')->name('salinArtikel');
+    Route::post('/remove-artikel','ArtikelController@remove')->name('removeArtikel');
+    //book
+    Route::post('/add-book','BookController@store')->name('addBook');
+
+    Route::post('/submit-kuis','MyCourseController@submitkuis')->name('submit-kuis');        
     Route::get('/akun','AkunController@index')->name('akun');
-    Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');        
+    Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');
+    route::get('/landing/land', 'ProfileController@landing')->name('landing');
 });

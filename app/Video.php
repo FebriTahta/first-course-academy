@@ -5,7 +5,9 @@ use App\Kursus;
 use App\Kelas;
 use App\Mapel;
 use App\User;
+use EmbedServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Cohensive\Embed\Facades\Embed;
 
 class Video extends Model
 {

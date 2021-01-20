@@ -43,7 +43,7 @@
                     <div class="block-content">
                         <label>{{ $item->created_at }}</label>
                     </div>
-                    <div class="block-content">
+                    <div class="block-content" style="max-width: 800px">
                         <p>{!! $item->news_desc !!}</p>
                     </div>
                     <?php $i++?>

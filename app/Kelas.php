@@ -42,4 +42,9 @@ class Kelas extends Model
     {
         return $this->hasMany(Book::class);
     }
+
+    public function artikel()
+    {
+        return $this->hasMany(Artikel::class);
+    }
 }
