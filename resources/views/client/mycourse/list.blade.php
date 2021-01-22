@@ -49,7 +49,7 @@
                                     @endif
                                 @else
                                     @if (count(auth()->user()->profile->kursus)==0)
-                                        Anda belum memiliki kursus. Segera hubungi Admin untuk mendapatkan kursus dan akses materi bergengsi kami 
+                                        <small> Anda belum memiliki kursus. Segera hubungi Admin untuk mendapatkan kursus dan akses materi bergengsi kami</small><br>
                                     @else
                                         Anda telah berlangganan <strong>{{ count(auth()->user()->profile->kursus) }} Kursus</strong>.<br>
                                         <small>Terimakasih telah berlangganan kursus pada kami. Selamat Belajar!^^</small>
