@@ -52,7 +52,7 @@
                                         Anda belum memiliki kursus. Segera hubungi Admin untuk mendapatkan kursus dan akses materi bergengsi kami 
                                     @else
                                         Anda telah berlangganan <strong>{{ count(auth()->user()->profile->kursus) }} Kursus</strong>.<br>
-                                        <small>Terimakasih telah berlangganan kursus pada kami. Selamat Belajar! ^ ^</small>
+                                        <small>Terimakasih telah berlangganan kursus pada kami. Selamat Belajar!^^</small>
                                         <button style="margin-top: 30px" class="btn btn-sm btn-success" onclick="scrollfu()">Daftar kursus anda</button>
                                     @endif
                                 @endif
@@ -116,9 +116,14 @@
 <div class="w3l-homeblock2 w3l-homeblock5 py-5">
     <div class="container py-lg-5 py-md-4" id="daftarkursus">
         <!-- block -->
-        <div class="left-right">
-            <h3 class="section-title-left mb-sm-4 mb-2"> MY COURSE</h3>
-        </div>
+        @auth
+            @if (auth()->user()->role=='pengunjung')
+            @else
+                <div class="left-right">
+                    <h3 class="section-title-left mb-sm-4 mb-2"> MY COURSE</h3>
+                </div>
+            @endif
+        @endauth
         <div class="row">
             @if (auth()->user()->role=='siswa')
                 @foreach (auth()->user()->profile->kursus as $item)
@@ -134,7 +139,7 @@
                                 <a href="{{ route('myCourse',$item->slug) }}" class="blog-desc">{{ $item->mapel->mapel_name }}{{ $item->kelas->kelas_name }}
                                 </a>
                                 <div class="author align-items-center">
-                                    <img src="{{ asset('photo/'.$item->user->profile->photo) }}" alt="" class="img-fluid rounded-circle">
+                                    <img @if ($item->user->profile->photo==null) src="{{ asset('/assets/assets/images/a2.jpg') }}" @else src="{{ asset('photo/'.$item->user->profile->photo) }}" @endif alt="" class="img-fluid rounded-circle">
                                     <ul class="blog-meta">
                                         <li>
                                             <a href="{{ route('myCourse',$item->slug) }}">{{ $item->user->name }}</a> 
@@ -163,7 +168,7 @@
                                 <a href="{{ route('myCourse',$item->slug) }}" class="blog-desc">{{ $item->mapel->mapel_name }}{{ $item->kelas->kelas_name }}
                                 </a>
                                 <div class="author align-items-center">
-                                    <img src="{{ asset('photo/'.$item->user->profile->photo) }}" alt="" class="img-fluid rounded-circle">
+                                    <img src="{{ asset('assets/assets/images/a2.jpg') }}" alt="" class="img-fluid rounded-circle">
                                     <ul class="blog-meta">
                                         <li>
                                             <a href="{{ route('myCourse',$item->slug) }}">{{ $item->user->name }}</a> 

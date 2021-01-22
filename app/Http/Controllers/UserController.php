@@ -60,7 +60,7 @@ class UserController extends Controller
                 'link'      => 'course-academy.top/login'
             ];
             //kirim email dulu
-            $when           = Carbon::now()->addSeconds(10);
+            $when           = Carbon::now()->addSeconds(5);
             Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
 
             if ($data_profile===null) {
