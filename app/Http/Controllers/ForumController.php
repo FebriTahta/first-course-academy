@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Kursus;
 use App\Komentar;
+use App\kelas_mapel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,20 @@ class ForumController extends Controller
         $user       = User::find($id);
         $data_kelas = Kelas::all();
         $data_mapel = Mapel::all();
+        $data_kursus= Kursus::all();
+        $kategori   = kelas_mapel::all();
+        return view('forum.index',compact('kategori','data_kelas','data_mapel','user','data_kursus'));
+    }
+
+    public function index2()
+    {
+        $id         = Auth::id();
+        $user       = User::find($id);
+        $data_kelas = Kelas::all();
+        $data_mapel = Mapel::all();
         $data_kursus = Kursus::all();
-        return view('forum.index',compact('data_kelas','data_mapel','user','data_kursus'));
+        $kategori   = kelas_mapel::all();
+        return view('forum.new_ui_forum.index',compact('kategori','data_kelas','data_mapel','user','data_kursus'));
     }
     
     public function daftarpertanyaan($slug_k,$slug_m)
@@ -34,6 +47,19 @@ class ForumController extends Controller
         $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('status','reguler')->where('mapel_id', $data_mapel_id)->orderBy('id','DESC')->get();
         return view('forum.daftar_pertanyaan', compact('data_kelas','data_mapel','data_forum','pertanyaanku'));
     }
+    //new_ui_forum
+    public function daftarpertanyaans($slug_k,$slug_m)
+    {
+        $id             = Auth::id();
+        $data_kelas     = Kelas::where('slug',$slug_k)->first();
+        $data_kelas_id  = $data_kelas->id;
+        $data_mapel     = Mapel::where('slug',$slug_m)->first();
+        $data_mapel_id  = $data_mapel->id;
+        $data_forum     = Forum::where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->where('status','reguler')->orderBy('id', 'DESC')->paginate(10);        
+        $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('status','reguler')->where('mapel_id', $data_mapel_id)->orderBy('id','DESC')->get();
+        return view('forum.new_ui_forum.daftar_pertanyaan', compact('data_kelas','data_mapel','data_forum','pertanyaanku'));
+    }
+
     public function daftarpertanyaanP($slug_k,$slug_m)
     {
         $id             = Auth::id();
@@ -69,6 +95,7 @@ class ForumController extends Controller
             'mapel_id'=>$request->mapel_id,
             'judul_pertanyaan'=>$request->judul_pertanyaan,
             'desc_pertanyaan'=>$request->desc_pertanyaan,
+            'status' => $request->status,
             'slug'=>Str::slug($request->slug)
         ]);
         if($request -> hasFile('desc_pertanyaan'))

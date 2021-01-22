@@ -110,6 +110,39 @@
     })
   })
 </script>
+<script type="text/javascript">
+  var months  =['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  var theDays =['Minggu','Senen','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  var date    = new Date();
+  var day     = date.getDate();
+  var month   = date.getMonth();
+  var thisDay = date.getDay(),
+      thisDay = theDays[thisDay];
+  var yy      = date.getYear();
+  var year    = (yy<1000) ? yy + 1900: yy;
+  // document.write(thisDay+',' + day + '' + months[month] + '' + year);
+  document.getElementById("waktu").innerHTML=(thisDay+', ' + day + '' + months[month] + '' + year);
+</script>
+<script>
+  function showtime()
+  {            
+      var today       = new Date();
+      var curr_hour   = today.getHours();
+      var curr_minute = today.getMinutes();
+      var curr_second = today.getSeconds();            
+      curr_hour       = checkTime(curr_hour);
+      curr_minute     = checkTime(curr_minute);
+      curr_second     = checkTime(curr_second);
+      document.getElementById("jam").innerHTML=curr_hour+ ":" + curr_minute + ":" + curr_second ;                        
+  }
+  function checkTime(i){            
+      if(i == 60){
+          i = 60;
+      }
+      return i;        
+  }
+  setInterval(showtime, 500);
+</script>
 <!-- //script for testimonials -->
 </body>
 

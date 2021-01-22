@@ -76,7 +76,7 @@ Author URL: http://w3layouts.com
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item @@fa__active" onclick="news()">News</a>
-							<a class="dropdown-item @@b__active" href="beauty.html">Daftar Forum</a>
+							<a class="dropdown-item @@b__active" href="{{ route('forums') }}">Daftar Forum</a>
 							<a class="dropdown-item @@fa__active" href="{{ route('allinstruktur') }}">Daftar Instruktur</a>
 							<a class="dropdown-item @@fa__active" href="{{ route('allkursus') }}">Daftar Kursus</a>
 						</div>

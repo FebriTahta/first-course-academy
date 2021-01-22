@@ -31,6 +31,10 @@ Route::get('/forum','ForumController@index')->name('forum');
 Route::get('/forum-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaan');
 Route::get('/forum-daftar-pertanyaan/premium/{slug_k}/{slug_m}','ForumController@daftarpertanyaanP');
 Route::get('/forum-detail-pertanyaan/{slug}','ForumController@detailpertanyaan')->name('forum-detail');
+//new_ui_forum
+Route::get('/forums','ForumController@index2')->name('forums');
+Route::get('/forums-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaans');
+
 Route::get('/download/{file}', 'BookController@getdownload')->name('download');
 Route::post('/post-komentar', 'KomentarController@postkomen')->name('post-komentar');
 Route::get('/berita','NewsController@display')->name('berita');

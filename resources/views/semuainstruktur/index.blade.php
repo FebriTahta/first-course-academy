@@ -21,7 +21,7 @@
                                 <img class="card-img-bottom d-block radius-image-full" style="max-height: 150px; max-width: 150px" src="{{ asset('assets/assets/images/beauty1.jpg') }}" alt="Card image cap">
                             </a>
                         </div> --}}
-                        <div class="col-sm-7 card-body blog-details align-self" >
+                        <div class="col-sm-11 card-body blog-details align-self" >
                             {{-- <a href="#blog-single.html" class="blog-desc">{{ $item->name }}
                             </a> --}}
                             <div class="author align-items-center">

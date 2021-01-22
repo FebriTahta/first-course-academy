@@ -32,20 +32,19 @@
                         </div>
                         <div class="col-sm-6 card-body blog-details align-self">                            
                             <span class="label-blue hover-box">
-                                
-                                    @if ($data_kursus->status=='aktif')
-                                        <form action="{{ route('nonaktifkan') }}" method="POST">@csrf
-                                            <input type="hidden" name="id" value="{{ $data_kursus->id }}">
-                                            <input type="hidden" name="status" value="nonaktif">
-                                            <button class="btn btn-sm text-uppercase text-primary" type="submit">{{ $data_kursus->status }}</button>
-                                        </form>                                        
-                                    @else
-                                        <form action="{{ route('aktifkan') }}" method="POST">@csrf
-                                            <input type="hidden" name="id" value="{{ $data_kursus->id }}">
-                                            <input type="hidden" name="status" value="aktif">
-                                            <button class="btn btn-sm text-uppercase text-danger" type="submit">{{ $data_kursus->status }}</button>
-                                        </form>
-                                    @endif                                                                 
+                                @if ($data_kursus->status=='aktif')
+                                    <form action="{{ route('nonaktifkan') }}" method="POST">@csrf
+                                        <input type="hidden" name="id" value="{{ $data_kursus->id }}">
+                                        <input type="hidden" name="status" value="nonaktif">
+                                        <button class="btn btn-sm text-uppercase text-primary" @if (auth()->user()->role=='siswa') disabled @endif type="submit">{{ $data_kursus->status }}</button>
+                                    </form>                                        
+                                @else
+                                    <form action="{{ route('aktifkan') }}" method="POST">@csrf
+                                        <input type="hidden" name="id" value="{{ $data_kursus->id }}">
+                                        <input type="hidden" name="status" value="aktif">
+                                        <button class="btn btn-sm text-uppercase text-danger" @if (auth()->user()->role=='siswa') disabled @endif type="submit">{{ $data_kursus->status }}</button>
+                                    </form>
+                                @endif
                             </span>
                             <a class="blog-desc">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}
                             </a>
@@ -87,8 +86,7 @@
                     </a>
                     <a  class="topics-list mt-3 hover-box" onclick="kuisscroll()">
                         <div class="list1">
-                            {{-- <span class="fa fa-file-alt"></span> --}}
-                            <span class="fa fa-pencil"></span>
+                            <span class="fa fa-pencil-square"></span>
                             <h4><u>{{ $data_kursus->kuis->count() }}</u> Latihan Soal</h4>
                         </div>
                     </a>
@@ -154,9 +152,11 @@
                         @foreach ($data_kursus->video as $key=>$item)
                             <div class="col-12 col-xl-4 ribbon ribbon-top ribbon-left ribbon-modern ribbon-danger" style="max-height: 100px" >
                                 @if (auth()->user()->role=='instruktur')
+                                    @if (auth()->user()->id==$data_kursus->user->id)
                                     <a class="ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromleft-remove-video" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
                                         <i class="fa fa-trash"> {{ $key+1 }}</i>
                                     </a>
+                                    @endif
                                 @endif
                                 <a class="block block-rounded block-link-pop text-right bg-primary  video-btn view-video" data-toggle="modal" data-video_link="{{ $item->video_link }}" data-target="#myModal" type="button">
                                     <div class="block-content block-content-full clearfix border-black-op-b border-3x">
@@ -204,6 +204,8 @@
                                         <td style="width: 42%">
                                             @if (auth()->user()->role=='instruktur')
                                                 <a href="/detail-latihan-soal/{{ $item->slug }}/{{ $data_kursus->slug }}">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a>
+                                            @elseif(auth()->user()->role=='admin')
+                                                <a href="/detail-latihan-soal/{{ $item->slug }}/{{ $data_kursus->slug }}">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a>
                                             @else
                                                 @if ($item->pertanyaan->count()!==0)
                                                     <a href="/kuis-form-latihan-soal/{{ $item->slug }}/{{ $data_kursus->slug }}" class="text-primary">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a>
@@ -224,15 +226,17 @@
                                         @endif
         
                                         @if (auth()->user()->role=='instruktur')
-                                            @if (auth()->user()->id !== $item->user_id)
-                                                <td class="float-right">
-                                                    <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
-                                                </td>    
-                                            @else
-                                                <td class="float-right">
-                                                    <a href="/buat-soal/{{ $item->id }}/{{ $item->slug }}"><i class="fa fa-plus"></i> soal</a>
-                                                    <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
-                                                </td>
+                                            @if (auth()->user()->id==$data_kursus->user->id)
+                                                @if (auth()->user()->id !== $item->user_id)
+                                                    <td class="float-right">
+                                                        <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
+                                                    </td>    
+                                                @else
+                                                    <td class="float-right">
+                                                        <a href="/buat-soal/{{ $item->id }}/{{ $item->slug }}"><i class="fa fa-plus"></i> soal</a>
+                                                        <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
+                                                    </td>
+                                                @endif
                                             @endif                                 
                                         @else                                
                                         
@@ -262,9 +266,11 @@
                         @foreach ($data_kursus->artikel as $key=>$item)
                             <div class="col-12 col-xl-6 text-left ribbon ribbon-bottom ribbon-right ribbon-modern ribbon-danger">
                                 @if (auth()->user()->role=='instruktur')
-                                    <a class="ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromleft-remove-artikel" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
-                                        <i class="fa fa-trash"> 1</i>
-                                    </a>
+                                    @if (auth()->user()->id==$data_kursus->user->id)
+                                        <a class="ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromleft-remove-artikel" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
+                                            <i class="fa fa-trash"> 1</i>
+                                        </a>
+                                    @endif
                                 @endif
                                 <a class="block block-rounded block-link-shadow" href="/artikel/{{ $item->id }}/{{ $item->slug }}" style="min-height: 80px">
                                     <div class="block-content block-content-full">
@@ -284,52 +290,55 @@
     </div>        
 </div>
 <!--floating button-->
-<div class="fab-container">
-    <div class="fab fab-icon-holder">
-        <i class="fa fa-question"></i>
-    </div>
-    <ul class="fab-options">
+
+
+
+
         @if (auth()->user()->role=='instruktur')
-        <li>
-            <span class="fab-label">Manage Video Kursus</span>
-            <a class="fab-icon-holder" href="{{ route('myvidInstruktur',$data_kursus->slug) }}">                
-                <i class="fa fa-plus"> <i class="fa fa-play"></i></i>
-            </a>
-        </li>
-        <li>
-            <span class="fab-label">Manage Artikel</span>
-            <a class="fab-icon-holder" href="{{ route('myArtikel',$data_kursus->slug) }}">
-                <i class="fas fa fa-plus"> <i class="fas fa fa-book"></i></i>
-            </a>
-        </li>        
-        <li>
-            <span class="fab-label">Manage Latihan Soal</span>
-            <a class="fab-icon-holder" href="{{ route('mykuisInstruktur',$data_kursus->slug) }}">                
-                <i class="fa fa-plus"> <i class="fa fa-pencil"></i></i>
-            </a>
-        </li>
-        @else
-        <li>
-            <span class="fab-label">Video Kursus</span>
-            <div class="fab-icon-holder" onclick="videoscroll()">
-                <i class="fas fa-video"></i>
+            @if (auth()->user()->id == $data_kursus->user->id)
+            <div class="fab-container">
+                <div class="fab fab-icon-holder">
+                    <i class="fa fa-question"></i>
+                </div>
+                <ul class="fab-options">
+                    <li>
+                        <span class="fab-label">Manage Video Kursus</span>
+                        <a class="fab-icon-holder" href="{{ route('myvidInstruktur',$data_kursus->slug) }}">                
+                            <i class="fa fa-plus"> <i class="fa fa-play"></i></i>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="fab-label">Manage Artikel</span>
+                        <a class="fab-icon-holder" href="{{ route('myArtikel',$data_kursus->slug) }}">
+                            <i class="fas fa fa-plus"> <i class="fas fa fa-book"></i></i>
+                        </a>
+                    </li>        
+                    <li>
+                        <span class="fab-label">Manage Latihan Soal</span>
+                        <a class="fab-icon-holder" href="{{ route('mykuisInstruktur',$data_kursus->slug) }}">                
+                            <i class="fa fa-plus"> <i class="fa fa-pencil"></i></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </li>
-        <li>
-            <span class="fab-label">Artikel</span>
-            <div class="fab-icon-holder" onclick="artikelscroll()">
-                <i class="fas fa fa-book"></i>
+            @endif
+
+            @else
+            <div class="fab-container">
+                <div class="fab fab-icon-holder">
+                    <i class="fa fa-question"></i>
+                </div>
+                <ul class="fab-options">
+                    <li>
+                        <span class="fab-label">MATERI</span>
+                        <div class="fab-icon-holder" onclick="videoscroll()">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </li>        
-        <li>
-            <span class="fab-label">Latihan Soal</span>
-            <div class="fab-icon-holder" onclick="kuisscroll()">
-                <i class="fa fa-file-alt"></i>
-            </div>
-        </li>
         @endif                
-    </ul>
-</div>
+
 
 <!--modal play video--> 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
