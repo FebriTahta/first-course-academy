@@ -73,7 +73,7 @@
 </div>
 <div class="content">
     <div class="row">
-        <div class="col-lg-4 trending" style="margin-top: 50px">
+        <div class="col-lg-4" style="margin-top: 50px">
             <div class="topics">                                   
                 <a class="topics-list hover-box" >
                     <div class="bg-clr-white" style="padding: 5%">                
@@ -83,13 +83,13 @@
                 <a class="topics-list mt-3 hover-box">
                     <div class="bg-clr-white text-danger" style="padding: 5%">                            
                         <h4 class="text-danger">NOTE</h4><br>
-                        <h4 class="text-danger">Gunakan full-screen untuk lebih detail saat membuat pertanyaan & Resize hingga 50% apabila menambahkan gambar</h4>
+                        <h4 class="text-danger"><small> Gunakan full-screen untuk lebih detail saat membuat pertanyaan & Resize hingga 50% apabila menambahkan gambar </small></h4>
                     </div>
                 </a>
             </div>                            
         </div>
 
-        <div class="col-lg-8 trending">
+        <div class="col-lg-8">
             <div class="left-right bg-clr-white p-3" style="margin-top: 50px;">                    
                 <form action="{{ route('storeSoal') }}" method="post" enctype="multipart/form-data">@csrf
                 <div class="form" style="padding: 20px">

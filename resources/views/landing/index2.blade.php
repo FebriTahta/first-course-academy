@@ -56,7 +56,7 @@
                         <!--instruktur-->
                         @auth
                             @if (auth()->user()->role=='instruktur')
-                                <div class="col-lg-4 col-md-6 item">
+                                <div class="col-lg-4 col-md-6 item" style="margin-top: 50px">
                                     <div class="card">
                                         <div class="card-header p-0 position-relative">
                                             
@@ -110,9 +110,9 @@
                                 <!--siswa-->
                             @elseif(auth()->user()->role=='siswa')
                                 <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
-                                <div class="col-lg-4 col-md-6 item">
+                                <div class="col-lg-4 col-md-6 item" style="margin-top: 50px">
                                     <div class="card">
-                                        <div class="card-header p-0 position-relative">
+                                        <div class="card-header position-relative">
                                             
                                             <a @if ($punya !== null) href="{{ route('myCourse',$item->slug) }}" @endif >
                                                 <img class="card-img-bottom d-block radius-image-full" style="max-height: 250px" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}"
@@ -163,9 +163,9 @@
                                 </div>
                             <!--admin-->
                             @elseif(auth()->user()->role=='admin')
-                                <div class="col-lg-4 col-md-6 item">
+                                <div class="col-lg-4 col-md-6 item" style="margin-top: 50px">
                                     <div class="card">
-                                        <div class="card-header p-0 position-relative">
+                                        <div class="card-header position-relative">
                                             
                                             <a href="{{ route('myCourse',$item->slug) }}" >
                                                 <img class="card-img-bottom d-block radius-image-full" style="max-height: 250px" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}"
@@ -212,9 +212,9 @@
                             <!--pengunjung-->
                             @elseif(auth()->user()->role=='pengunjung')
                             <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
-                            <div class="col-lg-4 col-md-6 item">
+                            <div class="col-lg-4 col-md-6 item" style="margin-top: 50px">
                                 <div class="card">
-                                    <div class="card-header p-0 position-relative">
+                                    <div class="card-header position-relative" >
                                         
                                         <a @if ($punya !== null) href="{{ route('myCourse',$item->slug) }}" @endif >
                                             <img class="card-img-bottom d-block radius-image-full" style="max-height: 250px" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}"
@@ -360,7 +360,7 @@
             @endif
             <div class="row" >
                 @foreach ($recent_news as $item)
-                <div class="col-lg-6 news" id="news">
+                <div class="col-lg-6 news" id="news" style="margin-top: 50px">
                     <div class="bg-clr-white hover-box" style="min-height: 280px">
                         <div class="row">
                             <div class="col-sm-6 position-relative" style="min-height: 280px">

@@ -68,7 +68,7 @@ class MyCourseController extends Controller
         }
         
     }
-
+    //new_ui
     public function kuisform2($slug, $slug2)
     {
         // slug 1 untuk kuis dan slug 2 untuk kursus
@@ -155,33 +155,38 @@ class MyCourseController extends Controller
     {
         $user_id            = $user_id;
         $data_kuis          = Kuis::where('id', $id)->first();
+        $data_kelas         = $data_kuis->kelas->id;
+        $data_mapel         = $data_kuis->mapel->id;
+        $data_kursus        = Kursus::where('kelas_id',$data_kelas)->where('mapel_id',$data_mapel)->first();
         $data_kuis_id       = $data_kuis->id;                
         $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->get();
         $data_result        = Result::where('user_id', $user_id)
                                     ->where('kuis_id',$data_kuis_id)->get();
         $result_siswa       = Result::where('user_id', $user_id)
                                     ->where('kuis_id', $data_kuis_id)->first();                                    
-        $data_result_benar  = Result::where('user_id', $user_id)
+        $benar              = Result::where('user_id', $user_id)
                                     ->where('kuis_id',$data_kuis_id)
                                     ->where('myresult','1')->count();
-        $data_result_salah  = Result::where('user_id', $user_id)
+        $salah              = Result::where('user_id', $user_id)
                                     ->where('kuis_id',$data_kuis_id)
                                     ->where('myresult','0')->count();                                    
         $jumlah_soal        = $data_result->count();
-        $nilai              = ($jumlah_soal - $data_result_salah) * (100/$jumlah_soal);                
+        $nilai              = ($jumlah_soal - $salah) * (100/$jumlah_soal);                
 
-        return view('admin.siswakuis.detail', compact('result_siswa','data_kuis','data_pertanyaan','data_result','data_result_benar','nilai'));
+        return view('client.mykuis.index2', compact('data_kursus','result_siswa','data_kuis','data_pertanyaan','data_result','benar','nilai','salah'));
     }
 
     public function resetkuis(Request $request)
     {   
-        $user           = $request->user_id;
-        $kuis           = $request->kuis_id;
-        $kuiss          = Kuis::find($kuis);
-        $kuis_name      = $kuiss->kuis_name;
-        $users          = User::find($user);
-        $user_mail      = $users->email;
-        $user_name      = $users->name;
+        $profile_id     = $request->profile_id;
+        $profile        = Profile::find($profile_id);
+        $user_id        = $profile->user_id;
+        $user           = User::find($user_id);
+        $user_name      = $user->name;
+        $user_mail      = $user->email;
+        $kuis           = Kuis::find($request->kuis_id);
+        $kuis_name      = $kuis->kuis_name;
+        
         $detail         = [
             'title'     => 'Hai '.$user_name.'',
             'body'      => 'Pengajuan reset hasil kuis pada kuis ('.$kuis_name.') yang sudah kamu ajukan telah disetujui dan telah direset oleh instruktur',
@@ -193,7 +198,7 @@ class MyCourseController extends Controller
         
         $result         =   Result::where([
                                     'kuis_id'=>$request->kuis_id,
-                                    'user_id'=>$request->user_id,
+                                    'profile_id'=>$request->profile_id,
                             ])->delete();        
         $reset          =   reset::find($request->id)->delete();
         
@@ -222,6 +227,7 @@ class MyCourseController extends Controller
             'link'    => 'course-academy.top'
         ];
         //kirim email dulu
+        // return $email_instruktur;
         $when               = Carbon::now()->addSeconds(10);
         Mail::to($email_instruktur)->send((new PengajuanResetKuis($detail))->delay($when));
         //terus reset
@@ -231,8 +237,16 @@ class MyCourseController extends Controller
                           'user_id'=>$request->user_id,
         ]);                      
         //redirect & notif di halaman web
-        $notif          = array('message'=>'pengajuan mereset hasil kuis dikirim, tunggu instruktur menyetujuinya');
+        $notif          = array('pesan-info' => 'pengajuan mereset hasil kuis dikirim, tunggu instruktur menyetujuinya');
         return redirect()->back()->with($notif);
+    }
+
+    //newui
+    public function formreset()
+    {
+        $id     = Auth::id();
+        $resets = Reset::where('user_id',$id)->get();
+        return view('/instruktur.reset', compact('resets'));
     }
     
 }

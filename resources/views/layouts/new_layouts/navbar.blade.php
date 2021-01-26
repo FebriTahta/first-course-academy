@@ -72,7 +72,7 @@
 							More <span class="fa fa-angle-down"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item @@fa__active" onclick="news()">News</a>
+							{{-- <a class="dropdown-item @@fa__active" onclick="news()">News</a> --}}
 							<a class="dropdown-item @@b__active" href="{{ route('forums') }}">Daftar Forum</a>
 							<a class="dropdown-item @@fa__active" href="{{ route('allinstruktur') }}">Daftar Instruktur</a>
 							<a class="dropdown-item @@fa__active" href="{{ route('allkursus') }}">Daftar Kursus</a>
@@ -91,6 +91,14 @@
 								
 							@endif
 						</li>
+						@if (auth()->user()->role=='instruktur')
+						<?php $resets = App\reset::where('user_id', auth()->user()->id)->get()?>
+							@if (count($resets)!==0)
+							<li class="nav-item @@contact__active">
+								<a class="nav-link fa fa-bell text-danger" href="{{ route('formreset') }}">{{ $resets->count() }}</a>
+							</li>
+							@endif
+						@endif
 					@else
 						<li class="nav-item @@pages__active">
 							<a class="nav-link" href="{{ route('login') }}">login</a>
@@ -106,8 +114,11 @@
 																
 							@elseif(auth()->user()->role==='instruktur')
 							<a class="nav-link" href="{{ route('logout') }}">logout</a>
-																
+							
 							@elseif(auth()->user()->role==='siswa')
+							<a class="nav-link" href="{{ route('logout') }}">logout</a>
+							
+							@elseif(auth()->user()->role==='pengunjung')
 							<a class="nav-link" href="{{ route('logout') }}">logout</a>
 							@endif	
 						@endauth

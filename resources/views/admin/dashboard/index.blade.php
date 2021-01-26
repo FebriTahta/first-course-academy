@@ -304,7 +304,7 @@
                                         <td class="text-right">
                                             <a href="#" class="text-warning" data-toggle="modal" data-target="#modal-fromleft-reset"
                                             data-user_id="{{ $item->profile->user->id }}" data-kuis_id="{{ $item->kuis_id }}" data-id="{{ $item->id }}"><i class="fa fa-warning"></i> reset</a>
-                                            <a href="/detail-result-siswa/{{ $item->kuis->id }}/{{ $item->profile->user->id }}"><i class="fa fa-check"></i> detail</a>
+                                            <a class="btn btn-sm btn-outline-primary fa fa-eye" href="/detail-result-siswa/{{ $item->kuis->id }}/{{ $item->profile->user->id }}"></a>
                                         </td>
                                     </tr>
                                 @endif                                

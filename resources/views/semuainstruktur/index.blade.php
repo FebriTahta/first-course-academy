@@ -28,7 +28,7 @@
                                 <img @if($item->profile->photo===null) src="{{ asset('assets/assets/images/a1.jpg') }}" @else src="{{ asset('photo/'.$item->profile->photo) }}" @endif alt="" class="img-fluid rounded-circle">
                                 <ul class="blog-meta">
                                     <li>
-                                        <a href="author.html">{{ $item->name }}</a> 
+                                        <a href="{{ route('detailInstruktur',$item->id) }}">{{ $item->name }}</a> 
                                     </li>
                                     <li class="meta-item blog-lesson">
                                         <span class="meta-value"> @if($item->profile->alumni==null)@else{{ $item->profile->alumni }} @endif </span>

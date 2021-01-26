@@ -7,6 +7,7 @@ use Auth;
 use App\User;
 use App\Kelas;
 use App\Mapel;
+use App\Artikel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -81,8 +82,8 @@ class BookController extends Controller
     public function mybook(){
         $user   = Auth::id();
         $users  = User::find($user);
-        $book   = Book::where('user_id', $user)->get();
-        $books  = Book::all();
+        $book   = Artikel::where('user_id', $user)->get();
+        $books  = Artikel::all();
         $kelass = Kelas::all();
         $mapels = Mapel::all();
         return view('/admin/daftarKonten/book', compact('book','books','users','kelass','mapels','user'));

@@ -8,7 +8,7 @@
             <a class="navbar-brand mb-3" href="#">
               <span class="fa fa-newspaper-o"></span> Course Academy</a>            
             <p class="mt-2">Design by <small><a href="https://w3layouts.com/">W3Layouts</a></small> </p>
-          </div>          
+          </div>
         </div>
       </div>
     </div>

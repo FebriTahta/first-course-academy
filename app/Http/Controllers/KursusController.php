@@ -67,7 +67,7 @@ class KursusController extends Controller
         }
     }
 
-    public function detail($slug)
+    public function detail($slug) 
     {           
         $data_kursus        =   Kursus::where('slug',$slug)->first();
         $data               =   $data_kursus->id;

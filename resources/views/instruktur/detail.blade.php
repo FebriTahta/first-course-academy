@@ -88,7 +88,7 @@
         </div>
         <div class="row">
             @foreach ($instruktur->kursus as $item)
-            <div class="col-lg-4 col-md-6 item">
+            <div class="col-lg-4 col-md-6 item" style="margin-bottom: 20px">
                 <div class="card">
                     <div class="card-header p-0 position-relative">
                         <a href="{{ route('myCourse',$item->slug) }}">

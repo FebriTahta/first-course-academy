@@ -409,17 +409,30 @@
                                 @if (count($data_siswa)==null)
                                     <p class="text-center text-danger">BELUM ADA SISWA YANG TERDAFTAR DALAM SISTEM</p>
                                 @else
-                                {{-- @foreach ($siswa_kursus as $siskur)                                
-                                    @if ($siskur->user->role=='siswa' && $siskur->user->stat=='1')
-                                    <div class="form-group">
-                                        <input type="checkbox" name="profile_id[]" value="{{ $siskur->id }}">&nbsp; &nbsp; &nbsp; &nbsp; {{ $siskur->user->name }}<br>
-                                        <input type="hidden" class="form-control" id="kursus_id" name="kursus_id[]"
-                                        value="{{ $data_kursus->id }}" required>                                        
-                                    </div>
-                                    @endif                                    
-                                @endforeach --}}
-                                    {{--TANPA MENGGUNAKAN HASIL COMPARE RESULT--}}
-                                   <div class="form-group">
+                                <div class="form-group">
+                                    <table class="table table-striped" id="addsis">
+                                        <thead>
+                                            <tr>
+                                                <th>nama</th>
+                                                <th>check</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($filtersiswa as $res)
+                                                @if ($res->user->role=='siswa' && $res->user->stat=='1')
+                                                <tr>
+                                                    <td class=""><a href="{{ route('profile', $res->user->id) }}">{{ $res->user->name }}</a>
+                                                        <input type="hidden" class="form-control" id="kursus_id" name="kursus_id[]"
+                                                        value="{{ $data_kursus->id }}" required>
+                                                    </td>
+                                                    <td class="text-left" style="width: 10%"> <input type="checkbox" name="profile_id[]" value="{{ $res->id }}"></td>
+                                                </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                   {{-- <div class="form-group">
                                        <table class="table table-borderless">
                                            @foreach ($filtersiswa as $res)
                                                 @if ($res->user->role=='siswa' && $res->user->stat=='1')                                                                            
@@ -433,7 +446,7 @@
                                                 @endif
                                            @endforeach
                                        </table>
-                                   </div>
+                                   </div> --}}
                                 @endif                                                                
                             </div>
                         </div>
@@ -1148,6 +1161,12 @@
         $(document).ready(function(){    
             table2= $('#table_video_kursus').DataTable({});        
         });
+         
+        var table3;
+        $(document).ready(function(){    
+            table3= $('#addsis').DataTable({});        
+        });
+
     </script>
 
     <script>        

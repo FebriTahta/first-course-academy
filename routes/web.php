@@ -30,17 +30,18 @@ Route::get('/detail-result-siswa/{id}/{user_id}','MyCourseController@detailresul
 Route::get('/forum','ForumController@index')->name('forum');
 Route::get('/forum-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaan');
 Route::get('/forum-daftar-pertanyaan/premium/{slug_k}/{slug_m}','ForumController@daftarpertanyaanP');
-Route::get('/forum-detail-pertanyaan/{slug}','ForumController@detailpertanyaan')->name('forum-detail');
+// Route::get('/forum-detail-pertanyaan/{slug}','ForumController@detailpertanyaan')->name('forum-detail');
 //new_ui_forum
 Route::get('/forums','ForumController@index2')->name('forums');
 Route::get('/forums-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaans');
+Route::get('/forums-detail-pertanyaan/{slug}','ForumController@detailpertanyaanss')->name('forums-detail');
 
 Route::get('/download/{file}', 'BookController@getdownload')->name('download');
 Route::post('/post-komentar', 'KomentarController@postkomen')->name('post-komentar');
 Route::get('/berita','NewsController@display')->name('berita');
 Route::get('/semua-kursus','KursusController@allkursus')->name('allkursus');
 Route::get('/semua-instruktur','ProfileController@allinstruktur')->name('allinstruktur');
-Route::get('/instruktur-dinfo/{id}','ProfileController@detailinstruktur')->name('detailInstruktur');
+Route::get('/instruktur-info/{id}','ProfileController@detailinstruktur')->name('detailInstruktur');
 Route::get('/news-detail/{id}','NewsController@index2')->name('newsDetail');
 
 Route::post('/daftar','AkunController@daftar')->name('daftar');
@@ -158,4 +159,6 @@ Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur,admin
     Route::get('/akun','AkunController@index')->name('akun');
     Route::post('/ajukan-reset', 'MyCourseController@ajukanreset')->name('ajukan-reset');
     route::get('/landing/land', 'ProfileController@landing')->name('landing');
+    //formresetkuis
+    route::get('/form-reset-kuis', 'MyCourseController@formreset')->name('formreset');
 });

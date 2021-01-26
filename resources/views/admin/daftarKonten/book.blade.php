@@ -88,7 +88,7 @@
                                 @if ($item->count() == 0)                             
                                 @else
                                     <tr>
-                                        <td>{{ $item->book_name }}</td>
+                                        <td>{{ $item->artikel_title }}</td>
                                         <td>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>
                                         <td 
                                             @if ($item->user->role=='admin') 
@@ -104,7 +104,7 @@
                                         </td>
                                         <td class="text-right">
                                             <a href="#" class="fa fa-trash text-danger" data-toggle="modal" data-target="#modal-fromleft-remove" data-id="{{ $item->id }}"> hapus</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a href="{{ route('download', $item->book_file) }}"><i class="fa fa-check"></i> unduh</a>
+                                            {{-- <a href="{{ route('download', $item->book_file) }}"><i class="fa fa-check"></i> unduh</a> --}}
                                         </td>
                                     </tr>
                                 @endif                                

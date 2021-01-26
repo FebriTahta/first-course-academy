@@ -9,6 +9,7 @@ use App\User;
 use App\Kursus;
 use App\Komentar;
 use App\kelas_mapel;
+use App\News;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -55,9 +56,24 @@ class ForumController extends Controller
         $data_kelas_id  = $data_kelas->id;
         $data_mapel     = Mapel::where('slug',$slug_m)->first();
         $data_mapel_id  = $data_mapel->id;
-        $data_forum     = Forum::where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->where('status','reguler')->orderBy('id', 'DESC')->paginate(10);        
-        $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('status','reguler')->where('mapel_id', $data_mapel_id)->orderBy('id','DESC')->get();
+        $data_forum     = Forum::where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->where('status','reguler')->orderBy('id', 'DESC')->paginate(20);        
+        $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->where('status','reguler')->orderBy('id','DESC')->paginate(20);
         return view('forum.new_ui_forum.daftar_pertanyaan', compact('data_kelas','data_mapel','data_forum','pertanyaanku'));
+    }
+
+    public function detailpertanyaanss($slug)
+    {
+        $id                     = Auth::id();
+        $data_pertanyaan_forum  = Forum::where('slug',$slug)->first();
+        $forum_id               = $data_pertanyaan_forum->id;  
+        $get_kelas_id           = $data_pertanyaan_forum->kelas_id;
+        $data_kelas             = Kelas::where('id', $get_kelas_id)->first();
+        $get_mapel_id           = $data_pertanyaan_forum->mapel_id;
+        $data_mapel             = Mapel::where('id', $get_mapel_id)->first();
+        $data_forum             = Forum::where('kelas_id', $get_kelas_id)->where('mapel_id', $get_mapel_id)->where('status','reguler')->paginate(20);
+        $pertanyaanku           = Forum::where('user_id', $id)->where('kelas_id', $get_kelas_id)->where('mapel_id', $get_mapel_id)->where('status','reguler')->orderBy('id','DESC')->paginate(20);
+        $komen                  = Komentar::where('forum_id', $forum_id)->orderBy('status','DESC')->get();
+        return view('forum.new_ui_forum.detail_pertanyaan',compact('komen','data_pertanyaan_forum','data_kelas','data_mapel','data_forum','pertanyaanku'));
     }
 
     public function daftarpertanyaanP($slug_k,$slug_m)
