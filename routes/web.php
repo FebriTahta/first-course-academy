@@ -34,6 +34,7 @@ Route::get('/forum-daftar-pertanyaan/premium/{slug_k}/{slug_m}','ForumController
 //new_ui_forum
 Route::get('/forums','ForumController@index2')->name('forums');
 Route::get('/forums-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaans');
+Route::get('/forums-daftar-pertanyaan/premium/{slug_k}/{slug_m}','ForumController@daftarpertanyaansP');
 Route::get('/forums-detail-pertanyaan/{slug}','ForumController@detailpertanyaanss')->name('forums-detail');
 
 Route::get('/download/{file}', 'BookController@getdownload')->name('download');

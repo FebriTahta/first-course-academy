@@ -5,6 +5,10 @@ use App\News;
 use App\User;
 use App\Kursus;
 use Auth;
+use Carbon\Carbon;
+use App\Mail\BCNews;
+use App\Mail\BCForumPremium;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -37,8 +41,24 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
+        $users      = User::all();
         $user_id    = Auth::id();
         $id         = $request->id;
+        $judul      = $request->news_tittle;
+
+        foreach ($users as $key => $item) {
+            # code...
+            $detail         = [
+                'title'   => 'Berita Baru',
+                'body'    => '('.$judul.')',
+                'link'    => 'course-academy.top'
+            ];
+            //kirim email dulu ke semua user
+            $when               = Carbon::now()->addSeconds(30);
+            Mail::to($item->email)->send((new BCNews($detail))->delay($when));
+        }
+
+
         $post       = News::updateOrCreate(['id'=> $id], [
             'user_id'       => $user_id,
             'news_pict'     => $request->news_pict,
@@ -51,6 +71,7 @@ class NewsController extends Controller
                 $post->news_pict = $request->file('news_pict')->getClientOriginalName();
                 $post->save();
             }
+            
         $notif = array(
             'pesan-sukses' => 'News baru saja diterbitkan',                
         );

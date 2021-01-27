@@ -266,7 +266,7 @@
                             @endif
                         <!--tidak login-->
                         @else
-                            <div class="col-lg-4 col-md-6 item">
+                            <div class="col-lg-4 col-md-6 item" style="margin-top: 50px">
                                 <div class="card">
                                     <div class="card-header p-0 position-relative">
                                         

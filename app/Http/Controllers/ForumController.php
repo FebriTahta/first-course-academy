@@ -76,6 +76,18 @@ class ForumController extends Controller
         return view('forum.new_ui_forum.detail_pertanyaan',compact('komen','data_pertanyaan_forum','data_kelas','data_mapel','data_forum','pertanyaanku'));
     }
 
+    public function daftarpertanyaansP($slug_k,$slug_m)
+    {
+        $id             = Auth::id();
+        $data_kelas     = Kelas::where('slug',$slug_k)->first();
+        $data_kelas_id  = $data_kelas->id;
+        $data_mapel     = Mapel::where('slug',$slug_m)->first();
+        $data_mapel_id  = $data_mapel->id;
+        $data_forum     = Forum::where('kelas_id', $data_kelas_id)->where('status','premium')->where('mapel_id', $data_mapel_id)->orderBy('id', 'DESC')->paginate(10);        
+        $pertanyaanku   = Forum::where('user_id', $id)->where('kelas_id', $data_kelas_id)->where('mapel_id', $data_mapel_id)->where('status','premium')->orderBy('id','DESC')->get();
+        return view('forum.new_ui_forum.daftar_pertanyaan_premium', compact('data_kelas','data_mapel','data_forum','pertanyaanku'));
+    }
+
     public function daftarpertanyaanP($slug_k,$slug_m)
     {
         $id             = Auth::id();

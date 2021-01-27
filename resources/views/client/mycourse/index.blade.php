@@ -101,7 +101,7 @@
             <div class="col-lg-12 trending mt-lg-0 mt-5 py-lg-5" style="margin-top: 15px">
                 <div class="mt-4 left-right bg-clr-white p-3">
                     <h5 class="section-title-left align-self pl-2 mb-sm-0 mb-3">Forum {{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }} </h5>
-                    <a class="btn btn-style btn-primary" href="#url">KUNJUNGI FORUM</a>
+                    <a class="btn btn-style btn-primary" href="/forums-daftar-pertanyaan/premium/{{ $data_kursus->kelas->slug }}/{{ $data_kursus->mapel->slug }}">KUNJUNGI FORUM</a>
                 </div>   
             </div>
         </div>

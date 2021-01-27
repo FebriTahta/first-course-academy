@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AjuanReset extends Mailable implements ShouldQueue
+class BCForumPremium extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +16,10 @@ class AjuanReset extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public $detail;
+    public function __construct($detail)
     {
-        //
+        $this->detail = $detail;
     }
 
     /**
@@ -28,7 +29,7 @@ class AjuanReset extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        // return $this->markdown('emails.ajuanreset');ga dipakai
-        return $this->subject('Subject: Pengajuan Reset Kuis')->view('emails.ajuanreset');
+        // return $this->view('view.name');
+        return $this->subject('Subject: Pertanyaan Baru (Forum)')->view('email.pengajuanresetkuis');
     }
 }

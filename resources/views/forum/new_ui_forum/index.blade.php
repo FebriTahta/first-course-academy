@@ -125,7 +125,7 @@
             @if (auth()->user()->role=='instruktur')
                 @foreach (auth()->user()->kursus as $key=>$item)
                 <div class="col-lg-3 col-6 grids-feature" style="margin-bottom: 10px">
-                    <a href="#premium">
+                    <a href="/forums-daftar-pertanyaan/premium/{{ $item->kelas->slug }}/{{ $item->mapel->slug }}">
                         <div class="area-box">
                             <span class="fa fa-university"></span>
                             <h4 class="title-head text-uppercase">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</h4>
