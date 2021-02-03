@@ -18,6 +18,7 @@ class CreateNilaisTable extends Migration
             $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('kuis_id');
             $table->integer('nilai');
+            $table->integer('ke');
             $table->timestamps();
         });
     }

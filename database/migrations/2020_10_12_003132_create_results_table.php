@@ -21,6 +21,7 @@ class CreateResultsTable extends Migration
             $table->unsignedBigInteger('pertanyaan_id');
             $table->unsignedBigInteger('answer_id');
             $table->boolean('myresult');
+            $table->integer('ke');
             $table->timestamps();
         });
 
