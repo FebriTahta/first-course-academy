@@ -71,7 +71,7 @@
                         <h5 class="text-center border-bottom" style="padding: 10px">
                             DETAIL LATIHAN SOAL
                         </h5>
-                    <?php $i=1?>
+                    <?php $i=1?> 
                     @foreach ($data_pertanyaan as $item)
                     <div class="block-content">
                         <div class="soal">

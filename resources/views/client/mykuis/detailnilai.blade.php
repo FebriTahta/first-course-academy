@@ -69,7 +69,6 @@
                     </div>
                 </div>
                 
-                
                 <div class="col-lg-4 trending" style="margin-top: 50px">
                     <div class="bg-clr-white text-uppercase" style="padding: 5%">
                         <h2 class="text-primary text-center"> <span @if($hasil->nilai>70) class="badge badge-primary" @else class="badge badge-danger" @endif> NILAI : {{ $hasil->nilai }} </span></h2><hr><br>

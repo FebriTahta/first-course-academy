@@ -300,7 +300,7 @@
                 @foreach ($data_profile->kursus as $item)                                    
                     <div class="block-header block-header-default">
                         <small>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} (instruktur : {{ $item->user->name }})</small>
-                        
+                         
                     </div>
                     <div class="block-content">
                         <table class="table table-hover">

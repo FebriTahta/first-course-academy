@@ -70,7 +70,7 @@
             </div>                                    
         </div>
     </div>
-</div>
+</div> 
 <div class="content">
     <div class="row">
         <div class="col-lg-4" style="margin-top: 50px">

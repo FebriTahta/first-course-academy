@@ -10,7 +10,7 @@
     </div>
 </div>
 <!-- END Hero -->
-
+ 
 <div class="content">
     <div class="col-xl-12">
         <h2 class="content-heading">Edit Soal <small>form control untuk audit soal</small></h2>

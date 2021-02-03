@@ -23,7 +23,7 @@
         @if (Session::has('pesan-sukses'))
             <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
         @endif    
-
+ 
     <div class="row">
         <div class="col-md-4">
             <div class="block shadow">

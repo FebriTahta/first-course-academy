@@ -121,7 +121,7 @@
             @else
                 <div class="left-right">
                     <h3 class="section-title-left mb-sm-4 mb-2"> MY COURSE</h3>
-                </div>
+                </div> 
             @endif
         @endauth
         <div class="row">

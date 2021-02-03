@@ -1092,7 +1092,8 @@
             </form>                   
         </div>            
     </div>
-</div>
+</div> 
+
 <!--end modal salin bukuku-->
 <!--modal salin bukuku-->
 <div class="modal fade" id="modal-fromright-removebuku" tabindex="-1" role="dialog" aria-labelledby="modal-fromrigt" aria-hidden="true">

@@ -25,7 +25,7 @@
                 <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
             @endif
         </div>
-
+ 
         @if (count($data_result) >  0)
         <div class="col-xl-4">
             <div class="block block-rounded">

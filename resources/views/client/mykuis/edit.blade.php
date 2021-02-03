@@ -5,7 +5,7 @@
 <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/codebase.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/js/plugins/summernote/summernote-bs4.css') }}">
 @endsection
-
+ 
 @section('content')
 <div class="w3l-homeblock2 w3l-homeblock6 py-5">
     <div class="container-fluid px-sm-5 py-lg-5 py-md-4">

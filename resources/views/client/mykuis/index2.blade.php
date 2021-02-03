@@ -3,7 +3,7 @@
 @section('head')
 <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/codebase.min.css') }}">
 @endsection
-
+ 
 @section('content')
 <div class="content">
     @if (Session::has('pesan-bahaya'))
