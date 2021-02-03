@@ -94,10 +94,10 @@ class BookController extends Controller
         $kursus_id  = $request->kursus_id;
 
         $buku       = Book::find($id);
-        $book_name  = $buku->book_name;
+        
         $kursus     = Kursus::find($kursus_id);
         $notif      = array(
-                        'message' => 'Buku "'.$book_name.'" berhasil dihapus',                
+                        'message' => 'Buku berhasil dihapus',                
                     );
         $kursus->book()->detach($buku);
         return redirect()->back()->with($notif);

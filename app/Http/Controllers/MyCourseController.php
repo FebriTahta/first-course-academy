@@ -101,6 +101,38 @@ class MyCourseController extends Controller
         }
     }    
 
+    public function detailnilai($kuis,$ke,$profile,$kursus)
+    {
+        $data_kuis      = Kuis::where('slug', $kuis)->first();
+        $data_kursus    = Kursus::where('slug', $kursus)->first();
+        $data_kuis_id   = $data_kuis->id;
+        $data_pertanyaan= Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->get();
+        $hasil          = Nilai::where('kuis_id', $data_kuis_id)->where('profile_id', $profile)->where('ke', $ke)->first();
+        $data_result    = Result::where('kuis_id',$data_kuis_id)->where('profile_id', $profile)->where('ke', $ke)->get();
+        // slug 1 untuk kuis dan slug 2 untuk kursus
+        // $user_id            = Auth::id();        
+        // $data_kuis          = Kuis::where('slug',$slug)->first();        
+        // $data_kuis_id       = $data_kuis->id;
+
+        // $data_kursus        = Kursus::where('slug',$slug2)->first();
+        // // $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->inRandomOrder()->get();
+        // $data_pertanyaan    = Pertanyaan::where('kuis_id', $data_kuis_id)->with('answer')->get();
+        // $data_result        = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->get();        
+        // $data_pertanyaan_R  = Pertanyaan::where('kuis_id', $data_kuis_id)->get();
+        // $profile            = Profile::where('user_id',$user_id)->first();
+        // $profile_id         = $profile->id;
+        
+        // $data_reset         = reset::where('kuis_id',$data_kuis_id)->where('profile_id', $profile_id)->get();
+
+        // $jumlah_soal        = $data_pertanyaan->count();
+        // $salah              = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->where('myresult','0')->count();
+        // $benar              = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->where('myresult','1')->count();
+        // $hasil              = Nilai::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->get();
+        
+        return view('client.mykuis.detailnilai',compact('data_kuis','data_kursus','data_pertanyaan','hasil','data_result'));
+        
+    }
+
     public function submitkuis(Request $request)
     {
         

@@ -34,7 +34,7 @@
                                     </form>
                                 @endif
                             </span>
-                            <a class="blog-desc">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}
+                            <a href="{{ route('myCourse',$data_kursus->slug) }}" class="blog-desc">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}
                             </a>
                             {{-- <p>Lorem ipsum dolor sit amet consectetur ipsum adipisicing elit. Quis
                                 vitae sit.</p> --}}
@@ -111,7 +111,7 @@
                                             <img @if($item->photo===null) src="{{ asset('assets/assets/images/a1.jpg') }}" @else src="{{ asset('photo/'.$item->photo) }}" @endif alt="" class="img-fluid rounded-circle">
                                             <ul class="blog-meta">
                                                 <li>
-                                                    <a href="/data-peserta-didik/{{ $data_kursus->slug }}/{{ $item->id }}">{{ $item->user->name }}</a> 
+                                                    <a @if(auth()->user()->role=='siswa') href="#{{ $item->user->name }}" @else href="/data-peserta-didik/{{ $data_kursus->slug }}/{{ $item->id }}" @endif>{{ $item->user->name }}</a> 
                                                 </li>
                                                 <li class="meta-item blog-lesson">
                                                     <span class="meta-value"> @if($item->alumni==null) belum mengisi profile @else{{ $item->alumni }} @endif </span>

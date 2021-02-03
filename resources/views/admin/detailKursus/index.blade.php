@@ -87,7 +87,7 @@
                             <div class="col-3 col-xl-3 nav nav-pills">
                                 <div class="nav-item text-center" style="width: 100%">
                                     <a class="nav-link" href="#" data-category-link="book">
-                                    <i class="fa fa-fw fa-book mr-5"></i> book</a>
+                                    <i class="fa fa-fw fa-book mr-5"></i> artikel</a>
                                 </div>                    
                             </div>                                                                               
                         </div>                                              
@@ -96,21 +96,22 @@
 
                     <!--konten button-->
                     <div class="col-md-4 col-xl-12 row" data-category="kuis" style="display: none">
-                        <div class="col-4 col-xl-4">
+                        <div class="">
+                            <button class="btn fa fa-copy" data-toggle="modal" data-target="#modal-fromright-salin-kuis">&nbsp; add kuis</button>
+                        </div>
+                        {{-- <div class="col-4 col-xl-4">
                             <button class="btn fa fa-plus" data-toggle="modal" data-target="#modal-fromright">&nbsp; add new kuis </button>
-                        </div>
-                        <div class="col-4 col-xl-4 text-center">
-                            <button class="btn fa fa-copy text-center" data-toggle="modal" data-target="#modal-fromright-kuisku">&nbsp; kuis saya</button>
-                        </div>
-                        <div class="col-4 col-xl-4">
-                            <button class="btn fa fa-copy float-right" data-toggle="modal" data-target="#modal-fromright-salin-kuis">&nbsp; salin kuis </button>
-                        </div>                        
-                    </div><br>
+                        </div> --}}
+                        {{-- <div class="col-4 col-xl-4 text-center">
+                            <button class="btn fa fa-copy float-right" data-toggle="modal" data-target="#modal-fromright-kuisku">&nbsp; </button>
+                        </div>                         --}}
+                    </div>
                     <div class="col-md-4 col-xl-12 row" data-category="book" style="display: none">
-                        <div class="col-4 col-xl-4"><button class="btn fa fa-plus" data-toggle="modal" data-target="#modal-fromright_book">&nbsp; upload buku</button></div>
+                        <button class="btn btn-sm fa fa-copy text-center" data-toggle="modal" data-target="#modal-fromright-salin-artikel">&nbsp; add artikel</button>
+                        {{-- <div class="col-4 col-xl-4"><button class="btn fa fa-plus" data-toggle="modal" data-target="#modal-fromright_book">&nbsp; upload buku</button></div>
                         <div class="col-4 col-xl-4 text-center"><button class="btn fa fa-copy " data-toggle="modal" data-target="#modal-fromright-bukuku">&nbsp; buku saya </button></div>
-                        <div class="col-4 col-xl-4"><button class="btn fa fa-copy float-right" data-toggle="modal" data-target="#modal-fromright-salin-book">&nbsp; salin buku </button></div>                        
-                    </div><br>
+                        <div class="col-4 col-xl-4"><button class="btn fa fa-copy float-right" data-toggle="modal" data-target="#modal-fromright-salin-book">&nbsp; salin buku </button></div>                         --}}
+                    </div>
                     <!--end konten button-->
 
                     <!--info-->
@@ -122,113 +123,19 @@
                                         <i class="fa fa-check"></i> Confirm
                                     </button>
                                 </div> --}}
-                                <p>berikut adalah informasi mengenai kursus ini</p>
-                                <p>instruktur : <u>{{ $data_instruktur_kursus->name }}</u> </p>
-                            </div>
-                            <div class="block-content">
-                                <p>jumlah materi video kursus : <u>{{ $data_kursus->video->count() }} video</u> <br>
-                                   <div class="row">
-                                        <i class="col-md-2">keterangan &nbsp; : </i> 
-                                        <table class="col-md-10 table table-borderless float-center">
-                                            <tbody>
-                                                @foreach ($data_kursus->video as $item)
-                                                <tr>
-                                                    <td>
-                                                        <li><a type="button" ><i class="fa fa-trash text-danger" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#modal-fromleft-remove-video"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @if ($item->user_id !== $data_kursus->user_id)
-                                                            <a type="button" data-toggle="modal" data-target="#modal-fromleft-tidakdapateditvideo"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @else
-                                                            <a href="#" type="button" data-toggle="modal" data-target="#modal-fromleft-update-video" data-id="{{ $item->id }}"
-                                                                data-video_name="{{ $item->video_name }}" data-video_link="{{ $item->video_link }}"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @endif
-                                                            {{ $item->video_name }}
-                                                            @if ($item->user_id !== $data_kursus->user_id)
-                                                                &nbsp;&nbsp;&nbsp; menyalin &nbsp;&nbsp;&nbsp; <a href="#">{{ $item->user->name }}</a>
-                                                            @else                                                                
-                                                            @endif
-                                                        </li>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                @endforeach                                                
-                                            </tbody>
-                                        </table>
+                                <p>kursus ini dikelolah oleh (instruktur) : <u>{{ $data_instruktur_kursus->name }}</u> </p>
+                                <p>dengan peserta didik yang tergabung sebanyak : {{ $data_kursus->profile->count() }} anak</p>
+                                <div class="row">
+                                    <div class="col-4 col-sm-4">
+                                        <p>Video course : {{ $data_kursus->video->count() }}</p>
                                     </div>
-                                </p>
-                            </div>
-
-                            <div class="block-content">
-                                <p>jumlah kuis pada kursus : <u>{{ $data_kursus->kuis->count() }} kuis</u> <br>
-                                   <div class="row">
-                                        <i class="col-md-2">keterangan &nbsp; : </i> 
-                                        <table class="col-md-10 table table-borderless float-center">
-                                            <tbody>
-                                                @foreach ($data_kursus->kuis as $item)
-                                                <tr>
-                                                    <td>
-                                                        <li><a type="button" ><i class="fa fa-trash text-danger" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#modal-fromleft-remove-kuis"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @if ($item->user_id !== $data_kursus->user_id)
-                                                                @if ($item->user->role == 'admin')
-                                                                <a href="#" type="button" data-toggle="modal" data-target="#modal-fromright" data-id="{{ $item->id }}"
-                                                                    data-kuis_name="{{ $item->kuis_name }}" data-kuis_desc="{{ $item->kuis_desc }}"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                                                                @else
-                                                                <a type="button" data-toggle="modal" data-target="#modal-fromleft-tidakdapateditvideo"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;    
-                                                                @endif                                                            
-                                                            @else
-                                                                <a href="#" type="button" data-toggle="modal" data-target="#modal-fromright" data-id="{{ $item->id }}"
-                                                                data-kuis_name="{{ $item->kuis_name }}" data-kuis_desc="{{ $item->kuis_desc }}"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @endif
-                                                                {{ $item->kuis_name }}
-                                                            @if ($item->user_id !== $data_kursus->user_id)
-                                                                &nbsp;&nbsp;&nbsp; menyalin &nbsp;&nbsp;&nbsp; <a href="#">{{ $item->user->name }}</a>
-                                                            @else                                                                
-                                                            @endif
-                                                        </li>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                @endforeach                                                
-                                            </tbody>
-                                        </table>
+                                    <div class="col-4 col-sm-4">
+                                        <p>Latihan Soal : {{ $data_kursus->kuis->count() }}</p>
                                     </div>
-                                </p>
-                            </div>
-
-                            <div class="block-content">
-                                <p>jumlah kuis pada kursus : <u>{{ $data_kursus->book->count() }} buku</u> <br>
-                                   <div class="row">
-                                        <i class="col-md-2">keterangan &nbsp; : </i> 
-                                        <table class="col-md-10 table table-borderless float-center">
-                                            <tbody>
-                                                @foreach ($data_kursus->book as $item)
-                                                <tr>
-                                                    <td>
-                                                        <li><a type="button" ><i class="fa fa-trash text-danger" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#modal-fromleft-remove-book"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @if ($item->user_id !== $data_kursus->user_id)
-                                                                @if ($item->user->role == 'admin')
-                                                                <a href="#" type="button" data-toggle="modal" data-target="#modal-fromright-book" data-id="{{ $item->id }}"
-                                                                    data-book_name="{{ $item->book_name }}"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                                                                @else
-                                                                <a type="button" data-toggle="modal" data-target="#modal-fromleft-tidakdapateditvideo"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;    
-                                                                @endif
-                                                            @else
-                                                                <a href="#" type="button" data-toggle="modal" data-target="#modal-fromright-book" data-id="{{ $item->id }}"
-                                                                data-book_name="{{ $item->book_name }}"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;
-                                                            @endif
-                                                                {{ $item->book_name }}
-                                                            @if ($item->user_id !== $data_kursus->user_id)
-                                                                &nbsp;&nbsp;&nbsp; menyalin &nbsp;&nbsp;&nbsp; <a href="#">{{ $item->user->name }}</a>
-                                                            @else                                                                
-                                                            @endif
-                                                        </li>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                @endforeach                                                
-                                            </tbody>
-                                        </table>
+                                    <div class="col-4 col-sm-4">
+                                        <p>artikel course : {{ $data_kursus->artikel->count() }}</p>
                                     </div>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -244,14 +151,16 @@
                                     <td class="border-bottom"></td>                                    
                                         @if ($data_kursus->user_id !== $kuis_item->user_id)
                                             @if (auth()->user()->role === 'admin')
-                                            <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
+                                                <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal </a>
+                                                    <a href="{{ route('createSoals', $kuis_item->id) }}" class="text-danger"><i class="fa fa-trash"></i> hapus</a>
+                                                </td>
                                             @else
-                                            <td class="text-left border-bottom d-none d-sm-table-cell"> By : {{ $kuis_item->user->name }}</td>
-                                            <td class="text-right border-bottom text-danger"><i></i>&nbsp; fixed</td>
+                                                <td class="text-left border-bottom d-none d-sm-table-cell"> By : {{ $kuis_item->user->name }}</td>
+                                                <td class="text-right border-bottom text-danger"><i></i>&nbsp; fixed</td>
                                             @endif                                            
                                         @else
-                                        <td class="text-left border-bottom d-none d-sm-table-cell"> By : Me</td>
-                                        <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
+                                            <td class="text-left border-bottom d-none d-sm-table-cell"> By : Me</td>
+                                            <td class="text-right border-bottom"><i></i>&nbsp; <a href="{{ route('createSoals', $kuis_item->id) }}"><i class="fa fa-plus"></i> soal</a></td>
                                         @endif                                    
                                 </tr>
                                 @endforeach
@@ -272,6 +181,42 @@
                                 </tr>
                                 @endforeach --}}
                             </tbody>
+                            @if (auth()->user()->role=='instruktur')
+                    <h5 class="mb-4" style="margin-top: 20px"> <span class="fa fa-plus label-blue btn hover-box" data-toggle="modal" data-target="#addartikels"></span></h5>    
+                @else
+                    <h5 class="mb-4" style="margin-top: 20px"> <span class="label-blue text-uppercase"> artikel</span></h5>
+                @endif
+                    <hr>        
+                <div class="row">
+                    @if (count($data_kursus->artikel)==null)
+                        <div class="col-12 col-xl-12 text-center" style="max-height: 100px">
+                            <p class="text-danger">Belum Ada Artikel & Buku Yang Tersedia</p>                            
+                        </div>
+                    @else
+                        @foreach ($data_kursus->artikel as $key=>$item)
+                            <div class="col-12 col-xl-6 text-left ribbon ribbon-bottom ribbon-right ribbon-modern ribbon-danger">
+                                @if (auth()->user()->role=='instruktur')
+                                    @if (auth()->user()->id==$data_kursus->user->id)
+                                        <a class="ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromright-removebuku" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
+                                            <i class="fa fa-trash"> {{ $key+1 }}</i>
+                                        </a>
+                                    @endif
+                                @elseif(auth()->user()->role=='admin')
+                                <a class=" text-white ribbon-box hover-box text-white" data-toggle="modal" data-target="#modal-fromright-removebuku" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}">
+                                    <i class="fa fa-trash"> {{ $key+1 }}</i>
+                                </a>
+                                @endif
+                                <a class="block block-rounded block-link-shadow" href="/artikel/{{ $item->id }}/{{ $item->slug }}" style="min-height: 80px">
+                                    <div class="block-content block-content-full">
+                                        <p class="font-size-sm text-muted float-sm-right mb-5"><em></em></p>
+                                        <h4 class="font-size-default text-primary mb-0">
+                                            <i class="fa fa-newspaper-o text-muted mr-5"></i> {{ $item->artikel_title }}
+                                        </h4>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach 
+                    @endif 
                         </table>
                     </div>
                     <!--book-->                    
@@ -814,64 +759,109 @@
 <!--end modal add & update kuis-->
 
 <!--modal salin kuis-->
-<div class="modal fade" id="modal-fromright-salin-kuis" tabindex="-1" role="dialog" aria-labelledby="modal-fromrigt" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-fromright" role="document">                            
+<div class="modal fade" id="modal-fromright-salin-kuis" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('salinKuis') }}" method="POST" enctype="multipart/form-data">@csrf 
-                <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">SALIN KUIS</h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-                                <i class="si si-close"></i>
-                            </button>
-                        </div>
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title">DAFTAR KUIS</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
                     </div>
-
-                    <div class="block-content">                            
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="hidden" id="id" name="id">                             
-                            </div>
-                            <div class="form-group">                                
-                                <div class="block-content">                                                                            
-                                    <p class="text-center text-danger border-bottom">pastikan kuis sesuai dengan materi anda</p>
-                                    <table class="table table-borderless">
-                                        @foreach ($data_kuis as $item_kuis)
-                                        <tr>
-                                        @if ($item_kuis->user_id !== $data_kursus->user_id)                                        
-                                            <div class="form-group">                                                                                                             
-                                                <td>
-                                                    <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
-                                                    <input type="checkbox" name="kuis_id[]" value="{{ $item_kuis->id }}">
-                                                </td>
-                                                <td>
-                                                    <label>{{ $item_kuis->kuis_name }}</label> 
-                                                </td>                                            
-                                                <td>
-                                                    <label class="float-center text-right"> By: {{ $item_kuis->user->name }}</label>
-                                                </td>
-                                                <td class="form-group float-right text-right">
-                                                    <a href="{{ route('detailsSoal', $item_kuis->id) }}" class="">detail</a>
-                                                </td>
-                                            </div>
-                                        @endif
-                                        </tr>
-                                        @endforeach
-                                    </table>                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group float-right">
-                            <button class="btn btn-primary" type="submit">salin</button>
-                        </div>
-                    </div>                                                               
-                </div>                        
-            </form>                   
-        </div>            
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('salinKuis') }}" method="post"> @csrf
+                        <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                        <table class="table table-striped" id="addkuis">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>kuis</th>
+                                    <th>owner</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($filter_kuis as $key=> $item)
+                                <tr>
+                                    @if ($item->pertanyaan->count()==0)
+                                        
+                                    @else
+                                    <td style="width: 5%">{{ $key+1 }}</td>
+                                    <td><a href="{{ route('detailsSoal', $item->id) }}" class="text-primary view-video">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a></td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        <label class="css-control css-control-info css-checkbox">
+                                            <input type="checkbox" class="css-control-input" name="kuis_id[]" value="{{ $item->id }}">
+                                            <span class="css-control-indicator"></span>
+                                        </label> 
+                                    </td>
+                                    @endif
+                                    
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-primary" type="submit">sumbit</button>
+                    </form>
+                </div>
+            </div>                
+        </div>
     </div>
 </div>
 <!--end modal salin kuis-->
+
+<!--modal salin artikel-->
+<div class="modal fade" id="modal-fromright-salin-artikel" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title">DAFTAR KUIS</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('salinArtikel') }}" method="post"> @csrf
+                        <input type="hidden" name="kursus_id" value="{{ $data_kursus->id }}">
+                        <table class="table table-striped" id="addartikel">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>artikel</th>
+                                    <th>owner</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($filter_artikel as $key=> $item)
+                                <tr>
+                                    <td style="width: 5%">{{ $key+1 }}</td>
+                                    <td><a href="/artikel/{{ $item->id }}/{{ $item->slug }}" class="text-primary">{{ $item->artikel_title }}</a></td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        <label class="css-control css-control-info css-checkbox">
+                                            <input type="checkbox" class="css-control-input" name="artikel_id[]" value="{{ $item->id }}">
+                                            <span class="css-control-indicator"></span>
+                                        </label> 
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-primary" type="submit">sumbit</button>
+                    </form>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+<!--end modal salin artikel-->
 
 <!--modal salin kuisku-->
 <div class="modal fade" id="modal-fromright-kuisku" tabindex="-1" role="dialog" aria-labelledby="modal-fromrigt" aria-hidden="true">
@@ -1058,7 +1048,7 @@
 <!--end modal salin buku-->
 
 <!--modal salin bukuku-->
-<div class="modal fade" id="modal-fromright-bukuku" tabindex="-1" role="dialog" aria-labelledby="modal-fromrigt" aria-hidden="true">
+<div class="modal fade" id="modal-fromright-bukuku" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
     <div class="modal-dialog modal-dialog-fromright" role="document">                            
         <div class="modal-content">
             <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('salinBuku') }}" method="POST" enctype="multipart/form-data">@csrf 
@@ -1108,7 +1098,7 @@
 <div class="modal fade" id="modal-fromright-removebuku" tabindex="-1" role="dialog" aria-labelledby="modal-fromrigt" aria-hidden="true">
     <div class="modal-dialog modal-dialog-fromright" role="document">                            
         <div class="modal-content">
-            <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('removeBuku') }}" method="POST" enctype="multipart/form-data">@csrf 
+            <form id="form-tambah-quiz" name="form-salin-kuis" class="form-horizontal" action="{{ route('removeArtikel') }}" method="POST" enctype="multipart/form-data">@csrf 
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-danger">
                         <h3 class="block-title">REMOVE</h3>
@@ -1127,8 +1117,8 @@
                             </div>
                             <div class="form-group">                                
                                 <div class="block-content">                                                                            
-                                    <p class="text-center text-danger border-bottom">Jika anda uploader dari buku ini. buku ini tetap dapat anda temukan pada menu "Buku Saya"</p>                                    
-                                    <p class="text-center"> Yakin akan menghapus buku ini ?</p>
+                                    <p class="text-center text-danger border-bottom"> anda dapat menyalin artikel ini lagi</p>
+                                    <p class="text-center"> Yakin akan menghapus artikel ini ?</p>
                                 </div>
                             </div>
                         </div>
@@ -1159,7 +1149,10 @@
     <script>
         var table2;
         $(document).ready(function(){    
-            table2= $('#table_video_kursus').DataTable({});        
+            table2= $('#table_salin_kuis').DataTable({});        
+        });
+        $(document).ready(function(){    
+            table2= $('#table_salin_artikel').DataTable({});        
         });
          
         var table3;

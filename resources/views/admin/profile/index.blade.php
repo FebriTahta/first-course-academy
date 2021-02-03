@@ -299,21 +299,33 @@
             <div class="block">
                 @foreach ($data_profile->kursus as $item)                                    
                     <div class="block-header block-header-default">
-                        <p>Kuis : {{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</p>
+                        <small>{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }} (instruktur : {{ $item->user->name }})</small>
+                        
                     </div>
                     <div class="block-content">
-                        @foreach ($item->kuis as $items)                                                    
-                        <ul>
-                            <li>{{ $items->kuis_name }}
-                                <?php $sudah_dikerjakan = App\Result::where('user_id', $data_profile->user_id)->where('kuis_id', $items->id)->first()?>
-                                @if ($sudah_dikerjakan==null)
-                                    <a class="float-right text-danger" href="#"> belum</a>
-                                @else
-                                    <a class="float-right" href="/detail-result-siswa/{{ $items->id }}/{{ $data_profile->user_id }}"> sudah</a>
-                                @endif                                
-                            </li>                            
-                        </ul>                        
-                        @endforeach
+                        <table class="table table-hover">
+                            
+                            <tbody>
+                                
+                                @foreach ($item->kuis as$key=>$items)
+                                <?php $sudah_dikerjakan = App\Result::where('profile_id', $data_profile->user->id)->where('kuis_id', $items->id)->first()?>
+                                <?php $hasil = App\Nilai::where('profile_id', $data_profile->user->id)->where('kuis_id', $items->id)->get()?>
+                                <tr>
+                                    <td style="width: 5%">{{ $key+1 }}</td>
+                                    <td>{{ $items->kuis_name }}</td>
+                                    @if ($sudah_dikerjakan==null)
+                                        <td class="text-right"> <span class="badge badge-danger"> BELUM </span></td>
+                                    @else
+                                        <td class="text-right">
+                                            @foreach ($hasil as$key=>$itemss)
+                                            <li style="text-decoration: none">#{{ $key+1 }}. nilai : <span @if($itemss->nilai > 70) class="badge badge-primary" @else class="badge badge-danger" @endif> <a href="/detail-nilai/{{ $items->slug }}/{{ $itemss->ke }}/{{ $data_profile->user->id }}/{{ $item->slug }}" class="text-white"> {{ $itemss->nilai }} </a></span> </li>
+                                            @endforeach
+                                        </td>
+                                    @endif
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 @endforeach
             </div>

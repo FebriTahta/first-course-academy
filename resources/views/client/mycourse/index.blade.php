@@ -50,7 +50,7 @@
                                     </form>
                                 @endif
                             </span>
-                            <a class="blog-desc">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}
+                            <a href="{{ route('myCourse',$data_kursus->slug) }}" class="blog-desc">{{ $data_kursus->mapel->mapel_name }} | {{ $data_kursus->kelas->kelas_name }}
                             </a>
                             {{-- <p>Lorem ipsum dolor sit amet consectetur ipsum adipisicing elit. Quis
                                 vitae sit.</p> --}}

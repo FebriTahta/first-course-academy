@@ -135,6 +135,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                
                                                 @foreach ($data_kursus->kuis as$key=>$item)
                                                 <?php $sudah_dikerjakan = App\Result::where('profile_id', $profiles->user->id)->where('kuis_id', $item->id)->first()?>
                                                 <?php $hasil = App\Nilai::where('profile_id', $profiles->user->id)->where('kuis_id', $item->id)->get()?>
@@ -145,9 +146,9 @@
                                                         <td class="text-right"> <span class="badge badge-danger"> BELUM </span></td>
                                                     @else
                                                         <td class="text-right">
-                                                            @foreach ($hasil as$key=>$item)
+                                                            @foreach ($hasil as$key=>$items)
                                                                 <ul>
-                                                                    <li>#{{ $key+1 }}. nilai : <span @if($item->nilai > 70) class="badge badge-primary" @else class="badge badge-danger" @endif> {{ $item->nilai }}</span> </li>
+                                                                    <li>#{{ $key+1 }}. nilai : <span @if($items->nilai > 70) class="badge badge-primary" @else class="badge badge-danger" @endif> <a href="/detail-nilai/{{ $item->slug }}/{{ $items->ke }}/{{ $profiles->user->id }}/{{ $data_kursus->slug }}" class="text-white"> {{ $items->nilai }} </a></span> </li>
                                                                 </ul>
                                                             @endforeach
                                                         </td>

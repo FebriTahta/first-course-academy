@@ -53,6 +53,9 @@ Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 Route::get('/detail-peserta-didik/{slug}','MyCourseController@detailsiswa')->name('detailsiswa');
 Route::get('/data-peserta-didik/{kursus}/{profile}','MyCourseController@datasiswa')->name('datasiswa');
 
+//detail nilai
+Route::get('/detail-nilai/{kuis}/{ke}/{profile}/{kursus}', 'MyCourseController@detailnilai');
+
 Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     //report user
     Route::get('/user-export-pdf', 'LaporanController@userPDF')->name('userpdf');

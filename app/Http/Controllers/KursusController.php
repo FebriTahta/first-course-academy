@@ -12,6 +12,9 @@ use App\Book;
 use App\kursus_profile;
 use App\Profile;
 use App\kursus_video;
+use App\kuis_kursus;
+use App\Artikel_kursus;
+use App\Artikel;
 use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
@@ -99,7 +102,16 @@ class KursusController extends Controller
         //lebih ringkas biar tidak memakai query di blade
         $filtersiswa            =   Profile::whereNotIn('id', $siswa_yg_sudah_masuk)->get();
 
-        return view('admin.detailKursus.index',compact('filtersiswa','filtervideo','result','data_siswa','kursus_video_all','kursus_video','data_kuis','siswa_kursus','total_user','data_kursus_siswa','data_instruktur_kursus','data','data_kursus','total_video','list_data_video_kursus'));
+        $video_masuk        = kursus_video::where('kursus_id', $data)->pluck('video_id')->toArray();
+        $filter_video       = Video::where('kelas_id', $data_id_kelas)->where('mapel_id',$data_id_mapel)->whereNotIn('id', $video_masuk)->get();
+        //latihansoal
+        $kuis_masuk         = kuis_kursus::where('kursus_id', $data)->pluck('kuis_id')->toArray();
+        $filter_kuis        = Kuis::where('kelas_id', $data_id_kelas)->where('mapel_id', $data_id_mapel)->whereNotIn('id', $kuis_masuk)->get();
+        //artikel
+        $artikel_masuk      = artikel_kursus::where('kursus_id', $data)->pluck('artikel_id')->toArray();
+        $filter_artikel     = Artikel::where('kelas_id', $data_id_kelas)->where('mapel_id', $data_id_mapel)->whereNotIn('id', $artikel_masuk)->get();
+
+        return view('admin.detailKursus.index',compact('filter_kuis','filter_artikel','filtervideo','filtersiswa','filter_video','result','data_siswa','kursus_video_all','kursus_video','data_kuis','siswa_kursus','total_user','data_kursus_siswa','data_instruktur_kursus','data','data_kursus','total_video','list_data_video_kursus'));
     }
 
     public function addsiswa(Request $request)
