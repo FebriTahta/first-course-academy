@@ -13,7 +13,7 @@ use App\kursus_profile;
 use App\Profile;
 use App\kursus_video;
 use App\kuis_kursus;
-use App\Artikel_kursus;
+use App\artikel_kursus;
 use App\Artikel;
 use Auth;
 use Illuminate\Support\Str;
