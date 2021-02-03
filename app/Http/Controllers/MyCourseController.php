@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Artikel;
 use App\kursus_video;
 use App\kuis_kursus;
+use App\Nilai;
 use App\artikel_kursus;
 use Auth;
 use App\Mail\PengajuanResetKuis;
@@ -89,11 +90,12 @@ class MyCourseController extends Controller
         $jumlah_soal        = $data_pertanyaan->count();
         $salah              = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->where('myresult','0')->count();
         $benar              = Result::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->where('myresult','1')->count();
+        $hasil              = Nilai::where('profile_id', $user_id)->where('kuis_id', $data_kuis_id)->get();
         if ($data_result->count() > 0) {
             
             # code...
             $nilai              = ($jumlah_soal - $salah) * (100/$jumlah_soal);
-            return view('client.mykuis.index2', compact('data_kursus','data_reset','nilai','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
+            return view('client.mykuis.index2', compact('hasil','data_kursus','data_reset','nilai','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
         }else{            
             return view('client.mykuis.index2', compact('data_kursus','data_pertanyaan','data_kuis','data_result','data_pertanyaan_R','jumlah_soal','salah','benar'));
         }
@@ -119,8 +121,24 @@ class MyCourseController extends Controller
                 'pertanyaan_id' => $pertanyaan,
                 'answer_id'     => $request->input('answers.'.$pertanyaan),                
                 'myresult'      => $status,
+                'ke'            => $request->ke
             ]);
-        }        
+        }
+
+        $total              = Result::where('profile_id', Auth::id())->where('kuis_id', $request->kuis_id)->where('ke',$request->ke)->count();
+        $salah              = Result::where('profile_id', Auth::id())->where('kuis_id', $request->kuis_id)->where('myresult','0')->where('ke',$request->ke)->count();
+        $benar              = Result::where('profile_id', Auth::id())->where('kuis_id', $request->kuis_id)->where('myresult','1')->where('ke',$request->ke)->count();
+        $dikalikan          = 100/$total; 
+        $nilai              = $benar * $dikalikan;
+        
+        // return 'nilai :'.$nilai.'total'.$total.'benar'.$benar.'dikalikan'.$dikalikan;
+        Nilai::create([
+            'profile_id'    => Auth::id(),
+            'kuis_id'       => $request->kuis_id,
+            'nilai'         => $nilai,
+            'ke'            => $request->ke
+        ]);
+        
 
         $notif = array(
             'pesan-sukses' => 'anda telah menyelesaikan kuis',                
@@ -249,4 +267,25 @@ class MyCourseController extends Controller
         return view('/instruktur.reset', compact('resets'));
     }
     
+    //ajax
+    public function getnilai($kuis_id,$profile_id)
+    {
+        $hasil['data']  = Nilai::where('kuis_id', $kuis_id)->where('profile_id', $profile_id)->get();
+        // return response()->json($hasil);
+        echo json_encode($hasil);
+
+    }
+
+    public function detailsiswa($slug)
+    {
+        $data_kursus = Kursus::where('slug',$slug)->first();
+        return view('instruktur.detailsiswa',compact('data_kursus'));
+    }
+
+    public function datasiswa($kursus,$profile)
+    {
+        $data_kursus = Kursus::where('slug',$kursus)->first();
+        $profiles    = Profile::find($profile);
+        return view('instruktur.datasiswa',compact('data_kursus','profiles'));
+    }
 }

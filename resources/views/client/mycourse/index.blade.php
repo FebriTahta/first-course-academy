@@ -21,6 +21,10 @@
                 <div class="alert alert-info text-bold">{{ Session::get('pesan-sukses') }}</div>
             @endif
             <h3 class="section-title-left mb-4"> My Course</h3>
+            <div class="left-right">
+                <small id="waktu"></small>
+                <small class="section-right" id="jam"></small>
+            </div>
         <div class="row">
             <div class="col-lg-6 mb-50">
                 <div class="bg-clr-white">
@@ -90,7 +94,8 @@
                             <h4><u>{{ $data_kursus->kuis->count() }}</u> Latihan Soal</h4>
                         </div>
                     </a>
-                    <a  class="topics-list mt-3 hover-box">
+                    <a href="{{ route('detailsiswa',$data_kursus->slug) }}"
+                        class="topics-list mt-3 hover-box">
                         <div class="list1">
                             <span class="fa fa-pie-chart"></span>
                             <h4><u>{{ $data_kursus->profile->count() }}</u> Peserta Didik</h4>
@@ -220,7 +225,7 @@
                                                 @if ($sudah_dikerjakan==null)
                                                     <p class="badge badge-danger text-uppercase float-right">belum</p>&nbsp;&nbsp;&nbsp;
                                                 @else
-                                                    <p class="badge badge-success text-uppercase float-right">selesai</p>&nbsp;&nbsp;&nbsp;
+                                                    <p class="badge badge-success text-uppercase float-right btn text-white hover-box" data-toggle="modal" data-target="#modalNilai" data-kuis_id="{{ $item->id }}" data-profile_id="{{ auth()->user()->id }}" id="btnNilai">SELESAI</p>&nbsp;&nbsp;&nbsp;
                                                 @endif
                                             </td>
                                         @endif
@@ -233,7 +238,7 @@
                                                     </td>    
                                                 @else
                                                     <td class="float-right">
-                                                        <a href="/buat-soal/{{ $item->id }}/{{ $item->slug }}"><i class="fa fa-plus"></i> soal</a>
+                                                        {{-- <a href="/buat-soal/{{ $item->id }}/{{ $item->slug }}"><i class="fa fa-plus"></i> soal</a> --}}
                                                         <a href="#" data-id="{{ $item->id }}" data-kursus_id="{{ $data_kursus->id }}" data-toggle="modal" data-target="#hapuskuis" class="fa fa-trash text-danger"> hapus</a>
                                                     </td>
                                                 @endif
@@ -362,6 +367,46 @@
 </div>
 <!--end modal play video-->
 
+<!--modal view nilai--> 
+<div class="modal fade" id="modalNilai" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-info">
+                    <h3 class="block-title"></h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="si si-close"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="block-content">
+                        <div class="form-group">
+                            <table class="table table-hover" id="daftarnilai">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>NILAI</th>
+                                        <th>OPSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- nilai retrieve dari ajax --}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <p id="nilai">LALALA </p>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+<!--end modal view nilai-->
+
 <!--modal add video--> 
 <div class="modal fade" id="addvideo" tabindex="-1" role="dialog" aria-labelledby="modal-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -474,6 +519,9 @@
                             <tbody>
                                 @foreach ($filter_kuis as $key=> $item)
                                 <tr>
+                                    @if ($item->pertanyaan->count()==0)
+                                        
+                                    @else
                                     <td style="width: 5%">{{ $key+1 }}</td>
                                     <td><a href="#" class="text-primary view-video">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a></td>
                                     <td>{{ $item->user->name }}</td>
@@ -483,6 +531,8 @@
                                             <span class="css-control-indicator"></span>
                                         </label> 
                                     </td>
+                                    @endif
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -631,6 +681,10 @@
     $(document).ready(function(){    
         table3= $('#addartikel').DataTable({});        
     });
+    var table4;
+    $(document).ready(function(){    
+        table4= $('#daftarnilai').DataTable({});        
+    });
 </script>
 
 <script>
@@ -652,6 +706,54 @@
 </script>
 
 <script>
+    $('#modalNilai').on('show.bs.modal', function(event){
+        var button = $(event.relatedTarget)
+        var kuis_id = button.data('kuis_id')
+        var profile_id = button.data('profile_id')
+        console.log(kuis_id);
+        //gajadi dipake
+        $.ajax({  //create an ajax request to display.php
+          type: "GET",
+          url: "http://127.0.0.1:8000/get-nilai/"+kuis_id+"/"+profile_id,       
+          success: function (response) {
+            for(var i=0; i<len; i++){
+            var nilai = response['data'][i].nilai;
+            $("#nilai").html(response['data'][i].nilai);
+            }
+            var len = 0;
+            $('#daftarnilai tbody').empty(); // Empty <tbody>
+            if(response['data'] != null){
+            len = response['data'].length;
+            }
+            if(len > 0){
+            for(var i=0; i<len; i++){
+            var id = response['data'][i].id;
+            var nilai = response['data'][i].nilai;
+            var tr_str = "<tr>" +
+            "<td align='center'>" + (i+1) + "</td>" +
+            "<td align='center'>" + nilai + "</td>" +
+            "</tr>";
+            $("#daftarnilai tbody").append(tr_str);
+            }
+            }else if(response['data'] != null){
+            var tr_str = "<tr>" +
+            "<td align='center'>1</td>" +
+            "<td align='center'>" + response['data'].nilai + "</td>" + 
+            "</tr>";
+            $("#daftarnilai tbody").append(tr_str);
+            }else{
+            var tr_str = "<tr>" +
+            "<td align='center' colspan='4'>No record found.</td>" +
+            "</tr>";
+            $("#daftarnilai tbody").append(tr_str);
+            }
+            
+          }
+        })
+    })
+</script>
+
+<script>
     var data = $("#playvideo").attr('src');
     //open modal and play video
     $(document).on('click','.view-video',function(){
@@ -665,12 +767,14 @@
             $("#playvideo").attr('src', '');
         });            
 </script>
+
 <script>
     $('#modal-fromleft-remove-video').on('show.bs.modal', function(event){
         var button = $(event.relatedTarget)
         var id = button.data('id')
         var kursus_id = button.data('kursus_id')
-        var modal = $(this)        
+        var modal = $(this)
+        console.log(id);
         modal.find('.block-content #id').val(id);
         modal.find('.block-content #kursus_id').val(kursus_id);
     })

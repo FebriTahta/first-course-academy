@@ -50,6 +50,9 @@ Route::post('/pertanyaan','ForumController@store')->name('pertanyaan');
 Route::post('/pertanyaanPremium','ForumController@storeP')->name('pertanyaanP');
 Route::get('/komenbenar','ChangeStatus@komentarbenar')->name('benar');
 
+Route::get('/detail-peserta-didik/{slug}','MyCourseController@detailsiswa')->name('detailsiswa');
+Route::get('/data-peserta-didik/{kursus}/{profile}','MyCourseController@datasiswa')->name('datasiswa');
+
 Route::group(['middleware'=>['auth','checkrole:admin,instruktur']], function(){
     //report user
     Route::get('/user-export-pdf', 'LaporanController@userPDF')->name('userpdf');
@@ -162,4 +165,6 @@ Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur,admin
     route::get('/landing/land', 'ProfileController@landing')->name('landing');
     //formresetkuis
     route::get('/form-reset-kuis', 'MyCourseController@formreset')->name('formreset');
+    //getnilai
+    Route::get('/get-nilai/{kuis_id}/{profile_id}', 'MyCourseController@getnilai');
 });

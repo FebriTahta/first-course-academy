@@ -166,10 +166,10 @@
                         @foreach ($data_profile->user->kursus as $item)
                             <tr>
                                 <td class=""><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
-                                <td class="text-center">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>
-                                <td class="float-right">
+                                <td class="text-right"> <a href="{{ route('kursus', $item->slug) }}" type="button" class="btn btn-outline-primary"> {{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</a></td>
+                                {{-- <td class="float-right">
                                     <a href="{{ route('kursus', $item->slug) }}" type="button" class="btn btn-outline-primary">pergi</a>
-                                </td>                                    
+                                </td>                                     --}}
                             </tr>
                         @endforeach
                     </table>
@@ -286,9 +286,9 @@
                         @foreach ($data_profile->kursus as $item)
                             <tr>
                                 <td class=""><img class="img-avatar" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt=""></td>
-                                <td class="">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</td>                                    
+                                <td class="text-right"> <a href="{{ route('kursus', $item->slug) }}" type="button" class="btn btn-outline-primary">{{ $item->mapel->mapel_name }} {{ $item->kelas->kelas_name }}</a></td>
                                 <td class="float-right">
-                                    <a href="{{ route('kursus', $item->slug) }}" type="button" class="btn btn-outline-primary">pergi</a>
+                                    
                                 </td>                                    
                             </tr>
                         @endforeach

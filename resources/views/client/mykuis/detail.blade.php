@@ -49,9 +49,9 @@
             <div class="col-lg-6" style="margin-bottom: 20px">
                 <div class="bg-clr-white" style="min-height: 233px; max-height: 233px;">
                     <div class="col-sm-1"></div>
-                    <div class="col-sm-5 blog-details align-self card-body ml-20">                        
+                    <div class="col-sm-11 blog-details align-self card-body ml-20">                        
                         <span class="label-blue">{{ $data_kuis->kuis_name }} </span>
-                            <p class="blog-desc" style="padding: 5px; margin-top: 10px" >{{ $data_kuis->kuis_desc }}</p>
+                        <p class="blog-desc" style="padding: 5px; margin-top: 10px" >{{ $data_kuis->kuis_desc }}</p>
                     </div>
                 </div>
             </div>            

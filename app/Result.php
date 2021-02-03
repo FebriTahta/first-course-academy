@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     protected $fillable = [
-        'user_id','profile_id','kuis_id','pertanyaan_id','answer_id','myresult'
+        'user_id','profile_id','kuis_id','pertanyaan_id','answer_id','myresult','ke'
     ];
 
     public function user()

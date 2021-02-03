@@ -8,6 +8,7 @@
             <a class="navbar-brand mb-3" href="#">
               <span class="fa fa-newspaper-o"></span> Course Academy</a>            
             <p class="mt-2">Design by <small><a href="https://w3layouts.com/">W3Layouts</a></small> </p>
+            
           </div>
         </div>
       </div>
@@ -67,6 +68,7 @@
 <script src="{{ asset('assets/js/pages/be_tables_datatables.min.js') }}"></script>
 <script>jQuery(function(){ Codebase.helpers(['summernote', 'ckeditor', 'simplemde']); });</script>
 <script>jQuery(function(){ Codebase.helpers('content-filter'); });</script>
+<script>jQuery(function(){ Codebase.helpers('table-tools'); });</script>
 <!-- theme changer js -->
 <script src="{{ asset('assets/assets/js/theme-change.js') }}"></script>
 <!-- //theme changer js -->
