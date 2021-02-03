@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
-{
+{ 
     public function index()
     {
         $data_mapel = Mapel::all();

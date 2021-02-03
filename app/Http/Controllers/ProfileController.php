@@ -5,7 +5,7 @@ use App\Profile;
 use App\User;
 use App\Kursus; 
 use Illuminate\Http\Request;
-
+ 
 class ProfileController extends Controller
 {
     public function index($id)

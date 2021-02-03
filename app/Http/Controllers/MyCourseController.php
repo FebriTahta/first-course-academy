@@ -22,7 +22,7 @@ use App\Mail\AccResetKuis;
 use App\Mail\AjuanReset;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-
+ 
 class MyCourseController extends Controller
 {
     public function courseform($slug)

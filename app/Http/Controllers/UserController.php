@@ -63,7 +63,7 @@ class UserController extends Controller
             $when           = Carbon::now()->addSeconds(5);
             Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
 
-            if ($data_profile===null) {
+            if ($data_profile===null) { 
                 # code...
                 $post->profile()->save(new Profile);
             }

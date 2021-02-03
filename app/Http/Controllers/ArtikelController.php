@@ -85,7 +85,7 @@ class ArtikelController extends Controller
         );
         return redirect()->back()->with($notif);
     }
-
+ 
     public function remove(Request $request)
     {
         $artikel_id     = $request->id;

@@ -61,7 +61,7 @@ class SoalController extends Controller
         );
         return redirect()->back()->with($notif);        
     }
-
+ 
     public function detail($slug)
     {        
         $data_kuis = Kuis::where('slug',$slug)->first();

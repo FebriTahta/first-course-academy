@@ -110,7 +110,7 @@ class VideoController extends Controller
         $video_id = (new video)->get_video_name();
         echo json_encode($video_id);                
     }
-
+ 
     public function myvideo()
     {
         $user   = Auth::id();

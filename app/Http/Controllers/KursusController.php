@@ -19,7 +19,7 @@ use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-
+ 
 class KursusController extends Controller
 {
 
