@@ -38,7 +38,7 @@ class AdminDashboardController extends Controller
 
         $id = Auth::id();
         $kursus_user    = Kursus::where('user_id', $id)->with('profile')->get();
-
+        
         //chart
         $data = DB::table('users')
         ->select(

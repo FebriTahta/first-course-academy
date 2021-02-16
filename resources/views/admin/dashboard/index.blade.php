@@ -411,7 +411,7 @@
     <script>
         $(document).ready(function () {
             // var analytics = document.getElementById("userdata").value;
-            var analytics = <?php echo $role; ?>;
+            var analytics = <?php echo $role; ?>
             
             // console.log(analytics);
             google.charts.load('current', {'packages':['corechart']});
