@@ -168,7 +168,7 @@
                                 <a href="{{ route('myCourse',$item->slug) }}" class="blog-desc">{{ $item->mapel->mapel_name }}{{ $item->kelas->kelas_name }}
                                 </a>
                                 <div class="author align-items-center">
-                                    <img src="{{ asset('assets/assets/images/a2.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    <img @if ($item->user->profile->photo==null) src="{{ asset('/assets/assets/images/a2.jpg') }}" @else src="{{ asset('photo/'.$item->user->profile->photo) }}" @endif alt="" class="img-fluid rounded-circle">
                                     <ul class="blog-meta">
                                         <li>
                                             <a href="{{ route('myCourse',$item->slug) }}">{{ $item->user->name }}</a> 
