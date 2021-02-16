@@ -76,7 +76,7 @@ class HomeController extends Controller
 
         }elseif($data_user == 'admin'){
             # code...            
-            return view('admin.dashboard.index',compact('verif','pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis','role', json_encode($array)));
+            return view('admin.dashboard.index',compact('verif','pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'))->with('role', json_encode($array));
             
         }elseif($data_user == 'instruktur'){
             // return redirect('/dashboard');
