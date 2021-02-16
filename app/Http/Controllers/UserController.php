@@ -44,33 +44,41 @@ class UserController extends Controller
         $email          = $request->email;
         $role           = $request->role;
         $result         = User::where('email', $request->email)->first();
-        
-        $post           =   User::updateOrCreate(['id' => $id],
-                            [
-                                'name' => $request->name,
-                                'role' => $request->role,     
-                                'email' => $request->email,
-                                'stat' => '0',                        
-                                'password'=>bcrypt('secret'),                                                
-                            ]);
+
+        if($result==null)
+        {
+            $post           =   User::updateOrCreate(['id' => $id],
+            [
+                'name' => $request->name,
+                'role' => $request->role,     
+                'email' => $request->email,
+                'stat' => '0',                        
+                'password'=>bcrypt('secret'),                                                
+            ]);
             $data_profile   = Profile::where(['user_id'=>$request->id])->first();
             $detail         = [
-                'title'     => 'Hai '.$nama.'',
-                'body'      => 'Anda telah didaftarkan sebagai '.$role.' Anda dapat login dengan menggunakan (Email : '.$email.') dan (Password : secret). perbarui password anda pada menu Reset / Lupa password',
-                'link'      => 'course-academy.top/login'
+            'title'     => 'Hai '.$nama.'',
+            'body'      => 'Anda telah didaftarkan sebagai '.$role.' Anda dapat login dengan menggunakan (Email : '.$email.') dan (Password : secret). perbarui password anda pada menu Reset / Lupa password',
+            'link'      => 'course-academy.top/login'
             ];
             //kirim email dulu
             $when           = Carbon::now()->addSeconds(5);
             Mail::to($email)->send((new UbahPengguna($detail))->delay($when));
 
             if ($data_profile===null) { 
-                # code...
-                $post->profile()->save(new Profile);
+            # code...
+            $post->profile()->save(new Profile);
             }
             $notif = array(
-                'pesan-sukses' => 'User berhasil ditambahkan'
+            'pesan-sukses' => 'User berhasil ditambahkan'
             );
-            return redirect()->back()->with($notif);        
+            return redirect()->back()->with($notif);  
+        }else{
+            $notif = array(
+                'pesan-bahaya' => 'EMAIL "'.$result->email.'" SUDAH TERDAFTAR PERIKSA DAFTAR USER YANG ADA'
+                );
+            return redirect()->back()->with($notif);
+        }
     }    
 
     /**

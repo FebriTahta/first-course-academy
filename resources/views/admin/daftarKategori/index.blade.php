@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-xl-12">
             <!--alert-->
-            <div class="content-heading"><label>Mapel > Kelas > Kategori</label></div>            
+            <div class="content-heading"><label><h5>KATEGORI KURSUS</h5></label></div>            
                 @if (Session::has('pesan'))
                     <div class="alert alert-info text-bold">{{ Session::get('pesan') }}</div>
                 @endif
@@ -33,8 +33,8 @@
     <!--table-->
     <div class="col-sm-4">
         <div class="block">
-            <div class="block-header block-header-default">                
-                <h3 class="block-title"><a href="#" class="fa fa-plus" data-toggle="modal" data-target="#modal-fromleft-mapel" ></a></h3>
+            <div class="block-header bg-primary">                
+                <h3 class="block-title"><a href="#" class="text-white fa fa-plus" data-toggle="modal" data-target="#modal-fromleft-mapel" ></a></h3>
             </div>
             <div class="block-content">
                 <div class="table-responsive">
@@ -63,12 +63,12 @@
 
     <div class="col-sm-4">
         <div class="block">
-            <div class="block-header block-header-default">                
-                <h3 class="block-title"><a href="#" class="fa fa-plus" data-toggle="modal" data-target="#modal-fromleft-kelas"></a></h3>
+            <div class="block-header bg-primary">                
+                <h3 class="block-title"><a href="#" class="text-white fa fa-plus" data-toggle="modal" data-target="#modal-fromleft-kelas"></a></h3>
             </div>
             <div class="block-content">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered" id="daftar_kelas" width="100%" cellspacing="0">
+                    <table class="table table-striped table-bordered" id="daftar_kelass" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>kelas</th>
@@ -93,8 +93,8 @@
 
     <div class="col-sm-4">
         <div class="block">
-            <div class="block-header block-header-default">                
-                <h3 class="block-title"><a href="#" class="fa fa-plus" data-toggle="modal" data-target="#modal-fromleft-addkategori"></a></h3>
+            <div class="block-header bg-primary">                
+                <h3 class="block-title"><a href="#" class="text-white fa fa-plus" data-toggle="modal" data-target="#modal-fromleft-addkategori"></a></h3>
             </div>
             <div class="block-content">
                 <div class="table-responsive">
@@ -330,6 +330,13 @@
 @endsection
 
 @section('script')
+<script>    
+    var table2;
+    $(document).ready(function(){    
+        table2= $('#daftar_kelas').DataTable({});        
+    });
+    
+</script>
 <script>
     $('#modal-fromleft-delmapel').on('show.bs.modal', function(event){
         var button = $(event.relatedTarget)        

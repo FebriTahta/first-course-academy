@@ -69,6 +69,7 @@
 <script>jQuery(function(){ Codebase.helpers(['summernote', 'ckeditor', 'simplemde']); });</script>
 <script>jQuery(function(){ Codebase.helpers('content-filter'); });</script>
 <script>jQuery(function(){ Codebase.helpers('table-tools'); });</script>
+{{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
 <!-- theme changer js -->
 <script src="{{ asset('assets/assets/js/theme-change.js') }}"></script>
 <!-- //theme changer js -->
@@ -146,6 +147,7 @@
   setInterval(showtime, 500);
 </script>
 <!-- //script for testimonials -->
+@yield('chart')
 </body>
 
 </html>

@@ -19,7 +19,7 @@
 <!-- END Hero -->
 <div class="content">
     <!-- Files Filtering -->
-    <h2 class="content-heading">KURSUS <small>tambahkan kursus dan instruktur baru pada kategori yang ada</small></h2>
+    <h5 class="content-heading">KATEGORI KURSUS</h5>
     @if (Session::has('message'))
         <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
     @endif
@@ -71,12 +71,12 @@
             <!--custom card instruktur-->
             @foreach ($data_kursus as $item)
                 
-                <div class="col-md-6 col-xl-4 js-appear-enabled animated fadeIn" data-category="{{ $item->kelas->kelas_name }}|{{ $item->mapel->mapel_name }}" style="display: none" data-toggle="appear">
+                <div class="col-12 col-xl-4 js-appear-enabled animated fadeIn" data-category="{{ $item->kelas->kelas_name }}|{{ $item->mapel->mapel_name }}" style="display: none" data-toggle="appear">
                     <!-- Property -->
                     <div class="block block-rounded block-shadow">
                         <div class="block-content p-0 overflow-hidden">
                             <a class="img-link" href="{{ route('kursus', $item->slug) }}">
-                                <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" height="285px">
+                                <img class="rounded-top" src="{{ asset('kursus_picture/'.$item->kursus_pict) }}" alt="" width="100%" height="200px">
                             </a>                    
                         </div>
                         <div class="block-content border-bottom">
@@ -115,34 +115,7 @@
                         <div class="block-content block-content-full text-center">
                             <div class="row">
                                 @auth
-                                    @if (auth()->user()->role=='siswa')
-                                        <?php $punya = App\kursus_profile::where('kursus_id', $item->id)->where('profile_id', auth()->user()->profile->id)->first()?>
-                                        @if ($punya !== null)
-                                            @if (auth()->user()->stat == 0)
-                                            <div class="block-content text-center">
-                                                <a href="#" class="btn btn-outline-warning"> ANDA SEDANG TIDAK AKTIF</a>
-                                            </div>
-                                            @else
-                                            <div class="block-content text-center">
-                                                <a href="{{ route('myCourse', $item->slug) }}" class="btn btn-outline-primary"> START</a>
-                                            </div>
-                                            @endif                                    
-                                        @else
-                                            <div class="block-content">
-                                                <a href="#" class="btn btn-outline-danger"> BUKAN KURSUS ANDA</a>
-                                            </div>                            
-                                        @endif
-                                    @elseif(auth()->user()->role=='instruktur')                                
-                                        @if ($item->user_id == auth()->user()->id)
-                                            <div class="block-content text-center">
-                                                <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary"> START</a>
-                                            </div>
-                                        @else
-                                            <div class="block-content">
-                                                <a href="#" class="btn btn-outline-danger"> BUKAN KURSUS ANDA</a>
-                                            </div>
-                                        @endif
-                                    @elseif(auth()->user()->role=='admin')
+                                    @if(auth()->user()->role=='admin')
                                     <div class="block-content">
                                         <a href="#" data-toggle="modal" data-target="#modal-fromleft-remove" class="btn btn-outline-danger fa fa-trash text-danger" data-id="{{ $item->id }}"> HAPUS</a>
                                         <a href="{{ route('kursus', $item->slug) }}" class="btn btn-outline-primary fa fa-check"> START</a>                                        
@@ -152,7 +125,6 @@
                                         <a href="#" class="btn btn-outline-primary"> HUBUNGI ADMIN UNTUK MENDAPATKAN KURSUS</a>
                                     </div>
                                     @endif
-                                                     
                                 @else
                                 <div class="block-content text-center">
                                     <a href="{{ route('login') }}" class="btn btn-primary"> SILAHKAN LOGIN </a>
@@ -272,13 +244,6 @@
 
 @section('script')
     <script>
-        var table;
-        $(document).ready(function(){    
-            table= $('#daftar_kursus').DataTable({});        
-        });
-    </script>
-    
-    <script>
         $('#modal-fromleft').on('show.bs.modal', function(event){
             var button = $(event.relatedTarget)
             var id =     button.data('id')
@@ -286,7 +251,7 @@
             var mapel_id = button.data('mapel_id')
             var slug = button.data('slug')
             var modal = $(this)
-            modal.find('.block-title').text('add instruktur untuk kursus');        
+            modal.find('.block-title').text('TAMBAH INSTRUKTUR KE KURSUS');        
             modal.find('.block-content #kelas_id').val(kelas_id);
             modal.find('.block-content #mapel_id').val(mapel_id);
             modal.find('.block-content #slug').val(slug);

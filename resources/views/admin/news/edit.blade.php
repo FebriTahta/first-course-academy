@@ -32,6 +32,9 @@
                 <div class="block-content">
                     <form action="{{ route('updateNews') }}" method="POST" enctype="multipart/form-data">@csrf
                         <div class="form-group">
+                            <input type="file" name="news_pict" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <input type="hidden" id="id" name="id" value="{{ $news->id }}">                            
                             <input class="form-control" id="val-tittle" type="text" name="news_tittle" placeholder="judul berita" value="{{ $news->news_tittle }}" required>                            
                         </div>

@@ -1,5 +1,9 @@
 @extends('layouts.admin_layouts.master')
-
+@section('head')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+@endsection
 @section('content')
 <!-- Hero -->
 <div class="bg-image bg-image-bottom" style="background-image: url({{ asset('assets/media/photos/photo34@2x.jpg') }});">
@@ -11,6 +15,7 @@
 </div>
 <!-- END Hero -->
 <div class="content">
+    {{-- <input type="text" id="userdata" value="{{ $role }}"> --}}
     @if (auth()->user()->role=='admin')
     <div class="row">
         <div class="col-xl-12">
@@ -72,7 +77,14 @@
     </div> 
     <div class="row invisible" data-toggle="appear">
         <!-- Row #4 -->
-        <div class="col-md-3">
+        <div class="col-md-6">
+            <div class="block">
+                <figure class="highcharts-figure">
+                    <div id="pie_chart" style="height: 400px; max-width: 100%" ></div>
+                </figure>
+            </div>
+        </div>
+        {{-- <div class="col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
                     <div class="py-20 text-center">
@@ -125,7 +137,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
@@ -134,9 +146,27 @@
                             <i class="fa fa-group fa-3x text-danger"></i>
                         </div>
                         <div class="font-size-h4 font-w600">{{ $belum_verif->count() }} belum verifikasi</div>
-                        <div class="text-muted">pengguna belum verifikasi email.</div>
+                        <div class="text-muted">.</div>
                         <div class="pt-20">
                             <a class="btn btn-rounded btn-alt-danger" href="{{ route('notverif') }}">
+                                <i class="fa fa-check mr-5"></i> cek detail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="block">
+                <div class="block-content block-content-full">
+                    <div class="py-20 text-center">
+                        <div class="mb-20">
+                            <i class="fa fa-group fa-3x text-success"></i>
+                        </div>
+                        <div class="font-size-h4 font-w600">{{ $verif }} sudah verifikasi</div>
+                        <div class="text-muted">.</div>
+                        <div class="pt-20">
+                            <a class="btn btn-rounded btn-alt-success" href="/daftar_user">
                                 <i class="fa fa-check mr-5"></i> cek detail
                             </a>
                         </div>
@@ -378,5 +408,28 @@
         modal.find('.block-content #user_id').val(user_id);
     });
     </script>
+    <script>
+        $(document).ready(function () {
+            // var analytics = document.getElementById("userdata").value;
+            var analytics = <?php echo $role; ?>;
+            
+            // console.log(analytics);
+            google.charts.load('current', {'packages':['corechart']});
+  
+            google.charts.setOnLoadCallback(drawChart);
+        
+            function drawChart()
+            {
+            var data = google.visualization.arrayToDataTable(analytics);
+            var options = {
+            title : 'PRESENTASE USER COURSE ACADEMY'
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+            chart.draw(data, options);
+            }
+        })
+    </script>
+    <script>
     
+    </script>
 @endsection

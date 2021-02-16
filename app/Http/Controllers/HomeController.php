@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Profile;
 use Auth;
+use DB;
 use App\Kursus;
 use App\Mapel;
 use App\Kelas;
@@ -47,8 +48,22 @@ class HomeController extends Controller
 
         $belum_verif            =   User::where('email_verified_at', null)->get();
         $pengunjung             =   User::where('role','pengunjung')->get();
-
+        $total_semua            =   User::all()->count();
+        $verif                  =   $total_semua - $belum_verif->count();
         $id = Auth::id();
+        //chart
+        $data = DB::table('users')
+        ->select(
+            DB::raw('role as role'),
+            DB::raw('count(*) as number')
+        )->groupBy('role')->get();
+
+        $array[] = ['Role', 'Number'];
+        foreach ($data as $key => $value) {
+            # code...
+            $array[++$key] = [$value->role, $value->number];
+        }
+
         $kursus_user    = Kursus::where('user_id', $id)->with('profile')->get();
 
         if ($data_user == 'siswa') {
@@ -61,7 +76,7 @@ class HomeController extends Controller
 
         }elseif($data_user == 'admin'){
             # code...            
-            return view('admin.dashboard.index',compact('pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'));
+            return view('admin.dashboard.index',compact('verif','pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'))->with('role', json_encode($array));
             
         }elseif($data_user == 'instruktur'){
             // return redirect('/dashboard');

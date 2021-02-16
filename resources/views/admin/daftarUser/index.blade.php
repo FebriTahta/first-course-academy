@@ -19,7 +19,7 @@
     <div class="col-12">
         <nav class="breadcrumb push content-heading">
             {{-- <a class="breadcrumb-item" href="be_pages_elearning_courses.html">Courses</a> --}}
-            <span class="breadcrumb-item active">User Management </span>
+            <span class="breadcrumb-item active text-uppercase"><h5>User Management </h5></span>
         </nav>
         {{-- <h2 class="content-heading breadcumb push">User Management</h2> --}}
         @if (Session::has('pesan-bahaya'))
@@ -33,7 +33,7 @@
         @endif
     </div>
     <div class="col-md-4">
-        <div class="block">
+        {{-- <div class="block">
             <div class="block-header block-header-default">
                 <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
             </div>
@@ -46,11 +46,11 @@
                     <li>anda dapat mengunduh laporan data <a href="{{ route('userpdf') }}"><u> disini "download" </u></a></li>
                 </ol>
             </div>
-        </div>    
+        </div>     --}}
         <div class="block">
-        <div class="block-header block-header-default ">
-            <h3 type="button" class="block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
-            <h3 class="block-title"></h3>
+        <div class="block-header bg-primary">
+            <h3 type="button" class="text-white block-title btn-block-option" data-toggle="block-option" data-action="content_toggle"></h3>            
+            <h3 class="block-title text-uppercase text-white">Registrasi User Baru</h3>
         </div>
         <div class="block-content">
             <form class="" action="{{ route('daftar_user.store') }}" method="post" > @csrf
@@ -79,6 +79,7 @@
                     </div>
                 </div>                                   
                 <div class="form-group">
+                    <br><br>
                     <button type="submit" class="btn btn-alt-primary">Submit</button>
                 </div>
             </form>
@@ -88,8 +89,8 @@
     <!--end form-->
     <div class="col-md-8">
         <div class="block ">
-            <div class="block-header block-header-default">                
-                <h3 class="block-title">DAFTAR USER</h3>
+            <div class="block-header bg-primary">                
+                <h3 class="block-title text-white">DAFTAR USER</h3>
             </div>
             <div class="block-content">
                 <div class="table-responsive">
@@ -126,13 +127,13 @@
                                     <td>{{ $item->email }}</td>
                                     <td>
                                         @if ($item->role=='admin')
-                                            <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
+                                            <button class="btn btn-sm btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
                                             data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-stat="{{ $item->stat }}" data-role="{{ $item->role }}"></button>
                                         @else
-                                            <a href="/profile/{{ $item->id }}" class="btn btn-outline-success fa fa-user"></a>
-                                            <button class="btn btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
+                                            <a href="/profile/{{ $item->id }}" class="btn btn-sm btn-outline-success fa fa-user"></a>
+                                            <button class="btn btn-sm btn-outline-primary fa fa-pencil" data-toggle="modal" data-target="#modal-fromleft-edit"
                                             data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-email="{{ $item->email }}" data-stat="{{ $item->stat }}" data-role="{{ $item->role }}"></button>
-                                            <button class="btn btn-outline-danger fa fa-trash" data-toggle="modal" data-target="#modal-fromleftdel"
+                                            <button class="btn btn-sm btn-outline-danger fa fa-trash" data-toggle="modal" data-target="#modal-fromleftdel"
                                             data-name="{{ $item->name }}" data-id="{{ $item->id }}"></button>  
                                         @endif                                                                              
                                     </td>

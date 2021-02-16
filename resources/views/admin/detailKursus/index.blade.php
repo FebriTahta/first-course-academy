@@ -13,7 +13,7 @@
 
 <div class="content">
     <div class="col-xl-12">
-        <h2 class="content-heading">KURSUS <small>form control untuk memanajemen konten ({{ $data_kursus->user->name }})</small></h2>
+        <h2 class="content-heading">KURSUS <small>Instruktur :  ({{ $data_kursus->user->name }})</small></h2>
         @if (Session::has('message'))
         <div class="alert alert-danger text-bold">{{ Session::get('message') }}</div>                
         @endif
@@ -25,7 +25,7 @@
         @endif
     </div>
 <div class="row">
-    <div class="col-xl-8">
+    <div class="col-xl-6">
         
         <!--video-->
         <div class="block shadow block-rounded border-bottom">
@@ -39,15 +39,15 @@
             <iframe id="playvideo" src="" frameborder="0" allowfullscreen width="100%" height="380" position="absolute"></iframe>
             @else
                 
-            <div class="block-content bg-secondary row">
-                <div class="col-4 col-xl-4">
-                    <a type="button" class="mb-20 text-white" data-toggle="modal" data-target="#modal-popout" data-total_video="{{ $total_video }}"><i class="si si-docs"></i> salin video</a>
+            <div class="block-content bg-secondary" style="height: 62px">
+                <div class="float-left text-left">
+                    <a type="button" class="mb-20 text-white" data-toggle="modal" data-target="#modal-popout" data-total_video="{{ $total_video }}"><i class="fa fa-plus"></i> ADD VIDEO</a>
                 </div>
-                <div class="col-4 col-xl-4 text-center">
+                {{-- <div class="col-4 col-xl-4 text-center">
                     <a type="button" class="mb-20 text-white" data-toggle="modal" data-target="#modal-popout-videoku"><i class="si si-docs"></i> video saya</a>
-                </div>
-                <div class="col-4 col-xl-4">
-                    <a type="button" class="mb-20 float-right text-white" data-toggle="modal" data-target="#modal-fromleft"><i class="fa fa-plus"></i> buat video</a>
+                </div> --}}
+                <div class="float-right">
+                    <a type="button" class="mb-20 float-right text-white" data-toggle="modal" data-target="#modal-fromleft"><i class="fa fa-plus"></i> CREATE VIDEO</a>
                 </div>                                                
             </div>            
             <iframe id="playvideo" src="" frameborder="0" allowfullscreen width="100%" height="380" position="absolute"></iframe>
@@ -97,7 +97,8 @@
                     <!--konten button-->
                     <div class="col-md-4 col-xl-12 row" data-category="kuis" style="display: none">
                         <div class="">
-                            <button class="btn fa fa-copy" data-toggle="modal" data-target="#modal-fromright-salin-kuis">&nbsp; add kuis</button>
+                            {{-- <h5 class="mb-4" style="margin-top: 20px"> <a href="#" data-target="#modal-fromright-salin-kuis" class="label-blue text-uppercase fa fa-plus" data-toggle="modal" > KUIS</a></h5> --}}
+                            {{-- <button class="btn fa fa-copy" data-toggle="modal" data-target="#modal-fromright-salin-kuis">&nbsp; add kuis</button> --}}
                         </div>
                         {{-- <div class="col-4 col-xl-4">
                             <button class="btn fa fa-plus" data-toggle="modal" data-target="#modal-fromright">&nbsp; add new kuis </button>
@@ -107,7 +108,7 @@
                         </div>                         --}}
                     </div>
                     <div class="col-md-4 col-xl-12 row" data-category="book" style="display: none">
-                        <button class="btn btn-sm fa fa-copy text-center" data-toggle="modal" data-target="#modal-fromright-salin-artikel">&nbsp; add artikel</button>
+                        {{-- <button class="btn btn-sm fa fa-copy text-center" data-toggle="modal" data-target="#modal-fromright-salin-artikel">&nbsp; add artikel</button> --}}
                         {{-- <div class="col-4 col-xl-4"><button class="btn fa fa-plus" data-toggle="modal" data-target="#modal-fromright_book">&nbsp; upload buku</button></div>
                         <div class="col-4 col-xl-4 text-center"><button class="btn fa fa-copy " data-toggle="modal" data-target="#modal-fromright-bukuku">&nbsp; buku saya </button></div>
                         <div class="col-4 col-xl-4"><button class="btn fa fa-copy float-right" data-toggle="modal" data-target="#modal-fromright-salin-book">&nbsp; salin buku </button></div>                         --}}
@@ -181,11 +182,9 @@
                                 </tr>
                                 @endforeach --}}
                             </tbody>
-                            @if (auth()->user()->role=='instruktur')
-                    <h5 class="mb-4" style="margin-top: 20px"> <span class="fa fa-plus label-blue btn hover-box" data-toggle="modal" data-target="#addartikels"></span></h5>    
-                @else
-                    <h5 class="mb-4" style="margin-top: 20px"> <span class="label-blue text-uppercase"> artikel</span></h5>
-                @endif
+                     
+                    <h5 class="mb-4" style="margin-top: 20px"> <a href="#" class="label-blue text-uppercase fa fa-plus" data-toggle="modal" data-target="#modal-fromright-salin-artikel"> artikel</a></h5>
+                
                     <hr>        
                 <div class="row">
                     @if (count($data_kursus->artikel)==null)
@@ -227,7 +226,7 @@
         </div>
     </div>            
     
-    <div class="col-md-4">        
+    <div class="col-md-6">        
         <div class="block block-rounded block-mode-pinned">
             <!--daftar video-->
             <div class="block-header block-header-default ">
@@ -273,9 +272,9 @@
 
         <div class="block block-rounded">
             <!--daftar siswa-->
-            <div class="block-header block-header-default ">
-                <h3 class="block-title btn-block-option" type="button" data-toggle="block-option" data-action="content_toggle"></h3>                
-                <button class="btn" data-toggle="modal" data-target="#modal-addsiswa" data-total_user="{{ $siswa_kursus->count() }}" data-total_video="{{ $total_video }}"><i class="fa fa-fw fa-plus"></i></button>
+            <div class="block-header bg-primary">
+                <h3 class="text-white block-title btn-block-option" type="button" data-toggle="block-option" data-action="content_toggle"></h3>                
+                <button class=" text-white btn btn-white" data-toggle="modal" data-target="#modal-addsiswa" data-total_user="{{ $siswa_kursus->count() }}" data-total_video="{{ $total_video }}"><i class="fa fa-fw fa-plus"></i> SISWA</button>
             </div>
                         
             <div class="block-content">
@@ -286,12 +285,26 @@
                         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-addsiswa" ><i class="fa fa-fw fa-plus"></i> tambahkan siswa baru</button>
                     </div>                                    
                 @else                    
-                    <table class="table table-borderless border-top">
-                        @foreach ($data_kursus->profile as $siswa_kursus_ini)                                                    
+                    <table class="table table-striped" id="table_siswas">
+                        <thead>
                             <tr>
-                                <td><a type="button" data-toggle="modal" data-target="#modal-removesiswa" data-kursus_id="{{ $data_kursus->id }}" data-profile_id="{{ $siswa_kursus_ini->id }}" class="fa fa-group">&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-trash text-danger"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="{{ route('profile', $siswa_kursus_ini->user->id) }}">{{ $siswa_kursus_ini->user->name }}</a></td>
+                                <th>nama siswa</th>
+                                <th>hapus</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
+                            @foreach ($data_kursus->profile as $siswa_kursus_ini)
+                               
+                                <tr>
+                                    <td class=""><a href="{{ route('profile', $siswa_kursus_ini->user->id) }}">{{ $siswa_kursus_ini->user->name }}</a>
+                                        {{-- <input type="hidden" class="form-control" id="kursus_id" name="kursus_id[]"
+                                        value="{{ $data_kursus->id }}" required> --}}
+                                    </td>
+                                    <td class="text-left" style="width: 10%"> <a type="button" data-toggle="modal" data-target="#modal-removesiswa" data-kursus_id="{{ $data_kursus->id }}" data-profile_id="{{ $siswa_kursus_ini->id }}">&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-trash text-danger"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                </tr>
+                                
+                            @endforeach
+                        </tbody>
                     </table>
                 @endif
             </div>
@@ -341,7 +354,7 @@
             <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('addSiswaKursus') }}" method="POST" enctype="multipart/form-data">@csrf                    
                 <div class="block block-themed block-transparent mb-0">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">tambahkan siswa dalam kursus</h3>
+                        <h3 class="block-title text-uppercase">tambahkan siswa dalam kursus</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="si si-close"></i>
@@ -412,8 +425,8 @@
         <div class="modal-content">
             <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeSiswa') }}" method="POST" enctype="multipart/form-data">@csrf                    
                 <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">remove siswa dari kursus</h3>
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title text-uppercase text-white">remove siswa dari kursus</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="si si-close"></i>
@@ -1146,14 +1159,22 @@
         document.getElementById('slug').value = slug;
     }    
     </script>
+    <script>
+        
+    </script>
 
     <script>
+        var table;
+        $(document).ready(function(){    
+            table= $('#table_siswas').DataTable({});        
+        });
         var table2;
         $(document).ready(function(){    
             table2= $('#table_salin_kuis').DataTable({});        
         });
+        var table4;
         $(document).ready(function(){    
-            table2= $('#table_salin_artikel').DataTable({});        
+            table4= $('#table_salin_artikel').DataTable({});        
         });
          
         var table3;
