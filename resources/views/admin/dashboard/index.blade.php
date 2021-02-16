@@ -415,16 +415,16 @@
         })
     </script>
     <script>
-    var analytics = <?php echo $role; ?>
+    // var analytics = <?php echo $role; ?>
             
-            console.log(analytics);
+            // console.log(analytics);
             google.charts.load('current', {'packages':['corechart']});
   
             google.charts.setOnLoadCallback(drawChart);
         
             function drawChart()
             {
-            var data = google.visualization.arrayToDataTable(analytics);
+            var data = google.visualization.arrayToDataTable(<?php echo $role?>);
             var options = {
             title : 'PRESENTASE USER COURSE ACADEMY'
             };
