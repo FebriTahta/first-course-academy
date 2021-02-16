@@ -31,6 +31,10 @@ Route::get('/forum','ForumController@index')->name('forum');
 Route::get('/forum-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaan');
 Route::get('/forum-daftar-pertanyaan/premium/{slug_k}/{slug_m}','ForumController@daftarpertanyaanP');
 // Route::get('/forum-detail-pertanyaan/{slug}','ForumController@detailpertanyaan')->name('forum-detail');
+
+//createartikeladmin
+Route::get('/create-artikel','ArtikelController@createform')->name('acreateForm');
+
 //new_ui_forum
 Route::get('/forums','ForumController@index2')->name('forums');
 Route::get('/forums-daftar-pertanyaan/{slug_k}/{slug_m}','ForumController@daftarpertanyaans');
@@ -159,6 +163,7 @@ Route::group(['middleware'=>['auth','checkrole:siswa,pengunjung,instruktur,admin
     Route::get('/artikel/{id}/{slug}','ArtikelController@detail')->name('artikels');
     Route::post('/add-artikel-kursus','ArtikelController@salin')->name('salinArtikel');
     Route::post('/remove-artikel','ArtikelController@remove')->name('removeArtikel');
+    Route::post('/remove-artikel-permanen','ArtikelController@removeArtikelPermanen')->name('removeArtikelsP');
     //book
     Route::post('/add-book','BookController@store')->name('addBook');
     //kuis

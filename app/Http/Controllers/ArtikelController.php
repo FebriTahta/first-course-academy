@@ -107,6 +107,25 @@ class ArtikelController extends Controller
         return view('/client.myartikel.create', compact('kursus'));
     }
 
+    public function createform()
+    {
+        $mapel = Mapel::all();
+        $kelas = Kelas::all();
+        return view('/admin.artikel.create',compact('mapel','kelas'));
+    }
+
+    public function removeArtikelPermanen(Request $request)
+    {
+        $id         = $request->id;
+        $artikel      = Artikel::find($id);
+        
+        $notif = array(
+            'pesan-bahaya' => 'Artikel berhasil dihapus',                
+        );
+        $artikel->delete();
+        return redirect()->back()->with($notif);
+    }
+
     public function edit($slug,$slug2)
     {
         $kursus     = Kursus::where('slug',$slug)->first();

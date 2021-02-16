@@ -13,6 +13,18 @@
 </div> --}}
 
 <div class="content" style="">
+    @if (Session::has('pesan'))
+        <div class="alert alert-info text-bold">{{ Session::get('pesan') }}</div>
+        @endif
+        @if (Session::has('pesan-peringatan'))
+            <div class="alert alert-warning text-bold">{{ Session::get('pesan-peringatan') }}</div>
+        @endif
+        @if (Session::has('pesan-bahaya'))
+            <div class="alert alert-danger text-bold">{{ Session::get('pesan-bahaya') }}</div>
+        @endif
+        @if (Session::has('pesan-sukses'))
+            <div class="alert alert-success text-bold">{{ Session::get('pesan-sukses') }}</div>
+        @endif 
     <div class="row">
         <div class="col-lg-9">
             <form action="{{ route('uploadArtikel') }}" method="POST" enctype="multipart/form-data">@csrf

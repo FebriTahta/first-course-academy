@@ -214,6 +214,41 @@
 </div>
 <!--end modal edit artikel--> 
 
+<div class="modal fade" id="modal-fromleft-remove" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-fromleft" role="document">                            
+        <div class="modal-content">
+            <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeArtikelsP') }}" method="POST" enctype="multipart/form-data">@csrf
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">HAPUS ARTIKEL</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="si si-close"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="block-content">                            
+                        <div class="form-group">
+                            <div class="form-group text-center">
+                                <p class="text-danger">BUKU TERSEBUT AKAN DIHAPUS PERMANEN DARI SISTEM!</p>
+                            </div>
+                            <div class="col-sm-12 form-group text-center border-bottom">
+                                <input type="hidden" class="form-control" id="id" name="id"
+                                    value="" required>
+                                <p>Yakin akan menghapus artikel tersebut ?</p>
+                            </div>                            
+                            <div class="col-sm-4 form-group">
+                                <button class="btn btn-outline-danger fa fa-trash" type="submit"> hapus</button>
+                            </div>
+                        </div>
+                    </div>                                                             
+                </div>                        
+            </form>                   
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')

@@ -13,15 +13,27 @@
 </div> --}}
 
 <div class="content" style="">
+    @if (Session::has('pesan'))
+        <div class="alert alert-info text-bold">{{ Session::get('pesan') }}</div>
+        @endif
+        @if (Session::has('pesan-peringatan'))
+            <div class="alert alert-warning text-bold">{{ Session::get('pesan-peringatan') }}</div>
+        @endif
+        @if (Session::has('pesan-bahaya'))
+            <div class="alert alert-danger text-bold">{{ Session::get('pesan-bahaya') }}</div>
+        @endif
+        @if (Session::has('pesan-sukses'))
+            <div class="alert alert-success text-bold">{{ Session::get('pesan-sukses') }}</div>
+        @endif 
     <div class="row">
         <div class="col-lg-9">
             <form action="{{ route('uploadArtikel') }}" method="POST" enctype="multipart/form-data">@csrf
                 <div class="form-group">
                     <input type="hidden" class="form-control" name="kursus_id">
-                    <input type="hidden" class="form-control" name="id">
-                    <input type="hidden" class="form-control" name="kelas_id" id="kelas_id" value="{{ $kursus->kelas->id }}">
-                    <input type="hidden" class="form-control" name="mapel_id" id="mapel_id" value="{{ $kursus->mapel->id }}">
-                    <input type="hidden" class="form-control" name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="text" class="form-control" name="id" value="{{ $artikel->id }}">
+                    <input type="text" class="form-control" name="kelas_id" id="kelas_id" value="{{ $kursus->kelas->id }}">
+                    <input type="text" class="form-control" name="mapel_id" id="mapel_id" value="{{ $kursus->mapel->id }}">
+                    <input type="text" class="form-control" name="user_id" value="{{ $artikel->user_id }}">
                 </div>
                 <div class="form-group">
                     <label for="">GAMBAR HEADER ARTIKEL</label>

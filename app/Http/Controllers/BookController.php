@@ -88,6 +88,7 @@ class BookController extends Controller
         $mapels = Mapel::all();
         return view('/admin/daftarKonten/book', compact('book','books','users','kelass','mapels','user'));
     }
+
  
     public function remove(Request $request){
         $id         = $request->id;

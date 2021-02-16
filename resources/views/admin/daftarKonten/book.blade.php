@@ -16,7 +16,7 @@
 
     <div class="content">
         <div class="col-12">
-            <div class="content-heading"><label>DAFTAR BUKU</label></div>            
+            <div class="content-heading"><label>DAFTAR ARTIKEL</label></div>            
                 @if (Session::has('pesan'))
                     <div class="alert alert-info text-bold">{{ Session::get('pesan') }}</div>
                 @endif
@@ -36,14 +36,14 @@
             <div class="block block-rounded">
                 <div class="block-header block-header-default">
                     <div class="block-content text-center">
-                        MY BOOK
+                        DAFTAR ARTIKEL
                     </div>
                 </div>
                 <div class="block-content">
                     <table table class="table table-stripped" id="table_book_kursus">
                         <thead>
                             <tr>
-                                <th>BOOK NAME</th>
+                                <th>ARTIKEL NAME</th>
                                 <th>KATEGORI</th>
                                 <th class="text-right">ACTION</th>
                             </tr>
@@ -66,7 +66,7 @@
                 </div>                
             </div>
             @else            
-            <button class="btn btn-outline-info fa fa-plus mb-10" data-toggle="modal" data-target="#modal-fromright_book"> UPLOAD</button>
+            <a class="btn btn-outline-info fa fa-plus mb-10" href="{{ route('acreateForm') }}"> UPLOAD</a>
             <div class="block block-rounded">                
                 <div class="block-header block-header-default">
                     <div class="block-content text-center">
@@ -77,7 +77,7 @@
                     <table table class="table table-stripped" id="table_book_kursuss">
                         <thead>
                             <tr>
-                                <th>BOOK NAME</th>
+                                <th>JUDUL ARTIKEL</th>
                                 <th>KATEGORI</th>
                                 <th>UPLOADER</th>
                                 <th class="text-right">ACTION</th>
@@ -182,10 +182,10 @@
     <div class="modal fade" id="modal-fromleft-remove" tabindex="-1" role="dialog" aria-labelledby="modal-fromleft" aria-hidden="true">
         <div class="modal-dialog modal-dialog-fromleft" role="document">                            
             <div class="modal-content">
-                <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('hapusBukuPermanen') }}" method="POST" enctype="multipart/form-data">@csrf
+                <form id="form-tambah-quiz" name="form-tambah-quiz" class="form-horizontal" action="{{ route('removeArtikelsP') }}" method="POST" enctype="multipart/form-data">@csrf
                     <div class="block block-themed block-transparent mb-0">
                         <div class="block-header bg-danger">
-                            <h3 class="block-title">HAPUS BUKU</h3>
+                            <h3 class="block-title">HAPUS ARTIKEL</h3>
                             <div class="block-options">
                                 <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                     <i class="si si-close"></i>
@@ -201,7 +201,7 @@
                                 <div class="col-sm-12 form-group text-center border-bottom">
                                     <input type="hidden" class="form-control" id="id" name="id"
                                         value="" required>
-                                    <p>Yakin akan menghapus buku tersebut ?</p>
+                                    <p>Yakin akan menghapus artikel tersebut ?</p>
                                 </div>                            
                                 <div class="col-sm-4 form-group">
                                     <button class="btn btn-outline-danger fa fa-trash" type="submit"> hapus</button>
