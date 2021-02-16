@@ -15,7 +15,7 @@
 </div>
 <!-- END Hero -->
 <div class="content">
-    <input type="text" id="userdata" value="{{ $role }}">
+    {{-- <input type="text" id="userdata" value="{{ $role }}"> --}}
     @if (auth()->user()->role=='admin')
     <div class="row">
         <div class="col-xl-12">
@@ -410,10 +410,14 @@
     </script>
     <script>
         $(document).ready(function () {
-            var analytics = document.getElementById("userdata").value;
-            // var analytics = <?php echo $role ?>
+            // var analytics = document.getElementById("userdata").value;
             
-            // console.log(analytics);
+        })
+    </script>
+    <script>
+    var analytics = <?php echo $role ?>
+            
+            console.log(analytics);
             google.charts.load('current', {'packages':['corechart']});
   
             google.charts.setOnLoadCallback(drawChart);
@@ -427,9 +431,5 @@
             var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
             chart.draw(data, options);
             }
-        })
-    </script>
-    <script>
-    
     </script>
 @endsection
