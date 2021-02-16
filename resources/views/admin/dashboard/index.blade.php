@@ -77,13 +77,13 @@
     </div> 
     <div class="row invisible" data-toggle="appear">
         <!-- Row #4 -->
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
             <div class="block">
                 <figure class="highcharts-figure">
                     <div id="pie_chart" style="height: 400px; max-width: 100%" ></div>
                 </figure>
             </div>
-        </div>
+        </div> --}}
         {{-- <div class="col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
@@ -138,7 +138,7 @@
                 </div>
             </div>
         </div> --}}
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div class="block">
                 <div class="block-content block-content-full">
                     <div class="py-20 text-center">
@@ -156,7 +156,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div class="block">
                 <div class="block-content block-content-full">
                     <div class="py-20 text-center">
@@ -418,18 +418,18 @@
     // var analytics = <?php echo $role; ?>
             
             // console.log(analytics);
-            google.charts.load('current', {'packages':['corechart']});
+            // google.charts.load('current', {'packages':['corechart']});
   
-            google.charts.setOnLoadCallback(drawChart);
+            // google.charts.setOnLoadCallback(drawChart);
         
-            function drawChart()
-            {
-            var data = google.visualization.arrayToDataTable(<?php echo $role?>);
-            var options = {
-            title : 'PRESENTASE USER COURSE ACADEMY'
-            };
-            var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
-            chart.draw(data, options);
-            }
+            // function drawChart()
+            // {
+            // var data = google.visualization.arrayToDataTable(<?php echo $role?>);
+            // var options = {
+            // title : 'PRESENTASE USER COURSE ACADEMY'
+            // };
+            // var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+            // chart.draw(data, options);
+            // }
     </script>
 @endsection
