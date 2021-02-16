@@ -38,7 +38,7 @@ class AdminDashboardController extends Controller
 
         $id = Auth::id();
         $kursus_user    = Kursus::where('user_id', $id)->with('profile')->get();
-        
+
         //chart
         $data = DB::table('users')
         ->select(
@@ -52,7 +52,7 @@ class AdminDashboardController extends Controller
             $array[++$key] = [$value->role, $value->number];
         }
         // dd($data, json_encode($array));
-        return view('admin.dashboard.index',compact('verif','user','pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis'))->with('role', json_encode($array));
+        return view('admin.dashboard.index',compact('verif','user','pengunjung','belum_verif','kursus_user','data_instruktur','data_siswa','data_user_non_acc','data_kursus','data_video','data_buku','data_kuis','role',json_encode($array)));
     }
     
 }
