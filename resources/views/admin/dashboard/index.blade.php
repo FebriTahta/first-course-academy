@@ -15,7 +15,7 @@
 </div>
 <!-- END Hero -->
 <div class="content">
-    {{-- <input type="text" id="userdata" value="{{ $role }}"> --}}
+    <input type="text" id="userdata" value="{{ $role }}">
     @if (auth()->user()->role=='admin')
     <div class="row">
         <div class="col-xl-12">
@@ -410,8 +410,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            // var analytics = document.getElementById("userdata").value;
-            var analytics = <?php echo $role ?>
+            var analytics = document.getElementById("userdata").value;
+            // var analytics = <?php echo $role ?>
             
             // console.log(analytics);
             google.charts.load('current', {'packages':['corechart']});
