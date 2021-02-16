@@ -415,7 +415,7 @@
         })
     </script>
     <script>
-    var analytics = <?php echo $role ?>
+    var analytics = <?php echo $role; ?>
             
             console.log(analytics);
             google.charts.load('current', {'packages':['corechart']});
