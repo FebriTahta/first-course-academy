@@ -523,7 +523,7 @@
                                         
                                     @else
                                     <td style="width: 5%">{{ $key+1 }}</td>
-                                    <td><a href="#" class="text-primary view-video">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a></td>
+                                    <td><a href="/detail-latihan-soal/{{ $item->slug }}/{{ $data_kursus->slug }}" class="text-primary">({{ $item->pertanyaan->count() }} soal) {{ $item->kuis_name }}</a></td>
                                     <td>{{ $item->user->name }}</td>
                                     <td>
                                         <label class="css-control css-control-info css-checkbox">

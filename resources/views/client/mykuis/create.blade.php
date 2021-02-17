@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-sm-1"></div>
                         <div class="col-sm-5 card-body blog-details align-self">
-                            <span class="label-blue">Latihan Soal</span>
+                            <span class="label-blue"><a href="#" class="box-hover">Kelola Latihan Soal </a></span>
                             <a class="blog-desc">{{ $data_kuis->mapel->mapel_name }} | {{ $data_kuis->kelas->kelas_name }}
                             </a>
                             {{-- <p>Lorem ipsum dolor sit amet consectetur ipsum adipisicing elit. Quis
